@@ -3,6 +3,7 @@ package entities;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,33 +12,37 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Chapters")
+@Table(name="")
 public class Chapitre {
-	
-	@Id@GeneratedValue(strategy = GenerationType.IDENTITY)
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="")
 	private String idChap;
+
+    @Column(name="")
 	private String nomChapitre;
-	private String Contenu;
+
+    @Column(name="")
+    private String contenu;
 	
 	
 	//on ne peut pas utiliser "mappedby" avec une relation @manytoOne!! => OK avec @OneToMany
 	//@ManyToOne(mappedBy="chapters")
 	
-	@ManyToOne//(mappedBy="chapters")
+    // !#TODO Update on errors
+    // !#TODO: Generate EQUALS + HASHCODE upon use of HashSet
+	@ManyToOne//(mappedBy="chapters") //
 	private Set<Formation> chap = new HashSet<Formation>();
 
 	//Constructeur
 	
-	public Chapitre() {
-		super();
-	}
-
+	public Chapitre() {}
 
 	public Chapitre(String idChap, String nomChapitre, String contenu) {
-		super();
 		this.idChap = idChap;
 		this.nomChapitre = nomChapitre;
-		Contenu = contenu;
+		this.contenu = contenu;
 	}
 
 	
@@ -65,24 +70,20 @@ public class Chapitre {
 
 
 	public String getContenu() {
-		return Contenu;
+		return contenu;
 	}
 
 
 	public void setContenu(String contenu) {
-		Contenu = contenu;
+		this.contenu = contenu;
 	}
 
 
 	@Override
 	public String toString() {
-		return "Chapitre [idChap=" + idChap + ", nomChapitre=" + nomChapitre + ", Contenu=" + Contenu + "]";
+		return "Chapitre [idChap=" + idChap + ", nomChapitre=" + nomChapitre + ", Contenu=" + contenu + "]";
 	}
 	
-	
-	
-	
-	
-	
-	
+	// Relation entre Chapitre + Formation
+	// Many To One
 }

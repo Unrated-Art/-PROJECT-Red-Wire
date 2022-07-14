@@ -1,16 +1,27 @@
 package entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
-
+@Table(name="") // translate to plurial in english
 public class Catalogue {
 
-	private String idCatalogue;
-	private String auteur;
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="idCatalogue")
+	private int idCatalogue; // Changed from `String` to `int`
+
+	@Column(name="")
+	private String auteur; // A voir avec Entity 'Admin/Manager' `int idAdmin`
+
+	@Column(name="")
 	private String dateCreation;
-	
-	
+
 	
 //Constructeur
 	
@@ -18,7 +29,7 @@ public class Catalogue {
 		super();
 	}
 
-	public Catalogue(String idCatalogue, String auteur, String dateCreation) {
+	public Catalogue(int idCatalogue, String auteur, String dateCreation) {
 		super();
 		this.idCatalogue = idCatalogue;
 		this.auteur = auteur;
@@ -27,11 +38,11 @@ public class Catalogue {
 
 //Setter et Getter
 	
-	public String getIdCatalogue() {
+	public int getIdCatalogue() {
 		return idCatalogue;
 	}
 
-	public void setIdCatalogue(String idCatalogue) {
+	public void setIdCatalogue(int idCatalogue) {
 		this.idCatalogue = idCatalogue;
 	}
 
@@ -57,5 +68,6 @@ public class Catalogue {
 	}
 	
 
-	
+	// Relation entre Catalogue + Formation
+	// One To Many
 }

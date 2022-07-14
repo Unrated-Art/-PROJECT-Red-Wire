@@ -1,29 +1,34 @@
 package entities;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="")
 public class Formateur {
 
-	
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="")
 	private long idFormateur;
-	private String cv;
-	
+
+    @Column(name="")
+    private String cv;
+
+    // One To Many
 	//référence vers sessions : 1 formateur peut participer à plusieurs sessions de formation=> collection de sessions dans Formateur
 	private HashSet<Session> listeSessions= new HashSet<Session>(); //la liste des sessions auxqeulles il participe
 
+	public Formateur() {}
 
-
-	public Formateur() {
-		// TODO Auto-generated constructor stub
-	}
-
-	public Formateur(long idFormateur, String cv) {
-		super();
-		this.idFormateur = idFormateur;
+	public Formateur(String cv) {
 		this.cv = cv;
 	}
 
@@ -42,8 +47,6 @@ public class Formateur {
 	public void setCv(String cv) {
 		this.cv = cv;
 	}
-	
-
 
 	public HashSet<Session> getListeSessions() {
 		return listeSessions;
@@ -74,8 +77,5 @@ public class Formateur {
 		Formateur other = (Formateur) obj;
 		return Objects.equals(cv, other.cv) && idFormateur == other.idFormateur;
 	}
-	
-	
-	
 
 }

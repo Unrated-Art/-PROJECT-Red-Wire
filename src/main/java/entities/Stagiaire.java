@@ -31,26 +31,26 @@ public class Stagiaire {
 	@Column(name="email")
 	private String email;
 
-	@Column(name="telNumber")
+	@Column(name="phoneNumber")
 	private String numTelephone;
 
 	@Column(name="company")
 	private Boolean entreprise;
 
 	@Column(name="contactInfo")
-	private String coordonnees;
+	private String coordonneesEntre;
 
 	public Stagiaire() {}
 
 	public Stagiaire(String nom, String prenom, String adresse, String email, String numTelephone, Boolean entreprise,
-			String coordonnees) {
+			String coordonneesEntre) {
 		this.nom = nom;
 		this.prenom = prenom;
 		this.adresse = adresse;
 		this.email = email;
 		this.numTelephone = numTelephone;
 		this.entreprise = entreprise;
-		this.coordonnees = coordonnees;
+		this.coordonneesEntre = coordonneesEntre;
 	}
 
 	public long getIdStagiaire() {
@@ -95,17 +95,17 @@ public class Stagiaire {
 	public void setEntreprise(Boolean entreprise) {
 		this.entreprise = entreprise;
 	}
-	public String getCoordonnees() {
-		return coordonnees;
+	public String getCoordonneesEntre() {
+		return coordonneesEntre;
 	}
-	public void setCoordonnees(String coordonnees) {
-		this.coordonnees = coordonnees;
+	public void setCoordonneesEntre(String coordonnees) {
+		this.coordonneesEntre = coordonnees;
 	}
 
 	@Override
 	public String toString() {
 		return "Stagiaire [idStagiaire=" + idStagiaire + ", nom=" + nom + ", prenom=" + prenom + ", adresse=" + adresse
 				+ ", email=" + email + ", numTelephone=" + numTelephone + ", entreprise=" + entreprise
-				+ ", coordonnees=" + coordonnees + "]";
+				+ ", coordonneesEntre=" + coordonneesEntre + "]";
 	}
 }

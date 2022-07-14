@@ -22,7 +22,7 @@ public class Formation {
     @Column(name="idTraining")
 	private long idFormation;
 
-	@Column(name="name")
+	@Column(name="ref")
 	private String reference;
 
 	@Column(name="location")
@@ -46,10 +46,17 @@ public class Formation {
 	@Column(name="details")
 	private String programmeDetaille;
 
-	private HashSet<Chapitre> chapitres = new HashSet<Chapitre>();
+	// Many To Many
 	private HashSet<Theme> themes = new HashSet<Theme>();
+	
+	// One To Many
+	private HashSet<Chapitre> chapitres = new HashSet<Chapitre>();
+
+	// One To Many
+	private HashSet<Session> sessions = new HashSet<Session>();
+	
+	// One To One
 	private PreTest pretest = new PreTest();
-	private HashSet<Session> session = new HashSet<Session>();
 
 	public Formation() {}
 
@@ -119,15 +126,6 @@ public class Formation {
 	public void setProgrammeDetaille(String programmeDetaille) {
 		this.programmeDetaille = programmeDetaille;
 	}
-
-	@Override
-	public String toString() {
-		return "Formation [idFormation=" + idFormation + ", reference=" + reference + ", lieu=" + lieu
-				+ ", interFormation=" + interFormation + ", duree=" + duree + ", prerequis=" + prerequis + ", objectif="
-				+ objectif + ", publicVise=" + publicVise + ", programmeDetaille=" + programmeDetaille + "]";
-	}
-
-	
 	
 	public HashSet<Chapitre> getChapitres() {
 		return chapitres;
@@ -153,18 +151,27 @@ public class Formation {
 		this.pretest = pretest;
 	}
 
-	public HashSet<Session> getSession() {
-		return session;
+	public HashSet<Session> getSessions() {
+		return sessions;
 	}
 
-	public void setSession(HashSet<Session> session) {
-		this.session = session;
+	public void setSessions(HashSet<Session> sessions) {
+		this.sessions = sessions;
 	}
 
 	@Override
+	public String toString() {
+		return "Formation [idFormation=" + idFormation + ", reference=" + reference + ", lieu=" + lieu
+				+ ", interFormation=" + interFormation + ", duree=" + duree + ", prerequis=" + prerequis + ", objectif="
+				+ objectif + ", publicVise=" + publicVise + ", programmeDetaille=" + programmeDetaille + ", themes="
+				+ themes + ", chapitres=" + chapitres + ", sessions=" + sessions + ", pretest=" + pretest + "]";
+	}
+
+	// FIX ERRORS W/ "PreTest.java"
+	@Override
 	public int hashCode() {
 		return Objects.hash(chapitres, duree, idFormation, interFormation, lieu, objectif, prerequis, programmeDetaille,
-				publicVise, reference, session, themes);
+				publicVise, reference, sessions, themes);
 	}
 
 	@Override
@@ -181,9 +188,6 @@ public class Formation {
 				&& Objects.equals(objectif, other.objectif) && Objects.equals(prerequis, other.prerequis)
 				&& Objects.equals(programmeDetaille, other.programmeDetaille)
 				&& Objects.equals(publicVise, other.publicVise) && Objects.equals(reference, other.reference)
-				&& Objects.equals(session, other.session) && Objects.equals(themes, other.themes);
+				&& Objects.equals(sessions, other.sessions) && Objects.equals(themes, other.themes);
 	}
-	
-	
-	
 }
