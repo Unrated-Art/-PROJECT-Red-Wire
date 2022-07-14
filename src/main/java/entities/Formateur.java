@@ -13,7 +13,7 @@ public class Formateur {
 	private String cv;
 	
 	//référence vers sessions : 1 formateur peut participer à plusieurs sessions de formation=> collection de sessions dans Formateur
-	private Set<Session> listeSessions= new HashSet<Session>(); //la liste des sessions auxqeulles il participe
+	private HashSet<Session> listeSessions= new HashSet<Session>(); //la liste des sessions auxqeulles il participe
 
 
 
@@ -43,13 +43,13 @@ public class Formateur {
 		this.cv = cv;
 	}
 	
-	
-	
-	public List<Session> getListeSessions() {
+
+
+	public HashSet<Session> getListeSessions() {
 		return listeSessions;
 	}
 
-	public void setListeSessions(List<Session> listeSessions) {
+	public void setListeSessions(HashSet<Session> listeSessions) {
 		this.listeSessions = listeSessions;
 	}
 
