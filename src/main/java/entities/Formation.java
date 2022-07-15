@@ -2,12 +2,19 @@ package entities;
 
 import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.MapsId;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /*
@@ -22,6 +29,8 @@ public class Formation {
     @Column(name="idTraining")
 	private long idFormation;
 
+	/* ****************** */
+	/* Attributes START */
 	@Column(name="ref")
 	private String reference;
 
@@ -45,18 +54,30 @@ public class Formation {
 
 	@Column(name="details")
 	private String programmeDetaille;
+	/* Attributes END */
+	/* ****************** */
 
-	// Many To Many
-	private HashSet<Theme> themes = new HashSet<Theme>();
-	
-	// One To Many
-	private HashSet<Chapitre> chapitres = new HashSet<Chapitre>();
+	/* ****************** */
+	/* Associations START */
+	@ManyToMany
+	@JoinTable(
+		name="themes_training",
+		joinColumns=@JoinColumn(name="idTraining"),
+		inverseJoinColumns=@JoinColumn(name="idTheme")
+	)
+	private Set<Theme> themes = new HashSet<Theme>();
 
-	// One To Many
-	private HashSet<Session> sessions = new HashSet<Session>();
-	
-	// One To One
+	@OneToMany()
+	private Set<Chapitre> chapitres = new HashSet<Chapitre>();
+
+	@OneToMany()
+	private Set<Session> sessions = new HashSet<Session>();
+
+	@OneToOne
+	@MapsId
 	private PreTest pretest = new PreTest();
+	/* Associations END */
+	/* ****************** */
 
 	public Formation() {}
 
@@ -75,59 +96,76 @@ public class Formation {
 	public long getIdFormation() {
 		return idFormation;
 	}
+
 	public void setIdFormation(long idFormation) {
 		this.idFormation = idFormation;
 	}
+
 	public String getReference() {
 		return reference;
 	}
+
 	public void setReference(String reference) {
 		this.reference = reference;
 	}
+
 	public String getLieu() {
 		return lieu;
 	}
+
 	public void setLieu(String lieu) {
 		this.lieu = lieu;
 	}
+
 	public Boolean getInterFormation() {
 		return interFormation;
 	}
+
 	public void setInterFormation(Boolean interFormation) {
 		this.interFormation = interFormation;
 	}
+
 	public int getDuree() {
 		return duree;
 	}
+
 	public void setDuree(int duree) {
 		this.duree = duree;
 	}
+
 	public String getPrerequis() {
 		return prerequis;
 	}
+
 	public void setPrerequis(String prerequis) {
 		this.prerequis = prerequis;
 	}
+
 	public String getObjectif() {
 		return objectif;
 	}
+
 	public void setObjectif(String objectif) {
 		this.objectif = objectif;
 	}
+
 	public String getPublicVise() {
 		return publicVise;
 	}
+
 	public void setPublicVise(String publicVise) {
 		this.publicVise = publicVise;
 	}
+
 	public String getProgrammeDetaille() {
 		return programmeDetaille;
 	}
+
 	public void setProgrammeDetaille(String programmeDetaille) {
 		this.programmeDetaille = programmeDetaille;
 	}
 	
-	public HashSet<Chapitre> getChapitres() {
+	public Set<Chapitre> getChapitres() {
 		return chapitres;
 	}
 
@@ -135,7 +173,7 @@ public class Formation {
 		this.chapitres = chapitres;
 	}
 
-	public HashSet<Theme> getThemes() {
+	public Set<Theme> getThemes() {
 		return themes;
 	}
 
@@ -151,7 +189,7 @@ public class Formation {
 		this.pretest = pretest;
 	}
 
-	public HashSet<Session> getSessions() {
+	public Set<Session> getSessions() {
 		return sessions;
 	}
 
