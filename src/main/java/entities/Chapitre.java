@@ -1,6 +1,7 @@
 package entities;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -33,10 +34,30 @@ public class Chapitre {
     // !#TODO Update on errors
     // !#TODO: Generate EQUALS + HASHCODE upon use of HashSet
 	@ManyToOne//(mappedBy="chapters") //
+	
+	
 	private Set<Formation> chap = new HashSet<Formation>();
 
 	//Constructeur
 	
+	@Override
+	public int hashCode() {
+		return Objects.hash(chap, contenu, idChap, nomChapitre);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Chapitre other = (Chapitre) obj;
+		return Objects.equals(chap, other.chap) && Objects.equals(contenu, other.contenu)
+				&& Objects.equals(idChap, other.idChap) && Objects.equals(nomChapitre, other.nomChapitre);
+	}
+
 	public Chapitre() {}
 
 	public Chapitre(String idChap, String nomChapitre, String contenu) {
@@ -48,11 +69,20 @@ public class Chapitre {
 	
 	//Getter et Setter
 	
+	
 
 	public String getIdChap() {
 		return idChap;
 	}
 
+
+	public Set<Formation> getChap() {
+		return chap;
+	}
+
+	public void setChap(Set<Formation> chap) {
+		this.chap = chap;
+	}
 
 	public void setIdChap(String idChap) {
 		this.idChap = idChap;

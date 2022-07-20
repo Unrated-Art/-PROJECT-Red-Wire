@@ -1,10 +1,16 @@
 package entities;
 
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -23,8 +29,32 @@ public class Catalogue {
 	private String dateCreation;
 
 	
+	@OneToMany (mappedBy="catalog")
+	
+	
+	
+	private Set<Formation> catalog = new HashSet<Formation>();
+	
 //Constructeur
 	
+	@Override
+	public int hashCode() {
+		return Objects.hash(auteur, catalog, dateCreation, idCatalogue);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Catalogue other = (Catalogue) obj;
+		return Objects.equals(auteur, other.auteur) && Objects.equals(catalog, other.catalog)
+				&& Objects.equals(dateCreation, other.dateCreation) && idCatalogue == other.idCatalogue;
+	}
+
 	public Catalogue() {
 		super();
 	}
@@ -38,8 +68,19 @@ public class Catalogue {
 
 //Setter et Getter
 	
+	
+	
+	
 	public int getIdCatalogue() {
 		return idCatalogue;
+	}
+
+	public Set<Formation> getCatalog() {
+		return catalog;
+	}
+
+	public void setCatalog(Set<Formation> catalog) {
+		this.catalog = catalog;
 	}
 
 	public void setIdCatalogue(int idCatalogue) {
@@ -67,7 +108,4 @@ public class Catalogue {
 		return "Catalogue [idCatalogue=" + idCatalogue + ", auteur=" + auteur + ", dateCreation=" + dateCreation + "]";
 	}
 	
-
-	// Relation entre Catalogue + Formation
-	// One To Many
 }
