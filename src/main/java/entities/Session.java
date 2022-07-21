@@ -40,7 +40,7 @@ public class Session {
 	private HashSet<Stagiaire> stagiaires = new HashSet<Stagiaire>();
 
 	@Column(name="")
-	private HashSet<EvalSession> evalSession = new HashSet<EvalSession>();
+	private HashSet<EvalSession> evalSessions = new HashSet<EvalSession>();
 
 	@Column(name="")
 	private Formateur formateur = new Formateur();
@@ -111,11 +111,11 @@ public class Session {
 	}
 
 	public HashSet<EvalSession> getEvalSession() {
-		return evalSession;
+		return evalSessions;
 	}
 
 	public void setEvalSession(HashSet<EvalSession> evalSession) {
-		this.evalSession = evalSession;
+		this.evalSessions = evalSession;
 	}
 
 	public HashSet<Formation> getFormations() {

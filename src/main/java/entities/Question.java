@@ -8,18 +8,18 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="") // translate to plurial in english
-public class Question {
+@Table(name="Questions") 
+public class Question { //composant de `PreTest`
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="idCatalogue")
 	private long idQuestion;
 
-	@Column(name="")
+	@Column(name="QuestContent")
 	private String contenuQ;
 
-	@Column(name="")
+	@Column(name="idTheme")
 	private String idTheme; 
 
 	public Question() {

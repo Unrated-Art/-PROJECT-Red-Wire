@@ -1,0 +1,215 @@
+@charset "UTF-8";
+
+div:not(#global),article,section,nav,header,footer,aside{ /* toutes les div sauf #global : le padding n'affecte pas global*/
+    /* border: 1px solid black; */
+    /* text-align: center; */
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+#global{
+    /* width:fit-content; */ /* non compatible avec Internet Explorer et other..*/
+    width: 100%; /* ou 100% ..etc : exprimer la largeur en % qui dépend du conteneur (navigateur)*/
+    margin: 50px auto; /* auto:pour centrer*/
+    
+}
+
+.withbordercenter{
+    border: 1px solid black;
+    text-align: center;
+}
+
+#haut{
+    background-color: aqua;
+    /*position: flottant;  */
+    width: 100%;/*1000px;*/  /*% par rapport au conteneur "global" */
+    height: 200px;
+
+
+}
+
+#haut img{ /*l'iamge qui est dans haut*/
+    height:100px;
+    width:100px;
+    position: relative; /*si on ne met pas position "relative", le top et left seront ignorés!!!*/
+    top:30px;
+    left:30px;
+    animation: anim1 3s; /*animation au chargement de ma page / sans avoir à suvoler l'image*/
+   
+
+}
+
+/* transformation lorsque mon image est survolée */
+#haut img:hover{ /*l'iamge qui est dans haut*/
+ 
+    transform: rotate(-45deg) scale(1,2);
+
+}
+
+/* animation */
+@keyframes anim1 {
+    0%{
+        transform: rotate(0deg) scale(1);
+        left: 0px;
+    }
+    50%{
+        transform: rotate(-45deg) scale(1,1);
+        left: 300px;
+    }
+    100%{
+        transform: rotate(0deg) scale(1);
+        left: 0px;
+    }
+}
+ 
+
+#gauche{
+    background-color: orange;
+    /* position: flottant; */
+    width: 25%; /* 250px; */
+    min-height: 500px; /* avoir au moins 500px => si */
+    /* overflow: auto; */ /*si contenu dépasse le conteneur=> une scrollbar s'affiche*/
+    
+}
+
+#gauche ul{
+    list-style-type: none;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#gauche ul li{
+    border: 1px solid;
+    margin:10px 0;
+    padding:0;
+    border: none;
+    
+}
+
+#gauche ul li a{
+    
+    background: aquamarine;
+    opacity:.5;
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    color: black;
+    padding: 5px;
+    border-radius: 6px ; /*coins arrondis*/
+    box-shadow: 0px 2px 10px 0px;
+
+}
+
+
+#gauche ul li a:hover, #gauche ul li a.active{/*a.active: la page active */ 
+    background: cyan;
+    color: white;
+    
+}
+#gauche ul li a.active:hover{ /* active et survolé*/
+    background: cornflowerblue;
+}
+
+
+
+#droite{
+    background: greenyellow;
+    width: 75%; /*750px;*/
+    min-height: 500px;
+    
+
+}
+
+#droite img{
+    max-width: 100%; /* ne dépasse pas la taille de son conteneur*/
+}
+#bas{
+    background: violet;
+    width: 100% ;/*1000px;*/
+    height: 40px;
+}
+
+.flottant{
+    float:left;
+}
+
+.clearer{ /* prend en compte les éléments flottant à gauche et à droite// ne comble pas les espaces vides aorès les 2*/
+    clear:both;
+}
+
+.fixe{
+    position: fixed;
+}
+
+.btnMenu{
+    color: cadetblue;
+    border-style: ridge;
+    padding: 5px;
+    text-decoration: none;
+    display:inline;
+
+    
+}
+.logo{
+    text-decoration: none;
+
+}
+
+.maxwidth{
+    width:max-content;
+}
+/* ******************** */
+/* responsive design CSS3 */
+/* ************************ */
+
+/* écrans moyens: tablette par exple */
+@media screen and (min-width:501px) and (max-width:768px) {  
+
+    #global{
+        width: 90%;
+    }
+    #haut{
+        background: pink;
+
+    }
+}
+
+
+
+/* Petits écrans, max largeur 500px */
+/* une condition= media query : les medias possibles: screen/print../all*/
+@media screen and (max-width:500px) {  /*  tout média qui est: "écran" ET qui a (max-width: 500px).=> les ecrans qui ont comme largeur 500px=>phone*/
+
+    #global{
+        width: 100%;
+        margin:0px;
+    }
+    #haut{
+        background: crimson;
+        height: auto;
+
+    }
+
+    #haut img{ /* le logo est centré et plus petit*/
+        position: static; /* la position par défaut */
+        width: 15%; /*50px;*/
+        height: 15%; /*50px;*/
+        margin: auto; /* pour centrer si l'elt de type block! */
+        display: block; /* j'impose que l'elt soit de type block!;
+    }
+
+    #gauche,#droite{
+        width: 100%;
+        /* ou */ /* float:none; */
+        min-height: 0; /* il n'y aucune hauteur minimale*/
+    }
+
+
+
+    body{ /* par défaut body a une petite marge => on l'enlève*/
+        margin:0px;
+    }
+
+}
+

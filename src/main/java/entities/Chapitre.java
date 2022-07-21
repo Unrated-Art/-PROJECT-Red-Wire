@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -33,7 +34,9 @@ public class Chapitre {
     // !#TODO Update on errors
     // !#TODO: Generate EQUALS + HASHCODE upon use of HashSet
 	@ManyToOne//(mappedBy="chapters") //
-	private Set<Formation> chap = new HashSet<Formation>();
+	//@JoinColumn(name="idFormation")
+	//private Formation formation= new Formation();
+	private Set<Formation> formations = new HashSet<Formation>();
 
 	//Constructeur
 	

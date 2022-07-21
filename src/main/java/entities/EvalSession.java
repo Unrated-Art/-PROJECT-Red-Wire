@@ -1,11 +1,14 @@
 package entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 //import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 //import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -15,39 +18,40 @@ public class EvalSession {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="")
+	@Column(name="idEval")
 	private long idEval;
 	
-	@Column(name="")
+	@Column(name="evalTrainer")
 	private int evalFormateur; //=>  formateur
 
-	@Column(name="")
+	@Column(name="evalContent")
 	private int evalContenu; //=> formation
 	
-	@Column(name="")
+	@Column(name="pedagogy")
 	private int pedagogie; // =>formateur
 
-	@Column(name="")
+	@Column(name="fieldMaster")
 	private int maitrisedomaine; // => formateur
 
-	@Column(name="")
+	@Column(name="availibility")
 	private int disponibilite; // =>formateur 
 
-	@Column(name="")
+	@Column(name="questionsResponse")
 	private int reponsesQuestions; //réponses aux questions =>formateur
 
-	@Column(name="")
+	@Column(name="recommandation")
 	private boolean recommandation; //=> recommandation de la formation
 	
 	//référence vers stagiaire : 1 évaluationSession concerne 1 et 1 seul stagiaire=>référence simple de stagiaire dans EvalSession
-	//@ManyToOne(cascade=CascadeType.ALL, mappedBy="contact")
-	// !#TODO: A faire
+	@ManyToOne(cascade=CascadeType.PERSIST)// ou CascadeType.ALL??
+	@JoinColumn(name="idTrainee")
 	private Stagiaire trainee;
+	
 	
 	public EvalSession() {}
 
 	public EvalSession(int evalFormateur, int evalContenu, int pedagogie, int maitrisedomaine, int disponibilite,
-			int reponsesQuestions, boolean recommandation, Stagiaire trainee) {
+			int reponsesQuestions, boolean recommandation) {
 		this.evalFormateur = evalFormateur;
 		this.evalContenu = evalContenu;
 		this.pedagogie = pedagogie;
@@ -55,7 +59,6 @@ public class EvalSession {
 		this.disponibilite = disponibilite;
 		this.reponsesQuestions = reponsesQuestions;
 		this.recommandation = recommandation;
-		this.trainee = trainee;
 	}
 
 	public int getEvalFormateur() {
@@ -140,7 +143,6 @@ public class EvalSession {
 	public String toString() {
 		return "EvalSession [idEval=" + idEval + ", evalFormateur=" + evalFormateur + ", evalContenu=" + evalContenu
 				+ ", pedagogie=" + pedagogie + ", maitrisedomaine=" + maitrisedomaine + ", disponibilite="
-				+ disponibilite + ", reponsesQuestions=" + reponsesQuestions + ", recommandation=" + recommandation
-				+ ", trainee=" + trainee + "]";
+				+ disponibilite + ", reponsesQuestions=" + reponsesQuestions + ", recommandation=" + recommandation + "]";
 	}
 }

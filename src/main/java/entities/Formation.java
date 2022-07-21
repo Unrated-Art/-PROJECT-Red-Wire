@@ -3,11 +3,13 @@ package entities;
 import java.util.HashSet;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /*
@@ -50,6 +52,7 @@ public class Formation {
 	private HashSet<Theme> themes = new HashSet<Theme>();
 	
 	// One To Many
+	@ManyToOne(cascade=CascadeType.PERSIST)//, mappedBy="chapitres")
 	private HashSet<Chapitre> chapitres = new HashSet<Chapitre>();
 
 	// One To Many
@@ -163,15 +166,15 @@ public class Formation {
 	public String toString() {
 		return "Formation [idFormation=" + idFormation + ", reference=" + reference + ", lieu=" + lieu
 				+ ", interFormation=" + interFormation + ", duree=" + duree + ", prerequis=" + prerequis + ", objectif="
-				+ objectif + ", publicVise=" + publicVise + ", programmeDetaille=" + programmeDetaille + ", themes="
-				+ themes + ", chapitres=" + chapitres + ", sessions=" + sessions + ", pretest=" + pretest + "]";
+				+ objectif + ", publicVise=" + publicVise + ", programmeDetaille=" + programmeDetaille + /*", themes="
+				+ themes + ", chapitres=" + chapitres + ", sessions=" + sessions + ", pretest=" + pretest +*/ "]";
 	}
 
 	// FIX ERRORS W/ "PreTest.java"
 	@Override
 	public int hashCode() {
-		return Objects.hash(chapitres, duree, idFormation, interFormation, lieu, objectif, prerequis, programmeDetaille,
-				publicVise, reference, sessions, themes);
+		return Objects.hash(/*chapitres,*/ duree, idFormation, interFormation, lieu, objectif, prerequis, programmeDetaille,
+				publicVise, reference/*, sessions, themes*/);
 	}
 
 	@Override
@@ -183,11 +186,11 @@ public class Formation {
 		if (getClass() != obj.getClass())
 			return false;
 		Formation other = (Formation) obj;
-		return Objects.equals(chapitres, other.chapitres) && duree == other.duree && idFormation == other.idFormation
+		return /*Objects.equals(chapitres, other.chapitres) &&*/ duree == other.duree && idFormation == other.idFormation
 				&& Objects.equals(interFormation, other.interFormation) && Objects.equals(lieu, other.lieu)
 				&& Objects.equals(objectif, other.objectif) && Objects.equals(prerequis, other.prerequis)
 				&& Objects.equals(programmeDetaille, other.programmeDetaille)
 				&& Objects.equals(publicVise, other.publicVise) && Objects.equals(reference, other.reference)
-				&& Objects.equals(sessions, other.sessions) && Objects.equals(themes, other.themes);
+				/*&& Objects.equals(sessions, other.sessions) && Objects.equals(themes, other.themes)*/;
 	}
 }

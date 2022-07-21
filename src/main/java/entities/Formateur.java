@@ -8,23 +8,26 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="")
+@Table(name="Trainers")
 public class Formateur {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="")
+    @Column(name="idTrainer")
 	private long idFormateur;
 
-    @Column(name="")
+    @Column(name="cv")
     private String cv;
 
     // One To Many
 	//référence vers sessions : 1 formateur peut participer à plusieurs sessions de formation=> collection de sessions dans Formateur
-	private HashSet<Session> listeSessions= new HashSet<Session>(); //la liste des sessions auxqeulles il participe
+	@OneToMany(/*cascade=CascadeType.PERSIST??.ALL??,*/ mappedBy="formateur")
+    private HashSet<Session> listeSessions= new HashSet<Session>(); //la liste des sessions auxqeulles il participe
+	
 
 	public Formateur() {}
 
