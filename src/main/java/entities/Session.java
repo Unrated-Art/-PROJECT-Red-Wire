@@ -1,18 +1,12 @@
 package entities;
 
 import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /*
@@ -27,8 +21,6 @@ public class Session {
     @Column(name="idSession")
 	private long idSession;
 
-	/* ****************** */
-	/* Attributes START */
 	@Column(name="dateStart")
 	private String dateDebut;
 
@@ -40,35 +32,12 @@ public class Session {
 
 	@Column(name="priceSession")
 	private float prixSession;
-	/* Attributes END */
-	/* ****************** */
 
-	/* ****************** */
-	/* Associations START */
-	// @Column(name="classroom")
-	@OneToOne
-	@MapsId
 	private Salle salle = new Salle();
-
-	// @Column(name="trainer")
-	@OneToOne
-	@MapsId
+	private HashSet<Stagiaire> stagiaires = new HashSet<Stagiaire>();
+	private HashSet<EvalSession> evalSession = new HashSet<EvalSession>();
+	private HashSet<Formateur> formateurs = new HashSet<Formateur>();
 	private Formateur formateur = new Formateur();
-
-	// @Column(name="evalSessions")
-	@OneToMany(orphanRemoval=true)
-	@JoinColumn(name="idEval")
-	private Set<EvalSession> evalSessions = new HashSet<EvalSession>();
-
-	// @Column(name="training")
-	@ManyToOne()
-	private Formation formation = new Formation();
-
-	// @Column(name="trainees")
-	// @ManyToMany NOT implemented because it is UNI-directional.
-	private Set<Stagiaire> stagiaires = new HashSet<Stagiaire>();
-	/* Associations END */
-	/* ****************** */
 
 	public Session() {}
 
@@ -82,41 +51,38 @@ public class Session {
 	public long getIdSession() {
 		return idSession;
 	}
-
 	public void setIdSession(long idSession) {
 		this.idSession = idSession;
 	}
-
 	public String getDateDebut() {
 		return dateDebut;
 	}
-
 	public void setDateDebut(String dateDebut) {
 		this.dateDebut = dateDebut;
 	}
-
 	public String getDateFin() {
 		return dateFin;
 	}
-
 	public void setDateFin(String dateFin) {
 		this.dateFin = dateFin;
 	}
-
 	public String getLieu() {
 		return lieu;
 	}
-
 	public void setLieu(String lieu) {
 		this.lieu = lieu;
 	}
-
 	public float getPrixSession() {
 		return prixSession;
 	}
-
 	public void setPrixSession(float prixSession) {
 		this.prixSession = prixSession;
+	}
+
+	@Override
+	public String toString() {
+		return "Session [idSession=" + idSession + ", dateDebut=" + dateDebut + ", dateFin=" + dateFin + ", lieu="
+				+ lieu + ", prixSession=" + prixSession + "]";
 	}
 
 	public Salle getSalle() {
@@ -127,28 +93,28 @@ public class Session {
 		this.salle = salle;
 	}
 
-	public Set<Stagiaire> getStagiaires() {
+	public HashSet<Stagiaire> getStagiaires() {
 		return stagiaires;
 	}
 
 	public void setStagiaires(HashSet<Stagiaire> stagiaires) {
-		this.stagiaires.addAll(stagiaires);
+		this.stagiaires = stagiaires;
 	}
 
-	public Set<EvalSession> getEvalSessions() {
-		return evalSessions;
+	public HashSet<EvalSession> getEvalSession() {
+		return evalSession;
 	}
 
-	public void setEvalSessions(HashSet<EvalSession> evalSessions) {
-		this.evalSessions.addAll(evalSessions);
+	public void setEvalSession(HashSet<EvalSession> evalSession) {
+		this.evalSession = evalSession;
 	}
 
-	public Formation getFormations() {
-		return formation;
+	public HashSet<Formateur> getFormateurs() {
+		return formateurs;
 	}
 
-	public void setFormations(Formation formation) {
-		this.formation = formation;
+	public void setFormateurs(HashSet<Formateur> formateurs) {
+		this.formateurs = formateurs;
 	}
 
 	public Formateur getFormateur() {
@@ -157,11 +123,5 @@ public class Session {
 
 	public void setFormateur(Formateur formateur) {
 		this.formateur = formateur;
-	}
-
-	@Override
-	public String toString() {
-		return "Session [idSession=" + idSession + ", dateDebut=" + dateDebut + ", dateFin=" + dateFin + ", lieu="
-				+ lieu + ", prixSession=" + prixSession + "]";
 	}
 }

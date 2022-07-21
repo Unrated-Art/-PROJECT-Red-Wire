@@ -1,20 +1,12 @@
 package entities;
 
 import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.MapsId;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /*
@@ -29,9 +21,7 @@ public class Formation {
     @Column(name="idTraining")
 	private long idFormation;
 
-	/* ****************** */
-	/* Attributes START */
-	@Column(name="ref")
+	@Column(name="name")
 	private String reference;
 
 	@Column(name="location")
@@ -54,30 +44,11 @@ public class Formation {
 
 	@Column(name="details")
 	private String programmeDetaille;
-	/* Attributes END */
-	/* ****************** */
 
-	/* ****************** */
-	/* Associations START */
-	@ManyToMany
-	@JoinTable(
-		name="themes_training",
-		joinColumns=@JoinColumn(name="idTraining"),
-		inverseJoinColumns=@JoinColumn(name="idTheme")
-	)
-	private Set<Theme> themes = new HashSet<Theme>();
-
-	@OneToMany()
-	private Set<Chapitre> chapitres = new HashSet<Chapitre>();
-
-	@OneToMany()
-	private Set<Session> sessions = new HashSet<Session>();
-
-	@OneToOne
-	@MapsId
+	private HashSet<Chapitre> chapitres = new HashSet<Chapitre>();
+	private HashSet<Themes> themes = new HashSet<Themes>();
 	private PreTest pretest = new PreTest();
-	/* Associations END */
-	/* ****************** */
+	private HashSet<Session> session = new HashSet<Session>();
 
 	public Formation() {}
 
@@ -96,76 +67,66 @@ public class Formation {
 	public long getIdFormation() {
 		return idFormation;
 	}
-
 	public void setIdFormation(long idFormation) {
 		this.idFormation = idFormation;
 	}
-
 	public String getReference() {
 		return reference;
 	}
-
 	public void setReference(String reference) {
 		this.reference = reference;
 	}
-
 	public String getLieu() {
 		return lieu;
 	}
-
 	public void setLieu(String lieu) {
 		this.lieu = lieu;
 	}
-
 	public Boolean getInterFormation() {
 		return interFormation;
 	}
-
 	public void setInterFormation(Boolean interFormation) {
 		this.interFormation = interFormation;
 	}
-
 	public int getDuree() {
 		return duree;
 	}
-
 	public void setDuree(int duree) {
 		this.duree = duree;
 	}
-
 	public String getPrerequis() {
 		return prerequis;
 	}
-
 	public void setPrerequis(String prerequis) {
 		this.prerequis = prerequis;
 	}
-
 	public String getObjectif() {
 		return objectif;
 	}
-
 	public void setObjectif(String objectif) {
 		this.objectif = objectif;
 	}
-
 	public String getPublicVise() {
 		return publicVise;
 	}
-
 	public void setPublicVise(String publicVise) {
 		this.publicVise = publicVise;
 	}
-
 	public String getProgrammeDetaille() {
 		return programmeDetaille;
 	}
-
 	public void setProgrammeDetaille(String programmeDetaille) {
 		this.programmeDetaille = programmeDetaille;
 	}
-	
-	public Set<Chapitre> getChapitres() {
+
+	@Override
+	public String toString() {
+		return "Formation [idFormation=" + idFormation + ", reference=" + reference + ", lieu=" + lieu
+				+ ", interFormation=" + interFormation + ", duree=" + duree + ", prerequis=" + prerequis + ", objectif="
+				+ objectif + ", publicVise=" + publicVise + ", programmeDetaille=" + programmeDetaille + "]";
+	}
+
+	public HashSet<Chapitre> getChapitres() {
 		return chapitres;
 	}
 
@@ -173,11 +134,11 @@ public class Formation {
 		this.chapitres = chapitres;
 	}
 
-	public Set<Theme> getThemes() {
+	public HashSet<Themes> getThemes() {
 		return themes;
 	}
 
-	public void setThemes(HashSet<Theme> themes) {
+	public void setThemes(HashSet<Themes> themes) {
 		this.themes = themes;
 	}
 
@@ -189,43 +150,11 @@ public class Formation {
 		this.pretest = pretest;
 	}
 
-	public Set<Session> getSessions() {
-		return sessions;
+	public ArrayList<Session> getSession() {
+		return session;
 	}
 
-	public void setSessions(HashSet<Session> sessions) {
-		this.sessions = sessions;
-	}
-
-	@Override
-	public String toString() {
-		return "Formation [idFormation=" + idFormation + ", reference=" + reference + ", lieu=" + lieu
-				+ ", interFormation=" + interFormation + ", duree=" + duree + ", prerequis=" + prerequis + ", objectif="
-				+ objectif + ", publicVise=" + publicVise + ", programmeDetaille=" + programmeDetaille + ", themes="
-				+ themes + ", chapitres=" + chapitres + ", sessions=" + sessions + ", pretest=" + pretest + "]";
-	}
-
-	// FIX ERRORS W/ "PreTest.java"
-	@Override
-	public int hashCode() {
-		return Objects.hash(chapitres, duree, idFormation, interFormation, lieu, objectif, prerequis, programmeDetaille,
-				publicVise, reference, sessions, themes);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Formation other = (Formation) obj;
-		return Objects.equals(chapitres, other.chapitres) && duree == other.duree && idFormation == other.idFormation
-				&& Objects.equals(interFormation, other.interFormation) && Objects.equals(lieu, other.lieu)
-				&& Objects.equals(objectif, other.objectif) && Objects.equals(prerequis, other.prerequis)
-				&& Objects.equals(programmeDetaille, other.programmeDetaille)
-				&& Objects.equals(publicVise, other.publicVise) && Objects.equals(reference, other.reference)
-				&& Objects.equals(sessions, other.sessions) && Objects.equals(themes, other.themes);
+	public void setSession(HashSet<Session> session) {
+		this.session = session;
 	}
 }
