@@ -1,7 +1,6 @@
 package entities;
 
 import java.util.HashSet;
-import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -24,7 +23,7 @@ public class Formation {
     @Column(name="idTraining")
 	private long idFormation;
 
-	@Column(name="ref")
+	@Column(name="name")
 	private String reference;
 
 	@Column(name="location")
@@ -54,12 +53,9 @@ public class Formation {
 	// One To Many
 	@ManyToOne(cascade=CascadeType.PERSIST)//, mappedBy="chapitres")
 	private HashSet<Chapitre> chapitres = new HashSet<Chapitre>();
-
-	// One To Many
-	private HashSet<Session> sessions = new HashSet<Session>();
-	
-	// One To One
+	private HashSet<Themes> themes = new HashSet<Themes>();
 	private PreTest pretest = new PreTest();
+	private HashSet<Session> session = new HashSet<Session>();
 
 	public Formation() {}
 
@@ -129,7 +125,14 @@ public class Formation {
 	public void setProgrammeDetaille(String programmeDetaille) {
 		this.programmeDetaille = programmeDetaille;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Formation [idFormation=" + idFormation + ", reference=" + reference + ", lieu=" + lieu
+				+ ", interFormation=" + interFormation + ", duree=" + duree + ", prerequis=" + prerequis + ", objectif="
+				+ objectif + ", publicVise=" + publicVise + ", programmeDetaille=" + programmeDetaille + "]";
+	}
+
 	public HashSet<Chapitre> getChapitres() {
 		return chapitres;
 	}
@@ -138,11 +141,11 @@ public class Formation {
 		this.chapitres = chapitres;
 	}
 
-	public HashSet<Theme> getThemes() {
+	public HashSet<Themes> getThemes() {
 		return themes;
 	}
 
-	public void setThemes(HashSet<Theme> themes) {
+	public void setThemes(HashSet<Themes> themes) {
 		this.themes = themes;
 	}
 
@@ -154,8 +157,8 @@ public class Formation {
 		this.pretest = pretest;
 	}
 
-	public HashSet<Session> getSessions() {
-		return sessions;
+	public ArrayList<Session> getSession() {
+		return session;
 	}
 
 	public void setSessions(HashSet<Session> sessions) {

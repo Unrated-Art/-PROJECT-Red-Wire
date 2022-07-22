@@ -33,10 +33,7 @@ public class Session {
 	@Column(name="priceSession")
 	private float prixSession;
 
-	@Column(name="")
 	private Salle salle = new Salle();
-
-	@Column(name="")
 	private HashSet<Stagiaire> stagiaires = new HashSet<Stagiaire>();
 
 	@Column(name="")
@@ -44,9 +41,6 @@ public class Session {
 
 	@Column(name="")
 	private Formateur formateur = new Formateur();
-
-	@Column(name="")
-	private HashSet<Formation> formations = new HashSet<Formation>();
 
 	public Session() {}
 
@@ -118,12 +112,12 @@ public class Session {
 		this.evalSessions = evalSession;
 	}
 
-	public HashSet<Formation> getFormations() {
-		return formations;
+	public HashSet<Formateur> getFormateurs() {
+		return formateurs;
 	}
 
-	public void setFormations(HashSet<Formation> formations) {
-		this.formations = formations;
+	public void setFormateurs(HashSet<Formateur> formateurs) {
+		this.formateurs = formateurs;
 	}
 
 	public Formateur getFormateur() {
@@ -133,6 +127,4 @@ public class Session {
 	public void setFormateur(Formateur formateur) {
 		this.formateur = formateur;
 	}
-	
-	// !#TODO: Annotation Many/One/Etc X-TO-X
 }
