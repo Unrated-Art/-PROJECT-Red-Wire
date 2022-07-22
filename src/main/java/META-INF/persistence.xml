@@ -11,6 +11,22 @@ http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
 		<!-- Entités -->
+		<class>com.entities.charline.Catalogue</class>
+		<class>com.entities.charline.Chapitre</class>
+		<class>com.entities.charline.Salle</class>
+
+		<class>com.entities.jeanmanno.Formation</class>
+		<class>com.entities.jeanmanno.Session</class>
+		<class>com.entities.jeanmanno.Stagiaire</class>
+
+		<class>com.entities.nourhene.EvalSession</class>
+		<class>com.entities.nourhene.Formateur</class>
+		<class>com.entities.nourhene.Question</class>
+		
+		<class>com.entities.patrick.PreTest</class>
+		<class>com.entities.patrick.Theme</class>
+
+		<!--
 		<class>entities.Catalogue</class>
 		<class>entities.Chapitre</class>
 		<class>entities.EvalSession</class>
@@ -22,7 +38,8 @@ http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 		<class>entities.Session</class>
 		<class>entities.Stagiaire</class>
 		<class>entities.Theme</class>
-		
+		 -->
+	
 		<properties>
 			<!-- Login -->
 			<property name="javax.persistence.jdbc.user" value="root" />

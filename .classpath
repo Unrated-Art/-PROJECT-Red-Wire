@@ -29,5 +29,6 @@
 	<classpathentry kind="lib" path="lib/jboss-interceptors-api_1.1_spec-1.0.0.Beta1.jar"/>
 	<classpathentry kind="lib" path="lib/jboss-logging-3.3.0.Final.jar"/>
 	<classpathentry kind="lib" path="lib/jsr250-api-1.0.jar"/>
+	<classpathentry kind="lib" path="lib/log4j-1.2.14.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
