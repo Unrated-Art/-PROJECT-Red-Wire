@@ -87,11 +87,16 @@ public class Formation {
 		this.programmeDetaille = programmeDetaille;
 	}
 
-	// idFormation ~ No SETTER -> AUTO-INCREMENTED VALUE
+	// idFormation ~ No SETTER -> AUTO-INCREMENTED VALUE  => we need the setter here!! (nrhn)
+	
 	public long getIdFormation() {
 		return idFormation;
 	}
 
+	public void setIdFormation(long idFormation) {
+		this.idFormation = idFormation;
+	}
+	
 	// reference
 	public String getReference() {
 		return reference;
