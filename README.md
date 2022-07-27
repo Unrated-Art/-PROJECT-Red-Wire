@@ -23,4 +23,3 @@ xxx
 ![Test](./src/assets/images/test.png)
 
 Test Image
-abc
