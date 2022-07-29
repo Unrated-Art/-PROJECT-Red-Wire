@@ -74,8 +74,11 @@ public class PreTest { //composite?
     if (getClass() != obj.getClass()) return false;
     PreTest other = (PreTest) obj;
     return (
-      idTest == other.idTest/*&& Objects.equals(questions, other.questions)*/ &&
-      Objects.equals(titre, other.titre)
+      idTest == other.idTest &&
+      /*&& Objects.equals(questions, other.questions)*/Objects.equals(
+        titre,
+        other.titre
+      )
     );
   }
   // Relation entre PreTest + Question

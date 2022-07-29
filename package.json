@@ -9,8 +9,8 @@
   },
   "scripts": {
     "fix:java": "npx prettier --write \"_backend/**/*.java\"",
-    "fix": "npm fix:java",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "fix": "npm run fix:java",
+    "test": "npm run fix",
     "scriptname": "husky install",
     "prepare": "husky install"
   },

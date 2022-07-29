@@ -78,7 +78,6 @@ public class Theme {
     Theme other = (Theme) obj;
     return (
       idTheme == other.idTheme && Objects.equals(nomTheme, other.nomTheme)
-    )//&& Objects.equals(sousTheme, other.sousTheme)
-    ;
+    ); //&& Objects.equals(sousTheme, other.sousTheme)
   }
 }
