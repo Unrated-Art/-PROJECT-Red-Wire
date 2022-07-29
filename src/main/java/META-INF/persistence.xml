@@ -5,41 +5,24 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence  
 http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 	<!-- Unité de persistance -->
-	<persistence-unit name="projetJPA"
+	<persistence-unit name="projetFILROUGE"
 		transaction-type="RESOURCE_LOCAL">
 		<!-- Provider -->
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
 		<!-- Entités -->
-		<class>com.entities.charline.Catalogue</class>
-		<class>com.entities.charline.Chapitre</class>
-		<class>com.entities.charline.Salle</class>
-
-		<class>com.entities.jeanmanno.Formation</class>
-		<class>com.entities.jeanmanno.Session</class>
-		<class>com.entities.jeanmanno.Stagiaire</class>
-
-		<class>com.entities.nourhene.EvalSession</class>
-		<class>com.entities.nourhene.Formateur</class>
-		<class>com.entities.nourhene.Question</class>
+		<class>com.saentities.Catalogue</class>
+		<class>com.saturne.entities.Chapitre</class>
+		<class>com.saturne.entities.EvalSession</class>
+		<class>com.saturne.entities.Formateur</class>
+		<class>com.saturne.entities.Formation</class>
+		<class>com.saturne.entities.PreTest</class>
+		<class>com.saturne.entities.Question</class>
+		<class>com.saturne.entities.Salle</class>
+		<class>com.saturne.entities.Session</class>
+		<class>com.saturne.entities.Stagiaire</class>
+		<class>com.saturne.entities.Theme</class>
 		
-		<class>com.entities.patrick.PreTest</class>
-		<class>com.entities.patrick.Theme</class>
-
-		<!--
-		<class>entities.Catalogue</class>
-		<class>entities.Chapitre</class>
-		<class>entities.EvalSession</class>
-		<class>entities.Formateur</class>
-		<class>entities.Formation</class>
-		<class>entities.PreTest</class>
-		<class>entities.Question</class>
-		<class>entities.Salle</class>
-		<class>entities.Session</class>
-		<class>entities.Stagiaire</class>
-		<class>entities.Theme</class>
-		 -->
-	
 		<properties>
 			<!-- Login -->
 			<property name="javax.persistence.jdbc.user" value="root" />

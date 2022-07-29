@@ -7,9 +7,9 @@
 <title>Test coucou</title>
 </head>
 <body>
-<form action="/TestServlet" method="POST">
+<form action="TestServlet" method="GET">
 
-
+<input name="test"  type="submit" value="Coucou"/>
 </form>
 
 </body>
