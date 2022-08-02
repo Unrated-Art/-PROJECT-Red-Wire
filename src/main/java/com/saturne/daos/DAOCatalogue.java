@@ -2,34 +2,71 @@ package com.saturne.daos;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
-
-
-
-import com.saturne.entities.Catalogue;
-import com.saturne.entities.Formation;
-import com.saturne.util.JpaUtil;
+import javax.persistence.EntityTransaction;
 
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Repository;
 
+import com.saturne.entities.Formation;
+import com.saturne.launcher.ProgrammePrincipal;
+import com.saturne.util.JpaUtil;
+
+@Repository("idao")
 public class DAOCatalogue implements IDAOCatalogue{
 
+	private static Logger log = Logger.getLogger(ProgrammePrincipal.class);
+
+	
+
+	@Override
+	public boolean addTraining(Formation f) {
+		boolean success=false;
+				
+				try {
+					EntityManager em=JpaUtil.getEmf().createEntityManager();
+				
+					EntityTransaction tx =  em.getTransaction();
+					tx.begin();
+						
+					em.persist(f);
+					 
+					tx.commit();
+						 	
+					em.close();
+				
+					success=true;
+					}
+				catch (Exception e) 
+					{
+					e.printStackTrace();
+					}
+				return success;
+	}
+	
 	
 	@Override
-	public Formation getTraining(String reference) { //rechercher une formation
+	public Formation getTrainingByReference(String reference) { //rechercher une formation
 		
 			
 			EntityManager em=JpaUtil.getEmf().createEntityManager();
-			
-			Formation f = em.find(Formation.class, reference);
+
+			Formation f=new Formation();
+			try { //.toString() => remove??
+			    f = (Formation) em.createNamedQuery("Formation.FindTrainingByReference").setParameter(1, reference.toString()).getSingleResult();
+			    log.trace("NamedNativeQuery: "+f+", reference: "+f.getReference()+" ,duree"+f.getDuree()+"blablabla.....");
+			} catch (Exception e) {
+			    log.debug("No result found for... ");
+			    e.printStackTrace();
+			}
+			finally {
+				em.close();	
+			}
 			
 			return(f);
+			
 
 	}
 	
@@ -60,51 +97,51 @@ public class DAOCatalogue implements IDAOCatalogue{
 	@Override
 	public ArrayList<Formation> getAllTrainings() {
 		
+        EntityManager em = JpaUtil.getEmf().createEntityManager(); 
+        //"SELECT idTraining, ref, location, interTraining, duration,requirements, goal, targetAudience, details FROM Trainings"
+        final String nativeQueryAllTrainings = "SELECT * FROM Trainings";
 		ArrayList<Formation> allTrainings = new ArrayList<Formation>();
+		
+		em.getTransaction().begin();
+		
+		
+		allTrainings = (ArrayList<Formation>) em.createNativeQuery(nativeQueryAllTrainings, Formation.class).getResultList();
 
-		ResultSet rec = null;
-		Connection con = null;
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-            con=DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/SATURNE","root","root");
+		//#!TODO: To be continued avec getResultList
 
-			Statement stmt = con.createStatement();
-			rec = stmt.executeQuery("SELECT * FROM trainings");
-			
-			System.out.println("Connected to database and all trainings selected");
-	       //log.trace("Connected to database and all trainings selected");  
-
-			while (rec.next()) {
-				Formation f = new Formation();
-				/*String reference, String lieu, Boolean interFormation, int duree, String prerequis,
-			String objectif, String publicVise, String programmeDetaille*/
-				
-				f.setIdFormation(rec.getLong("idTraining"));
-				f.setReference(rec.getString("ref"));
-				f.setLieu(rec.getString("location"));
-				f.setInterFormation(rec.getBoolean("interTraining"));
-				f.setDuree(rec.getInt("duration"));
-				f.setPrerequis(rec.getString("requirements"));
-				f.setObjectif(rec.getString("goal"));
-				f.setPublicVise(rec.getString("targetAudience"));
-				f.setProgrammeDetaille(rec.getString("details"));
-
-				allTrainings.add(f);
-				System.out.println("formation n°"+f.getIdFormation() +" ajoutée ");
-			}
-
-			stmt.close();
-			rec.close();
-			con.close();
-
-		} catch (Exception e) {
-			e.printStackTrace();
+		
+		for(Formation f:allTrainings) {
+			log.info("Les informations de la formation: "+f.toString());
 		}
 		
+		em.getTransaction().commit();
+		em.close();
+
 		return allTrainings;
 			
 		}
+
+
+	@Override
+	public ArrayList<Formation> getTrainingByKeyword(String keyword) {
+		 	DAOCatalogue dc = new DAOCatalogue();
+	        List<Formation> allTrainings = dc.getAllTrainings();
+	        List<Formation> result = allTrainings.stream()
+	        		.filter(f -> ((f.getReference()).toUpperCase()).contains(keyword.toLowerCase())
+	        				|| ((f.getLieu()).toUpperCase()).contains(keyword.toLowerCase()) 
+	        				|| ((f.getObjectif()).toUpperCase()).contains(keyword.toLowerCase()) 
+	        				|| ((f.getPrerequis()).toUpperCase()).contains(keyword.toLowerCase()) 
+	        				|| ((f.getProgrammeDetaille()).toUpperCase()).contains(keyword.toLowerCase()) 
+	        				|| ((f.getPublicVise()).toUpperCase()).contains(keyword.toLowerCase()))
+	        				/*|| ((f.getThemes().foreach()????.contains(keyword.toLowerCase())*/ 
+	        				.collect(Collectors.toList());
+	        		
+	        log.info("Nombre de formation trouvé avec le mot clé " + keyword + " : " + result.size());
+	        return (ArrayList<Formation>) result;
+	        
+	}
+
+
 
 
 }

@@ -11,6 +11,13 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="trainings")
+
+
+@NamedNativeQuery(name="Formation.FindTrainingByReference", 
+				//query="SELECT * FROM trainings WHERE ref=?",
+						query="SELECT * FROM trainings WHERE ref=?",
+				//query="SELECT idTraining, ref, location, interTraining, duration,requirements, goal, targetAudience, details  FROM trainings WHERE ref=?",
+				resultClass=Formation.class)
 public class Formation {
 
 	@Id
@@ -59,7 +66,7 @@ public class Formation {
 	private Set<Session> sessions = new HashSet<Session>();
 	
 	// 1 formation --> 1 preTest
-	@OneToOne(cascade=CascadeType.PERSIST)
+	@OneToOne(cascade=CascadeType.PERSIST /*, fetch = FetchType.LAZY*/)
 	@JoinColumn(name="idTest")
 	private PreTest pretest = new PreTest();
 

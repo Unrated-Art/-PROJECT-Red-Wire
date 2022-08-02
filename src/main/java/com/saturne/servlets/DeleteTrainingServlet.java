@@ -41,6 +41,9 @@ public class DeleteTrainingServlet extends HttpServlet {
 		long id = Long.parseLong(request.getParameter("id"));
 		ServiceCatalogue sc = new ServiceCatalogue();
 		sc.deleteTraining(id);
+		response.getWriter().append("Training "+id+" deleted");
+		request.getRequestDispatcher("/trainings.jsp").forward(request, response);
+
 	}
 
 }
