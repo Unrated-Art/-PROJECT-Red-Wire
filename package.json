@@ -1,0 +1,35 @@
+{
+  "name": "red-wire",
+  "version": "1.0.0",
+  "description": "Red-Wire Project",
+  "main": "index.js",
+  "devDependencies": {
+    "husky": "^8.0.1",
+    "prettier-plugin-java": "^1.6.2"
+  },
+  "scripts": {
+    "fix:java": "npx prettier --write \"_backend/**/*.java\"",
+    "fix": "npm run fix:java",
+    "test": "npm run fix",
+    "scriptname": "husky install",
+    "prepare": "husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Unrated-Art/Red-Wire.git"
+  },
+  "keywords": [
+    "java",
+    "hubernate",
+    "spring",
+    "javascript",
+    "angular",
+    "typescript"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Unrated-Art/Red-Wire/issues"
+  },
+  "homepage": "https://github.com/Unrated-Art/Red-Wire#readme"
+}
