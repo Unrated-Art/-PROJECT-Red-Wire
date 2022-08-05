@@ -3,17 +3,23 @@ package com.saturne.services;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-
-import com.saturne.daos.DAOCatalogue;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.saturne.entities.Formation;
-import com.saturne.launcher.ProgrammePrincipal;
+import com.saturne.repositories.CatalogueRepository;
 
+@Service
 public class ServiceCatalogue {
 
-	private static Logger log = Logger.getLogger(ProgrammePrincipal.class);
-	public ServiceCatalogue() {
-	// TODO Auto-generated constructor stub
+	private static Logger log = Logger.getLogger(ServiceCatalogue.class);
+	//Injection de dépendance 
+	@Autowired
+	private final CatalogueRepository catalogueRepo;
+	
+	public ServiceCatalogue(CatalogueRepository catalogueRepo) {
+		this.catalogueRepo=catalogueRepo;
+	
 }
 
 
