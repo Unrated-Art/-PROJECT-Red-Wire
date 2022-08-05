@@ -25,19 +25,21 @@ public class ServiceCatalogue {
 
 	
 	
-	public void addTraining(Formation f) {
-		DAOCatalogue dc = new DAOCatalogue();
+	public Formation addTraining(Formation f) {
 		
-		try
-		{
-			dc.addTraining(f);
-			log.trace("La formation "+f.getReference()+" a été ajoutée");
-		}
-		catch (Error e)
-		{
-			e.printStackTrace();
-		}
-			
+		return catalogueRepo.save(f) ;
+		
+		
+//		try
+//		{
+//			dc.addTraining(f);
+//			log.trace("La formation "+f.getReference()+" a été ajoutée");
+//		}
+//		catch (Error e)
+//		{
+//			e.printStackTrace();
+//		}
+//			
 	}
 	
 	/**
@@ -45,7 +47,7 @@ public class ServiceCatalogue {
 	 * @param reference
 	 */
 	public Formation getTraining(String reference) { 
-		DAOCatalogue dc= new DAOCatalogue();
+		//DAOCatalogue dc= new DAOCatalogue();
 		
 		Formation f = dc.getTrainingByReference(reference);
 		/*String reference, String lieu, Boolean interFormation, int duree, String prerequis,
