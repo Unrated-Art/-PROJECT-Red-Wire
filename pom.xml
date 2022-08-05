@@ -36,21 +36,12 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-<<<<<<< HEAD
-		  <dependency>
+		
+		<dependency>
 		    <groupId>log4j</groupId>
 		    <artifactId>log4j</artifactId>
 		    <version>1.2.17</version>
-    	</dependency>
-=======
-		
-		<dependency>
-    <groupId>log4j</groupId>
-    <artifactId>log4j</artifactId>
-    <version>1.2.17</version>
-    </dependency>
-		
->>>>>>> 49b528a3e85162e6baf777696ea1eb6407604f07
+	    </dependency>
 	</dependencies>
 
 	<build>
