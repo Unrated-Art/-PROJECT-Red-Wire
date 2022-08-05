@@ -29,6 +29,9 @@ public class Formation implements Serializable {
 
 	@Column(name="ref")
 	private String reference;
+	
+	@Column(name="title")
+	private String titref;
 
 	@Column(name="location")
 	private String lieu;
@@ -98,6 +101,16 @@ public class Formation implements Serializable {
 	public void setReference(String reference) {
 		this.reference = reference;
 	}
+	
+	
+	public String getTitref() {
+		return titref;
+	}
+
+	public void setTitref(String titref) {
+		this.titref = titref;
+	}
+
 	public String getLieu() {
 		return lieu;
 	}

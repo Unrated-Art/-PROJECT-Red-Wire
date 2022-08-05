@@ -21,6 +21,9 @@ public class Catalogue {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="idCatalogue")
 	private int idCatalogue; // Changed from `String` to `int`
+	
+	@Column(name="Title")
+	private String titre;
 
 	@Column(name="idAuthor")
 	private String auteur; // A voir avec Entity 'Admin/Manager' `int idAdmin`
@@ -53,6 +56,15 @@ public class Catalogue {
 
 	public void setIdCatalogue(int idCatalogue) {
 		this.idCatalogue = idCatalogue;
+	}
+
+	
+	public String getTitre() {
+		return titre;
+	}
+
+	public void setTitre(String titre) {
+		this.titre = titre;
 	}
 
 	public String getAuteur() {
