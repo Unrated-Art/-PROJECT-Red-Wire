@@ -33,6 +33,9 @@ public class Stagiaire {
 
 	@Column(name="phoneNumber")
 	private String numTelephone;
+	
+	@Column(name="password")
+	private String mpass;
 
 	@Column(name="company")
 	private Boolean entreprise;
@@ -91,6 +94,17 @@ public class Stagiaire {
 	public void setNumTelephone(String numTelephone) {
 		this.numTelephone = numTelephone;
 	}
+	
+	
+	
+	public String getMpass() {
+		return mpass;
+	}
+
+	public void setMpass(String mpass) {
+		this.mpass = mpass;
+	}
+
 	public Boolean getEntreprise() {
 		return entreprise;
 	}
