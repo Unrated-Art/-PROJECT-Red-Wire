@@ -1,18 +1,19 @@
-package com.saturne.entities;
+package com.saturne.redwire.entities;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+//import java.io.Serializable;
+//import javax.persistence.CascadeType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="questions") 
-public class Question { //composant de `PreTest`
+public class Question{// implements Serializable{??
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,10 +32,8 @@ public class Question { //composant de `PreTest`
 	@JoinColumn(name="idTest")
 	private PreTest preTest = new PreTest();
 	
-	
 
 	public Question() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public Question(String contenuQ, String idTheme) {
@@ -65,8 +64,6 @@ public class Question { //composant de `PreTest`
 	public void setIdTheme(String idTheme) {
 		this.idTheme = idTheme;
 	}
-	
-	
 
 	public PreTest getPreTest() {
 		return preTest;
@@ -81,6 +78,4 @@ public class Question { //composant de `PreTest`
 		return "Question [idQuestion=" + idQuestion + ", contenuQ=" + contenuQ + ", idTheme=" + idTheme + "]";
 	}
 
-	// Relation entre Question + PreTest
-	// Many To Many
 }

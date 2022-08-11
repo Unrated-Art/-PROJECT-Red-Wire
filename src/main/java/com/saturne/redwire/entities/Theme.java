@@ -1,10 +1,8 @@
-package com.saturne.entities;
+package com.saturne.redwire.entities;
 
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,7 +13,7 @@ import javax.persistence.Table;
  
 @Entity
 @Table(name="themes")
-public class Theme {
+public class Theme{// implements Serializable{
 	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,12 +23,16 @@ public class Theme {
     @Column(name="themeName")
     private String nomTheme;
 	
-	
-    // !#TODO: Generate EQUALS + HASHCODE upon use of HashSet!!!
     //1 theme <--> * sous-themes
-    @OneToMany/*(cascade=CascadeType.PERSIST)*/ //#!TODO: check cascade Type!!
+    @OneToMany//( mappedBy="theme")//, insert=false , update=false )
 	private Set<Theme> sousTheme = new HashSet<Theme>();
 	
+//    //* sous-themes <--> 1 theme
+//    @ManyToOne
+//    @JoinColumn(name="idTheme")
+//	private Theme theme = new Theme();
+    
+    
 	public Theme() {}
 	
 
@@ -64,12 +66,18 @@ public class Theme {
 		this.sousTheme = sousTheme;
 	}
 
+//	public Theme getTheme() {
+//		return theme;
+//	}
+//
+//	public void setTheme(Theme theme) {
+//		this.theme = theme;
+//	}
+
 	@Override
 	public String toString() {
 		return "Theme [idTheme=" + idTheme + ", nomTheme=" + nomTheme + "]";
 	}
-
-
 
 	@Override
 	public int hashCode() {
@@ -87,9 +95,8 @@ public class Theme {
 		if (getClass() != obj.getClass())
 			return false;
 		Theme other = (Theme) obj;
-		return idTheme == other.idTheme && Objects.equals(nomTheme, other.nomTheme)
-				//&& Objects.equals(sousTheme, other.sousTheme)
-				;
+		return idTheme == other.idTheme 
+				&& Objects.equals(nomTheme, other.nomTheme);
 	}
 	
 	

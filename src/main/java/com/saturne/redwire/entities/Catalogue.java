@@ -1,9 +1,10 @@
-package com.saturne.entities;
+package com.saturne.redwire.entities;
+
 
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-
+//import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,19 +15,19 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="catalogue") // translate to plurial in english
-public class Catalogue {
+@Table(name="catalogues") 
+public class Catalogue{// implements Serializable{
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="idCatalogue")
-	private int idCatalogue; // Changed from `String` to `int`
+	private int idCatalogue; 
 	
 	@Column(name="Title")
 	private String titre;
 
 	@Column(name="idAuthor")
-	private String auteur; // A voir avec Entity 'Admin/Manager' `int idAdmin`
+	private String auteur; 
 
 	@Column(name="creationDate")
 	private String dateCreation;
@@ -81,9 +82,7 @@ public class Catalogue {
 
 	public void setDateCreation(String dateCreation) {
 		this.dateCreation = dateCreation;
-	}
-	
-	
+	}	
 
 	public Set<Formation> getFormations() {
 		return formations;
@@ -95,7 +94,8 @@ public class Catalogue {
 
 	@Override
 	public String toString() {
-		return "Catalogue [idCatalogue=" + idCatalogue + ", auteur=" + auteur + ", dateCreation=" + dateCreation + "]";
+		return "Catalogue [idCatalogue=" + idCatalogue + ", auteur=" + auteur 
+				+ ", dateCreation=" + dateCreation + "]";
 	}
 
 	@Override
@@ -117,8 +117,4 @@ public class Catalogue {
 	}
 	
 	
-	
-
-	// Relation entre Catalogue + Formation
-	// One To Many ==> OK nrhn
 }

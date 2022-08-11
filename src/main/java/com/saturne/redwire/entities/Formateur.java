@@ -1,10 +1,11 @@
-package com.saturne.entities;
+package com.saturne.redwire.entities;
+
 
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
+//import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,7 +16,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="Trainers")
-public class Formateur {
+public class Formateur {// implements Serializable{??
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +29,7 @@ public class Formateur {
     // One To Many
 	//référence vers sessions : 1 formateur peut participer à plusieurs sessions de formation=> collection de sessions dans Formateur
 	@OneToMany(/*cascade=CascadeType.PERSIST,*/ mappedBy="formateur") //#!TODO: check cascadeType!!!
-    private Set<Session> listeSessions= new HashSet<Session>(); //la liste des sessions auxqeulles il participe
+    private Set<Session> listeSessions= new HashSet<Session>(); //la liste des sessions auxquelles il participe
 	
 
 	public Formateur() {}

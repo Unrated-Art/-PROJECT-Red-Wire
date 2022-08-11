@@ -1,4 +1,4 @@
-package com.saturne.entities;
+package com.saturne.redwire.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,7 +12,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="trainees")
-public class Stagiaire {
+public class Stagiaire{//  implements Serializable{??
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,9 +41,7 @@ public class Stagiaire {
 	private Boolean entreprise;
 
 	@Column(name="contactInfo")
-	private String coordonneesEntre;
-	
-	
+	private String coordonneesEntre;	
 
 	public Stagiaire() {}
 
@@ -94,9 +92,7 @@ public class Stagiaire {
 	public void setNumTelephone(String numTelephone) {
 		this.numTelephone = numTelephone;
 	}
-	
-	
-	
+		
 	public String getMpass() {
 		return mpass;
 	}

@@ -1,10 +1,10 @@
-package com.saturne.entities;
+package com.saturne.redwire.entities;
 
-import java.io.Serializable;
+
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-
+//import java.io.Serializable;
 import javax.persistence.*;
 
 /*
@@ -13,46 +13,45 @@ import javax.persistence.*;
 @Entity
 @Table(name="trainings")
 
-
 @NamedNativeQuery(name="Formation.FindTrainingByReference", 
 				//query="SELECT * FROM trainings WHERE ref=?",
 						query="SELECT * FROM trainings WHERE ref=?",
 				//query="SELECT idTraining, ref, location, interTraining, duration,requirements, goal, targetAudience, details  FROM trainings WHERE ref=?",
 				resultClass=Formation.class)
 
-public class Formation implements Serializable {
+public class Formation{// implements Serializable {????
 
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="idTraining")
-	private long idFormation;
+    @Column(name = "idTraining")
+    private long idFormation;
 
-	@Column(name="ref")
-	private String reference;
-	
-	@Column(name="title")
-	private String titref;
+    @Column(name = "ref")
+    private String reference;
 
-	@Column(name="location")
-	private String lieu;
+    @Column(name = "title")
+    private String titref;
 
-	@Column(name="interTraining")
-	private Boolean interFormation;
+    @Column(name = "location")
+    private String lieu;
 
-	@Column(name="duration")
-	private int duree;
+    @Column(name = "interTraining")
+    private Boolean interFormation;
 
-	@Column(name="requirements")
-	private String prerequis;
+    @Column(name = "duration")
+    private int duree;
 
-	@Column(name="goal")
-	private String objectif;
+    @Column(name = "requirements")
+    private String prerequis;
 
-	@Column(name="targetAudience")
-	private String publicVise;
+    @Column(name = "goal")
+    private String objectif;
 
-	@Column(name="details")
-	private String programmeDetaille;
+    @Column(name = "targetAudience")
+    private String publicVise;
+
+    @Column(name = "details")
+    private String programmeDetaille;
 
 
 	//* Formations --> * Themes
@@ -77,9 +76,19 @@ public class Formation implements Serializable {
 
 	public Formation() {}
 
-	public Formation(String reference, String lieu, Boolean interFormation, int duree, String prerequis,
-			String objectif, String publicVise, String programmeDetaille) {
+	public Formation(
+		String reference,
+		String titref,
+		String lieu,
+		Boolean interFormation,
+		int duree,
+		String prerequis,
+		String objectif,
+		String publicVise,
+		String programmeDetaille) 
+	{
 		this.reference = reference;
+		this.titref = titref;
 		this.lieu = lieu;
 		this.interFormation = interFormation;
 		this.duree = duree;
@@ -100,8 +109,7 @@ public class Formation implements Serializable {
 	}
 	public void setReference(String reference) {
 		this.reference = reference;
-	}
-	
+	}	
 	
 	public String getTitref() {
 		return titref;
@@ -186,35 +194,66 @@ public class Formation implements Serializable {
 		this.sessions = sessions;
 	}
 
-	@Override
-	public String toString() {
-		return "Formation [idFormation=" + idFormation + ", reference=" + reference + ", lieu=" + lieu
-				+ ", interFormation=" + interFormation + ", duree=" + duree + ", prerequis=" + prerequis + ", objectif="
-				+ objectif + ", publicVise=" + publicVise + ", programmeDetaille=" + programmeDetaille + /*", themes="
-				+ themes + ", chapitres=" + chapitres + ", sessions=" + sessions + ", pretest=" + pretest +*/ "]";
-	}
+    @Override
+    public String toString() {
+        return (
+            "Formation [idFormation=" +
+            idFormation +
+            ", reference=" +
+            reference +
+            ", titref=" +
+            titref +
+            ", lieu=" +
+            lieu +
+            ", interFormation=" +
+            interFormation +
+            ", duree=" +
+            duree +
+            ", prerequis=" +
+            prerequis +
+            ", objectif=" +
+            objectif +
+            ", publicVise=" +
+            publicVise +
+            ", programmeDetaille=" +
+            programmeDetaille +
+            "]"
+        );
+    }
 
-	// FIX ERRORS W/ "PreTest.java"
-	@Override
-	public int hashCode() {
-		return Objects.hash(/*chapitres,*/ duree, idFormation, interFormation, lieu, objectif, prerequis, programmeDetaille,
-				publicVise, reference/*, sessions, themes*/);
-	}
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+            duree,
+            idFormation,
+            interFormation,
+            lieu,
+            objectif,
+            prerequis,
+            programmeDetaille,
+            publicVise,
+            reference,
+            titref
+        );
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Formation other = (Formation) obj;
-		return /*Objects.equals(chapitres, other.chapitres) &&*/ duree == other.duree && idFormation == other.idFormation
-				&& Objects.equals(interFormation, other.interFormation) && Objects.equals(lieu, other.lieu)
-				&& Objects.equals(objectif, other.objectif) && Objects.equals(prerequis, other.prerequis)
-				&& Objects.equals(programmeDetaille, other.programmeDetaille)
-				&& Objects.equals(publicVise, other.publicVise) && Objects.equals(reference, other.reference)
-				/*&& Objects.equals(sessions, other.sessions) && Objects.equals(themes, other.themes)*/;
-	}
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
+        Formation other = (Formation) obj;
+        return (
+            duree == other.duree &&
+            idFormation == other.idFormation &&
+            Objects.equals(interFormation, other.interFormation) &&
+            Objects.equals(lieu, other.lieu) &&
+            Objects.equals(objectif, other.objectif) &&
+            Objects.equals(prerequis, other.prerequis) &&
+            Objects.equals(programmeDetaille, other.programmeDetaille) &&
+            Objects.equals(publicVise, other.publicVise) &&
+            Objects.equals(reference, other.reference) &&
+            Objects.equals(titref, other.titref)
+        );
+    }
 }

@@ -1,8 +1,10 @@
-package com.saturne.entities;
+package com.saturne.redwire.entities;
+
 
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+//import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,8 +15,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="preTest") // translate to plurial in english
-public class PreTest { //composite?
+@Table(name="preTest")
+public class PreTest {// implements Serializable??
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,9 +51,7 @@ public class PreTest { //composite?
 
 	public void setTitre(String titre) {
 		this.titre = titre;
-	}
-
-	
+	}	
 	
 	public Set<Question> getQuestions() {
 		return questions;
@@ -68,7 +68,7 @@ public class PreTest { //composite?
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(idTest/*, questions*/, titre);
+		return Objects.hash(idTest, titre);
 	}
 
 	@Override
@@ -80,16 +80,11 @@ public class PreTest { //composite?
 		if (getClass() != obj.getClass())
 			return false;
 		PreTest other = (PreTest) obj;
-		return idTest == other.idTest /*&& Objects.equals(questions, other.questions)*/
+		return idTest == other.idTest
 				&& Objects.equals(titre, other.titre);
 	}
 	
-	
-	
-	
 
-	// Relation entre PreTest + Question
-	// Many To Many
 }
 
 

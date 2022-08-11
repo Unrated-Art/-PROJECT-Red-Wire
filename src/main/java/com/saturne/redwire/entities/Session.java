@@ -1,4 +1,5 @@
-package com.saturne.entities;
+package com.saturne.redwire.entities;
+
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -11,7 +12,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="sessions")
-public class Session {
+public class Session {// implements Serializable{??
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,8 +28,8 @@ public class Session {
 	@Column(name="location")
 	private String lieu;
 
-	@Column(name="sessionPrice")
-	private float prixSession;
+	@Column(name = "price")
+	private float prix;
 
 	//*sessions <--> 1 salle
 	@ManyToOne/*(cascade=CascadeType.ALL)*/ //#!TODO: check cascade Type!!
@@ -60,11 +61,11 @@ public class Session {
 
 	public Session() {}
 
-	public Session(String dateDebut, String dateFin, String lieu, float prixSession) {
+	public Session(String dateDebut, String dateFin, String lieu, float prix) {
 		this.dateDebut = dateDebut;
 		this.dateFin = dateFin;
 		this.lieu = lieu;
-		this.prixSession = prixSession;
+		this.prix = prix;
 	}
 
 	public long getIdSession() {
@@ -92,16 +93,16 @@ public class Session {
 		this.lieu = lieu;
 	}
 	public float getPrixSession() {
-		return prixSession;
+		return prix;
 	}
-	public void setPrixSession(float prixSession) {
-		this.prixSession = prixSession;
+	public void setPrixSession(float prix) {
+		this.prix = prix;
 	}
 
 	@Override
 	public String toString() {
 		return "Session [idSession=" + idSession + ", dateDebut=" + dateDebut + ", dateFin=" + dateFin + ", lieu="
-				+ lieu + ", prixSession=" + prixSession + "]";
+				+ lieu + ", prix=" + prix + "]";
 	}
 
 	public Salle getSalle() {
@@ -128,22 +129,7 @@ public class Session {
 		this.evalSessions = evalSession;
 	}
 
-	
-	
-	//by J-M
-//	public HashSet<Formation> getFormations() {
-//		return formations;
-//	}
-//
-//	public void setFormations(HashSet<Formation> formations) {
-//		this.formations = formations;
-//	}
 
-	
-	/**
-	 * By nourhene
-	 * 
-	 */
 	public Formation getFormation() {
 		return formation;
 	}
@@ -152,10 +138,6 @@ public class Session {
 		this.formation = formation;
 	}
 	
-	/**
-	 * END by nourhene
-	 */
-
 	public Formateur getFormateur() {
 		return formateur;
 	}
@@ -166,7 +148,7 @@ public class Session {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(dateDebut, dateFin, idSession, lieu, prixSession);
+		return Objects.hash(dateDebut, dateFin, idSession, lieu, prix);
 	}
 
 	@Override
@@ -180,12 +162,8 @@ public class Session {
 		Session other = (Session) obj;
 		return Objects.equals(dateDebut, other.dateDebut) && Objects.equals(dateFin, other.dateFin)
 				&& idSession == other.idSession && Objects.equals(lieu, other.lieu)
-				&& Float.floatToIntBits(prixSession) == Float.floatToIntBits(other.prixSession);
+				&& Float.floatToIntBits(prix) == Float.floatToIntBits(other.prix);
 	}
-	
-	// !#TODO: Annotation Many/One/Etc X-TO-X ==> done by nrhn le 16/07/2022
-	
-	
 	
 	
 }
