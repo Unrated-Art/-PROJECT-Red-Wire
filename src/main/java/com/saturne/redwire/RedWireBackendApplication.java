@@ -16,7 +16,7 @@ import com.saturne.redwire.resources.FormationResource;
 import com.saturne.redwire.services.FormationService;
 
 @SpringBootApplication
-public class RedWireBackendApplication{// extends SpringBootServletInitializer {// implements CommandLineRunner{
+public class RedWireBackendApplication {
 	
 	@Autowired 
 	private FormationService formationService;

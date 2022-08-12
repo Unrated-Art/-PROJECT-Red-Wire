@@ -38,14 +38,14 @@ public class Stagiaire{//  implements Serializable{??
 	private String mpass;
 
 	@Column(name="company")
-	private Boolean entreprise;
+	private boolean entreprise;
 
 	@Column(name="contactInfo")
 	private String coordonneesEntre;	
 
 	public Stagiaire() {}
 
-	public Stagiaire(String nom, String prenom, String adresse, String email, String numTelephone, Boolean entreprise,
+	public Stagiaire(String nom, String prenom, String adresse, String email, String numTelephone, boolean entreprise,
 			String coordonneesEntre) {
 		this.nom = nom;
 		this.prenom = prenom;
@@ -101,10 +101,10 @@ public class Stagiaire{//  implements Serializable{??
 		this.mpass = mpass;
 	}
 
-	public Boolean getEntreprise() {
+	public boolean getEntreprise() {
 		return entreprise;
 	}
-	public void setEntreprise(Boolean entreprise) {
+	public void setEntreprise(boolean entreprise) {
 		this.entreprise = entreprise;
 	}
 	public String getCoordonneesEntre() {

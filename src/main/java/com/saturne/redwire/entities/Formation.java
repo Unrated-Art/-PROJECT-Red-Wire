@@ -36,7 +36,7 @@ public class Formation{// implements Serializable {????
     private String lieu;
 
     @Column(name = "interTraining")
-    private Boolean interFormation;
+    private boolean interFormation;
 
     @Column(name = "duration")
     private int duree;
@@ -80,7 +80,7 @@ public class Formation{// implements Serializable {????
 		String reference,
 		String titref,
 		String lieu,
-		Boolean interFormation,
+		boolean interFormation,
 		int duree,
 		String prerequis,
 		String objectif,
@@ -125,10 +125,10 @@ public class Formation{// implements Serializable {????
 	public void setLieu(String lieu) {
 		this.lieu = lieu;
 	}
-	public Boolean getInterFormation() {
+	public boolean getInterFormation() {
 		return interFormation;
 	}
-	public void setInterFormation(Boolean interFormation) {
+	public void setInterFormation(boolean interFormation) {
 		this.interFormation = interFormation;
 	}
 	public int getDuree() {
