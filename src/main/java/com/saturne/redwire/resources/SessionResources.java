@@ -2,7 +2,6 @@ package com.saturne.redwire.resources;
 
 import com.saturne.redwire.entities.Session;
 import com.saturne.redwire.services.SessionService;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -38,7 +37,7 @@ public class SessionResources {
         @RequestParam(name = "location") String location,
         @RequestParam(name = "price", defaultValue = "0") float price
     ) {
-    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         Session s = new Session();
         s.setDateDebut(LocalDate.parse(dateStart, formatter));
         s.setDateFin(LocalDate.parse(dateEnd, formatter));
@@ -58,7 +57,7 @@ public class SessionResources {
     ) {
         Session s = sessionService.getSession(id);
         if (s != null) {
-        	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             if (dateStart != null) {
                 s.setDateDebut(LocalDate.parse(dateStart, formatter));
             }
@@ -85,17 +84,25 @@ public class SessionResources {
     @GetMapping(name = "search.session")
     @ResponseStatus(HttpStatus.OK)
     public List<Session> getSessions(
-		@RequestParam(value = "dateStart", required = false) String dateStart,
-		@RequestParam(value = "dateEnd", required = false) String dateEnd,
-		@RequestParam(value = "location", required = false) String location,
-		@RequestParam(value = "price", required = false) String price
-	) {
-    	HashMap<String, String> params = new HashMap<>();
-    	if (dateStart != null) { params.put("dateStart", dateStart); }
-    	if (dateEnd != null) { params.put("dateEnd", dateEnd); }
-    	if (location != null) { params.put("location", location); }
-    	if (price != null) { params.put("price", price); }
-    	return sessionService.getSessions(params);
+        @RequestParam(value = "dateStart", required = false) String dateStart,
+        @RequestParam(value = "dateEnd", required = false) String dateEnd,
+        @RequestParam(value = "location", required = false) String location,
+        @RequestParam(value = "price", required = false) String price
+    ) {
+        HashMap<String, String> params = new HashMap<>();
+        if (dateStart != null) {
+            params.put("dateStart", dateStart);
+        }
+        if (dateEnd != null) {
+            params.put("dateEnd", dateEnd);
+        }
+        if (location != null) {
+            params.put("location", location);
+        }
+        if (price != null) {
+            params.put("price", price);
+        }
+        return sessionService.getSessions(params);
     }
 
     @DeleteMapping(name = "delete.session", path = "/{id}")
@@ -103,7 +110,7 @@ public class SessionResources {
     public void deleteSessionById(@PathVariable("id") long id) {
         Session s = sessionService.getSession(id);
         if (s != null) {
-        	sessionService.deleteSession(s.getIdSession());
+            sessionService.deleteSession(s.getIdSession());
         }
     }
 }

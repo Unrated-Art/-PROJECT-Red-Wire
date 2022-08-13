@@ -105,21 +105,22 @@ public class Session {
     }
 
     @Override
-	public int hashCode() {
-		return Objects.hash(dateDebut, dateFin, idSession, lieu, prix);
-	}
+    public int hashCode() {
+        return Objects.hash(dateDebut, dateFin, idSession, lieu, prix);
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Session other = (Session) obj;
-		return Objects.equals(dateDebut, other.dateDebut) && Objects.equals(dateFin, other.dateFin)
-				&& idSession == other.idSession && Objects.equals(lieu, other.lieu)
-				&& Float.floatToIntBits(prix) == Float.floatToIntBits(other.prix);
-	}
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
+        Session other = (Session) obj;
+        return (
+            Objects.equals(dateDebut, other.dateDebut) &&
+            Objects.equals(dateFin, other.dateFin) &&
+            idSession == other.idSession &&
+            Objects.equals(lieu, other.lieu) &&
+            Float.floatToIntBits(prix) == Float.floatToIntBits(other.prix)
+        );
+    }
 }
