@@ -1,60 +1,81 @@
 package com.saturne.entities;
 
+import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "authors")
 public class Auteur {
-	
-	private long idAuteur;
-	private String prenomA;
-	private String nomA;
-	
 
-	public Auteur() {
-		
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idAuthor")
+    private long idAuteur;
 
+    @Column(name = "firstName")
+    private String prenomA;
 
-	public Auteur(long idAuteur, String prenomA, String nomA) {
-		super();
-		this.idAuteur = idAuteur;
-		this.prenomA = prenomA;
-		this.nomA = nomA;
-	}
+    @Column(name = "lastName")
+    private String nomA;
 
+    public Auteur() {}
 
-	public long getIdAuteur() {
-		return idAuteur;
-	}
+    public Auteur(String prenomA, String nomA) {
+        this.prenomA = prenomA;
+        this.nomA = nomA;
+    }
 
+    public Auteur(long idAuteur, String prenomA, String nomA) {
+        this.idAuteur = idAuteur;
+        this.prenomA = prenomA;
+        this.nomA = nomA;
+    }
 
-	public void setIdAuteur(long idAuteur) {
-		this.idAuteur = idAuteur;
-	}
+    public long getIdAuteur() {
+        return idAuteur;
+    }
 
+    public void setIdAuteur(long idAuteur) {
+        this.idAuteur = idAuteur;
+    }
 
-	public String getPrenomA() {
-		return prenomA;
-	}
+    public String getPrenomA() {
+        return prenomA;
+    }
 
+    public void setPrenomA(String prenomA) {
+        this.prenomA = prenomA;
+    }
 
-	public void setPrenomA(String prenomA) {
-		this.prenomA = prenomA;
-	}
+    public String getNomA() {
+        return nomA;
+    }
 
+    public void setNomA(String nomA) {
+        this.nomA = nomA;
+    }
 
-	public String getNomA() {
-		return nomA;
-	}
+    @Override
+    public String toString() {
+        return "Auteur [idAuteur=" + idAuteur + ", prenomA=" + prenomA + ", nomA=" + nomA + "]";
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(idAuteur, nomA, prenomA);
+    }
 
-	public void setNomA(String nomA) {
-		this.nomA = nomA;
-	}
-
-
-	@Override
-	public String toString() {
-		return "Auteur [idAuteur=" + idAuteur + ", prenomA=" + prenomA + ", nomA=" + nomA + "]";
-	}
-	
-	
-
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
+        Auteur other = (Auteur) obj;
+        return idAuteur == other.idAuteur && Objects.equals(nomA, other.nomA) && Objects.equals(prenomA, other.prenomA);
+    }
 }

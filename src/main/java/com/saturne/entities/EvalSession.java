@@ -1,148 +1,103 @@
 package com.saturne.entities;
 
-import javax.persistence.CascadeType;
+import java.util.Objects;
 import javax.persistence.Column;
-//import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-//import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-@Entity 
-@Table(name="evalSession")
+@Entity
+@Table(name = "evalSessions")
 public class EvalSession {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="idEval")
-	private long idEval;
-	
-	@Column(name="evalTrainer")
-	private int evalFormateur; //=>  formateur
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idEval")
+    private long idEval;
 
-	@Column(name="evalContent")
-	private int evalContenu; //=> formation
-	
-	@Column(name="pedagogy")
-	private int pedagogie; // =>formateur
+    @Column(name = "pedagogy")
+    private int pedagogie;
 
-	@Column(name="fieldMaster")
-	private int maitrisedomaine; // => formateur
+    @Column(name = "fieldMastery")
+    private int maitrisedomaine;
 
-	@Column(name="availibility")
-	private int disponibilite; // =>formateur 
+    @Column(name = "availibility")
+    private int disponibilite;
 
-	@Column(name="questionsResponse")
-	private int reponsesQuestions; //réponses aux questions =>formateur
+    @Column(name = "questionsResponse")
+    private int reponsesQuestions;
 
-	@Column(name="recommandation")
-	private boolean recommandation; //=> recommandation de la formation
-	
-	//* eval session --> 1 stagiaire
-	@ManyToOne//(cascade=CascadeType.PERSIST)// ou CascadeType.ALL?? //#!TODO: vérifier!! cascade type
-	@JoinColumn(name="idStagiaire")
-	private Stagiaire trainee;
-	
-	
-	public EvalSession() {}
+    @Column(name = "recommandation")
+    private boolean recommandation;
 
-	public EvalSession(int evalFormateur, int evalContenu, int pedagogie, int maitrisedomaine, int disponibilite,
-			int reponsesQuestions, boolean recommandation) {
-		this.evalFormateur = evalFormateur;
-		this.evalContenu = evalContenu;
-		this.pedagogie = pedagogie;
-		this.maitrisedomaine = maitrisedomaine;
-		this.disponibilite = disponibilite;
-		this.reponsesQuestions = reponsesQuestions;
-		this.recommandation = recommandation;
-	}
+    @OneToOne
+    @JoinColumn(name = "idTrainer")
+    private Formateur evalFormateur;
 
-	public int getEvalFormateur() {
-		return evalFormateur;
-	}
+    @OneToOne
+    @JoinColumn(name = "idTraining")
+    private Formation evalContenu;
 
+    public EvalSession() {}
 
-	public void setEvalFormateur(int evalFormateur) {
-		this.evalFormateur = evalFormateur;
-	}
+    public EvalSession(int pedagogie, int maitrisedomaine, int disponibilite, int reponsesQuestions, boolean recommandation) {
+        this.pedagogie = pedagogie;
+        this.maitrisedomaine = maitrisedomaine;
+        this.disponibilite = disponibilite;
+        this.reponsesQuestions = reponsesQuestions;
+        this.recommandation = recommandation;
+    }
 
+    public EvalSession(long idEval, int pedagogie, int maitrisedomaine, int disponibilite, int reponsesQuestions, boolean recommandation) {
+        this.idEval = idEval;
+        this.pedagogie = pedagogie;
+        this.maitrisedomaine = maitrisedomaine;
+        this.disponibilite = disponibilite;
+        this.reponsesQuestions = reponsesQuestions;
+        this.recommandation = recommandation;
+    }
 
-	public int getEvalContenu() {
-		return evalContenu;
-	}
+    @Override
+    public String toString() {
+        return (
+            "EvalSession [idEval=" +
+            idEval +
+            ", pedagogie=" +
+            pedagogie +
+            ", maitrisedomaine=" +
+            maitrisedomaine +
+            ", disponibilite=" +
+            disponibilite +
+            ", reponsesQuestions=" +
+            reponsesQuestions +
+            ", recommandation=" +
+            recommandation +
+            "]"
+        );
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(disponibilite, idEval, maitrisedomaine, pedagogie, recommandation, reponsesQuestions);
+    }
 
-	public void setEvalContenu(int evalContenu) {
-		this.evalContenu = evalContenu;
-	}
-
-
-	public int getPedagogie() {
-		return pedagogie;
-	}
-
-
-	public void setPedagogie(int pedagogie) {
-		this.pedagogie = pedagogie;
-	}
-
-
-	public int getMaitrisedomaine() {
-		return maitrisedomaine;
-	}
-
-
-	public void setMaitrisedomaine(int maitrisedomaine) {
-		this.maitrisedomaine = maitrisedomaine;
-	}
-
-
-	public int getDisponibilite() {
-		return disponibilite;
-	}
-
-
-	public void setDisponibilite(int disponibilite) {
-		this.disponibilite = disponibilite;
-	}
-
-	
-	
-	//getter/setter pour la référence de stagiaire
-
-	public int getReponsesQuestions() {
-		return reponsesQuestions;
-	}
-
-	public void setReponsesQuestions(int reponsesQuestions) {
-		this.reponsesQuestions = reponsesQuestions;
-	}
-
-	public boolean isRecommandation() {
-		return recommandation;
-	}
-
-	public void setRecommandation(boolean recommandation) {
-		this.recommandation = recommandation;
-	}
-
-	public Stagiaire getTrainee() {
-		return trainee;
-	}
-
-
-	public void setTrainee(Stagiaire trainee) {
-		this.trainee = trainee;
-	}
-
-	@Override
-	public String toString() {
-		return "EvalSession [idEval=" + idEval + ", evalFormateur=" + evalFormateur + ", evalContenu=" + evalContenu
-				+ ", pedagogie=" + pedagogie + ", maitrisedomaine=" + maitrisedomaine + ", disponibilite="
-				+ disponibilite + ", reponsesQuestions=" + reponsesQuestions + ", recommandation=" + recommandation + "]";
-	}
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
+        EvalSession other = (EvalSession) obj;
+        return (
+            disponibilite == other.disponibilite &&
+            idEval == other.idEval &&
+            maitrisedomaine == other.maitrisedomaine &&
+            pedagogie == other.pedagogie &&
+            recommandation == other.recommandation &&
+            reponsesQuestions == other.reponsesQuestions
+        );
+    }
 }

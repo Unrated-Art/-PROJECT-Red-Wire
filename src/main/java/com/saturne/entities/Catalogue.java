@@ -1,124 +1,96 @@
 package com.saturne.entities;
 
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="catalogue") // translate to plurial in english
+@Table(name = "catalogues")
 public class Catalogue {
 
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="idCatalogue")
-	private int idCatalogue; // Changed from `String` to `int`
-	
-	@Column(name="Title")
-	private String titre;
+    @Column(name = "idCatalogue")
+    private int idCatalogue;
 
-	@Column(name="idAuthor")
-	private String auteur; // A voir avec Entity 'Admin/Manager' `int idAdmin`
+    @Column(name = "title")
+    private String titre;
 
-	@Column(name="creationDate")
-	private String dateCreation;
-	
-	
-	//1 catalogue --> * formations
-	@OneToMany(cascade=CascadeType.ALL)
-	private Set<Formation> formations = new HashSet<Formation>();
+    @Column(name = "creationDate")
+    private String dateCreation;
 
-	
-//Constructeur
-	
-	public Catalogue() {
-		super();
-	}
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idAuthor")
+    private Auteur auteur;
 
-	public Catalogue(String auteur, String dateCreation) {
-		this.auteur = auteur;
-		this.dateCreation = dateCreation;
-	}
+    public Catalogue() {}
 
-//Setter et Getter
-	
-	public int getIdCatalogue() {
-		return idCatalogue;
-	}
+    public Catalogue(String titre, String dateCreation) {
+        this.titre = titre;
+        this.dateCreation = dateCreation;
+    }
 
-	public void setIdCatalogue(int idCatalogue) {
-		this.idCatalogue = idCatalogue;
-	}
+    public Catalogue(int idCatalogue, String titre, String dateCreation) {
+        this.idCatalogue = idCatalogue;
+        this.titre = titre;
+        this.dateCreation = dateCreation;
+    }
 
-	
-	public String getTitre() {
-		return titre;
-	}
+    public int getIdCatalogue() {
+        return idCatalogue;
+    }
 
-	public void setTitre(String titre) {
-		this.titre = titre;
-	}
+    public void setIdCatalogue(int idCatalogue) {
+        this.idCatalogue = idCatalogue;
+    }
 
-	public String getAuteur() {
-		return auteur;
-	}
+    public String getTitre() {
+        return titre;
+    }
 
-	public void setAuteur(String auteur) {
-		this.auteur = auteur;
-	}
+    public void setTitre(String titre) {
+        this.titre = titre;
+    }
 
-	public String getDateCreation() {
-		return dateCreation;
-	}
+    public String getDateCreation() {
+        return dateCreation;
+    }
 
-	public void setDateCreation(String dateCreation) {
-		this.dateCreation = dateCreation;
-	}
-	
-	
+    public void setDateCreation(String dateCreation) {
+        this.dateCreation = dateCreation;
+    }
 
-	public Set<Formation> getFormations() {
-		return formations;
-	}
+    public Auteur getAuteur() {
+        return auteur;
+    }
 
-	public void setFormations(Set<Formation> formations) {
-		this.formations = formations;
-	}
+    public void setAuteur(Auteur auteur) {
+        this.auteur = auteur;
+    }
 
-	@Override
-	public String toString() {
-		return "Catalogue [idCatalogue=" + idCatalogue + ", auteur=" + auteur + ", dateCreation=" + dateCreation + "]";
-	}
+    @Override
+    public String toString() {
+        return "Catalogue [idCatalogue=" + idCatalogue + ", titre=" + titre + ", dateCreation=" + dateCreation + "]";
+    }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(auteur, dateCreation, idCatalogue);
-	}
+    @Override
+    public int hashCode() {
+        return Objects.hash(dateCreation, idCatalogue, titre);
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Catalogue other = (Catalogue) obj;
-		return Objects.equals(auteur, other.auteur) && Objects.equals(dateCreation, other.dateCreation)
-				&& idCatalogue == other.idCatalogue;
-	}
-	
-	
-	
-
-	// Relation entre Catalogue + Formation
-	// One To Many ==> OK nrhn
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
+        Catalogue other = (Catalogue) obj;
+        return Objects.equals(dateCreation, other.dateCreation) && idCatalogue == other.idCatalogue && Objects.equals(titre, other.titre);
+    }
 }

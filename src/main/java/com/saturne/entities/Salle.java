@@ -1,104 +1,99 @@
 package com.saturne.entities;
 
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="classroom")
+@Table(name = "classrooms")
 public class Salle {
 
-	@Id
-	@Column(name="idClassroom", nullable=false)
-	private String idSalle;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idClassroom")
+    private long idSalle;
 
-	@Column(name="stage")
-	private int etage;
+    @Column(name = "roomNumber")
+    private String numSalle;
 
-	@Column(name="address")
-	private String adresse;
-	
-    // !#TODO: Generate EQUALS + HASHCODE upon use of HashSet
-	// !#TODO: Creer -> accesseurs GET/SET => OK nrhn 
-	@OneToMany(mappedBy="salle")
-	private Set<Session> sessions = new HashSet<Session>();
-	
-	//Constructeur
-	
-	public Salle(String idSalle, int etage, String adresse) {
-		this.idSalle = idSalle;
-		this.etage = etage;
-		this.adresse = adresse;
-	}
+    @Column(name = "floorNumber")
+    private String etage;
 
-	public Salle() {}
-	
-	//Getter et Setter
+    @Column(name = "address")
+    private String adresse;
 
-	public String getIdSalle() {
-		return idSalle;
-	}
+    public Salle() {}
 
-	public void setIdSalle(String idSalle) {
-		this.idSalle = idSalle;
-	}
+    public Salle(String numSalle, String etage, String adresse) {
+        this.numSalle = numSalle;
+        this.etage = etage;
+        this.adresse = adresse;
+    }
 
-	public int getEtage() {
-		return etage;
-	}
+    public Salle(long idSalle, String numSalle, String etage, String adresse) {
+        this.idSalle = idSalle;
+        this.numSalle = numSalle;
+        this.etage = etage;
+        this.adresse = adresse;
+    }
 
-	public void setEtage(int etage) {
-		this.etage = etage;
-	}
+    public long getIdSalle() {
+        return idSalle;
+    }
 
-	public String getAdresse() {
-		return adresse;
-	}
+    public void setIdSalle(long idSalle) {
+        this.idSalle = idSalle;
+    }
 
-	public void setAdresse(String adresse) {
-		this.adresse = adresse;
-	}
-	
-	
+    public String getNumSalle() {
+        return numSalle;
+    }
 
-	public Set<Session> getSessions() {
-		return sessions;
-	}
+    public void setNumSalle(String numSalle) {
+        this.numSalle = numSalle;
+    }
 
-	public void setSessions(Set<Session> sessions) {
-		this.sessions = sessions;
-	}
+    public String getEtage() {
+        return etage;
+    }
 
-	@Override
-	public String toString() {
-		return "Salle [idSalle=" + idSalle + ", Etage=" + etage + ", adresse=" + adresse + "]";
-	}
+    public void setEtage(String etage) {
+        this.etage = etage;
+    }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(adresse, etage, idSalle);
-	}
+    public String getAdresse() {
+        return adresse;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Salle other = (Salle) obj;
-		return Objects.equals(adresse, other.adresse) && etage == other.etage && Objects.equals(idSalle, other.idSalle);
-	}
-	
-	
-	
+    public void setAdresse(String adresse) {
+        this.adresse = adresse;
+    }
+
+    @Override
+    public String toString() {
+        return "Salle [idSalle=" + idSalle + ", numSalle=" + numSalle + ", etage=" + etage + ", adresse=" + adresse + "]";
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(adresse, etage, idSalle, numSalle);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
+        Salle other = (Salle) obj;
+        return (
+            Objects.equals(adresse, other.adresse) &&
+            Objects.equals(etage, other.etage) &&
+            idSalle == other.idSalle &&
+            Objects.equals(numSalle, other.numSalle)
+        );
+    }
 }

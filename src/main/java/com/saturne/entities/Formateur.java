@@ -1,86 +1,99 @@
 package com.saturne.entities;
 
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Trainers")
+@Table(name = "trainers")
 public class Formateur {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="idTrainer")
-	private long idFormateur;
+    @Column(name = "idTrainer")
+    private long idFormateur;
 
-    @Column(name="cv")
+    @Column(name = "firstName")
+    private String prenomF;
+
+    @Column(name = "lastName")
+    private String nomF;
+
+    @Column(name = "cv")
     private String cv;
 
-    // One To Many
-	//référence vers sessions : 1 formateur peut participer à plusieurs sessions de formation=> collection de sessions dans Formateur
-	@OneToMany(/*cascade=CascadeType.PERSIST,*/ mappedBy="formateur") //#!TODO: check cascadeType!!!
-    private Set<Session> listeSessions= new HashSet<Session>(); //la liste des sessions auxqeulles il participe
-	
+    public Formateur() {}
 
-	public Formateur() {}
+    public Formateur(String prenomF, String nomF, String cv) {
+        this.prenomF = prenomF;
+        this.nomF = nomF;
+        this.cv = cv;
+    }
 
-	public Formateur(String cv) {
-		this.cv = cv;
-	}
+    public Formateur(long idFormateur, String prenomF, String nomF, String cv) {
+        this.idFormateur = idFormateur;
+        this.prenomF = prenomF;
+        this.nomF = nomF;
+        this.cv = cv;
+    }
 
-	public long getIdFormateur() {
-		return idFormateur;
-	}
+    public long getIdFormateur() {
+        return idFormateur;
+    }
 
-	public void setIdFormateur(long idFormateur) {
-		this.idFormateur = idFormateur;
-	}
+    public void setIdFormateur(long idFormateur) {
+        this.idFormateur = idFormateur;
+    }
 
-	public String getCv() {
-		return cv;
-	}
+    public String getPrenomF() {
+        return prenomF;
+    }
 
-	public void setCv(String cv) {
-		this.cv = cv;
-	}
+    public void setPrenomF(String prenomF) {
+        this.prenomF = prenomF;
+    }
 
-	public Set<Session> getListeSessions() {
-		return listeSessions;
-	}
+    public String getNomF() {
+        return nomF;
+    }
 
-	public void setListeSessions(Set<Session> listeSessions) {
-		this.listeSessions = listeSessions;
-	}
+    public void setNomF(String nomF) {
+        this.nomF = nomF;
+    }
 
-	@Override
-	public String toString() {
-		return "Formateur [idFormateur=" + idFormateur + ", cv=" + cv + "]";
-	}
+    public String getCv() {
+        return cv;
+    }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(cv, idFormateur);
-	}
+    public void setCv(String cv) {
+        this.cv = cv;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Formateur other = (Formateur) obj;
-		return Objects.equals(cv, other.cv) && idFormateur == other.idFormateur;
-	}
+    @Override
+    public String toString() {
+        return "Formateur [idFormateur=" + idFormateur + ", prenomF=" + prenomF + ", nomF=" + nomF + ", cv=" + cv + "]";
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(cv, idFormateur, nomF, prenomF);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
+        Formateur other = (Formateur) obj;
+        return (
+            Objects.equals(cv, other.cv) &&
+            idFormateur == other.idFormateur &&
+            Objects.equals(nomF, other.nomF) &&
+            Objects.equals(prenomF, other.prenomF)
+        );
+    }
 }

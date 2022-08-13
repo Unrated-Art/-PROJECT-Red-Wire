@@ -1,6 +1,6 @@
 package com.saturne.entities;
 
-import javax.persistence.CascadeType;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,76 +11,64 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="questions") 
-public class Question { //composant de `PreTest`
+@Table(name = "questions")
+public class Question {
 
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="idQuestion")
-	private long idQuestion;
+    @Column(name = "idQuestion")
+    private long idQuestion;
 
-	@Column(name="questContent")
-	private String contenuQ;
+    @Column(name = "content")
+    private String contenuQ;
 
-	@Column(name="idTheme")
-	private String idTheme; 
-	
-	
-	// * questions <--> 1 pretset
-	@ManyToOne/*(cascade=CascadeType.PERSIST)*/ //#!TODO: check cascade!!
-	@JoinColumn(name="idTest")
-	private PreTest preTest = new PreTest();
-	
-	
+    @ManyToOne
+    @JoinColumn(name = "idTheme")
+    private Theme idTheme;
 
-	public Question() {
-		// TODO Auto-generated constructor stub
-	}
+    public Question() {}
 
-	public Question(String contenuQ, String idTheme) {
-		this.contenuQ = contenuQ;
-		this.idTheme = idTheme;
-	}
+    public Question(String contenuQ) {
+        this.contenuQ = contenuQ;
+    }
 
-	public long getIdQuestion() {
-		return idQuestion;
-	}
+    public Question(long idQuestion, String contenuQ) {
+        this.idQuestion = idQuestion;
+        this.contenuQ = contenuQ;
+    }
 
-	public void setIdQuestion(long idQuestion) {
-		this.idQuestion = idQuestion;
-	}
+    public long getIdQuestion() {
+        return idQuestion;
+    }
 
-	public String getContenuQ() {
-		return contenuQ;
-	}
+    public void setIdQuestion(long idQuestion) {
+        this.idQuestion = idQuestion;
+    }
 
-	public void setContenuQ(String contenuQ) {
-		this.contenuQ = contenuQ;
-	}
+    public String getContenuQ() {
+        return contenuQ;
+    }
 
-	public String getIdTheme() {
-		return idTheme;
-	}
+    public void setContenuQ(String contenuQ) {
+        this.contenuQ = contenuQ;
+    }
 
-	public void setIdTheme(String idTheme) {
-		this.idTheme = idTheme;
-	}
-	
-	
+    @Override
+    public String toString() {
+        return "Question [idQuestion=" + idQuestion + ", contenuQ=" + contenuQ + "]";
+    }
 
-	public PreTest getPreTest() {
-		return preTest;
-	}
+    @Override
+    public int hashCode() {
+        return Objects.hash(contenuQ, idQuestion);
+    }
 
-	public void setPreTest(PreTest preTest) {
-		this.preTest = preTest;
-	}
-
-	@Override
-	public String toString() {
-		return "Question [idQuestion=" + idQuestion + ", contenuQ=" + contenuQ + ", idTheme=" + idTheme + "]";
-	}
-
-	// Relation entre Question + PreTest
-	// Many To Many
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
+        Question other = (Question) obj;
+        return Objects.equals(contenuQ, other.contenuQ) && idQuestion == other.idQuestion;
+    }
 }
