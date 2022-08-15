@@ -27,7 +27,7 @@ public class Catalogue{// implements Serializable{
 	@Column(name="Title")
 	private String titre;
 
-	@Column(name="idAuthor")
+	@Column(name="Author")
 	private String auteur; 
 
 	@Column(name="creationDate")
