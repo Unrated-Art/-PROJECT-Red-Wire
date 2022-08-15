@@ -2,11 +2,17 @@ package com.saturne.redwire.entities;
 
 import java.time.LocalDate;
 import java.util.Objects;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -29,6 +35,30 @@ public class Session {
 
     @Column(name = "price")
     private float prix;
+
+    @ManyToOne
+    @JoinColumn(name = "idClassroom")
+    private Salle salle;
+
+    @ManyToOne
+    @JoinColumn(name = "idTraining")
+    private Formation formation;
+
+    @ManyToOne
+    @JoinColumn(name = "idTrainer")
+    private Formateur formateur;
+
+    @OneToMany
+    @JoinColumn(name = "evalSessions")
+    private Set<EvalSession> evalSessions;
+
+    @ManyToMany
+    @JoinTable(
+        name = "sessionTrainee",
+        joinColumns = { @JoinColumn(name = "idSession") },
+        inverseJoinColumns = { @JoinColumn(name = "idTrainee") }
+    )
+    private Set<Stagiaire> stagiaires;
 
     public Session() {}
 
@@ -85,6 +115,46 @@ public class Session {
 
     public void setPrix(float prix) {
         this.prix = prix;
+    }
+
+    public Salle getSalle() {
+        return salle;
+    }
+
+    public void setSalle(Salle salle) {
+        this.salle = salle;
+    }
+
+    public Formation getFormation() {
+        return formation;
+    }
+
+    public void setFormation(Formation formation) {
+        this.formation = formation;
+    }
+
+    public Formateur getFormateur() {
+        return formateur;
+    }
+
+    public void setFormateur(Formateur formateur) {
+        this.formateur = formateur;
+    }
+
+    public Set<EvalSession> getEvalSessions() {
+        return evalSessions;
+    }
+
+    public void setEvalSessions(Set<EvalSession> evalSessions) {
+        this.evalSessions = evalSessions;
+    }
+
+    public Set<Stagiaire> getStagiaires() {
+        return stagiaires;
+    }
+
+    public void setStagiaires(Set<Stagiaire> stagiaires) {
+        this.stagiaires = stagiaires;
     }
 
     @Override

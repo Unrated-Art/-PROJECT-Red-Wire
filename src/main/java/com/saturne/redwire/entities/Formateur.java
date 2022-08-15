@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "trainers")
-public class Formateur {
+public class Formateur extends User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

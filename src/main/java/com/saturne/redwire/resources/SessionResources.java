@@ -1,6 +1,8 @@
 package com.saturne.redwire.resources;
 
+import com.saturne.redwire.entities.Formation;
 import com.saturne.redwire.entities.Session;
+import com.saturne.redwire.services.FormationService;
 import com.saturne.redwire.services.SessionService;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -32,6 +34,7 @@ public class SessionResources {
     @PostMapping(name = "create.session")
     @ResponseStatus(HttpStatus.CREATED)
     public Session createSession(
+        @RequestParam(name = "idTraining") long idTraining,
         @RequestParam(name = "dateStart") String dateStart,
         @RequestParam(name = "dateEnd") String dateEnd,
         @RequestParam(name = "location") String location,
@@ -43,19 +46,33 @@ public class SessionResources {
         s.setDateFin(LocalDate.parse(dateEnd, formatter));
         s.setLieu(location);
         s.setPrix(price);
-        return sessionService.createSession(s);
+        s = sessionService.createSession(s);
+
+        try {
+            FormationService fs = new FormationService();
+            Formation training = fs.findFormationById(idTraining);
+            s.setFormation(training);
+            s = sessionService.updateSession(s);
+        } catch (Exception e) {}
+
+        return s;
     }
 
     @PutMapping(name = "update.session", path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Session updateSession(
-        @PathVariable(name = "id") long id,
+        @PathVariable(name = "id") long idSession,
         @RequestParam(name = "dateStart", required = false) String dateStart,
         @RequestParam(name = "dateEnd", required = false) String dateEnd,
         @RequestParam(name = "location", required = false) String location,
-        @RequestParam(name = "price", defaultValue = "0") float price
+        @RequestParam(name = "price", defaultValue = "0") float price,
+
+        @RequestParam(name = "idClassroom", defaultValue = "0") long idClassroom,
+        @RequestParam(name = "idTrainer", defaultValue = "0") long idTrainer,
+        @RequestParam(name = "evalSessions[]", defaultValue="[]") String[] evalSessions,
+        @RequestParam(name = "stagiaires[]", defaultValue="[]") String[] stagiaires
     ) {
-        Session s = sessionService.getSession(id);
+        Session s = sessionService.getSession(idSession);
         if (s != null) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             if (dateStart != null) {
@@ -69,6 +86,27 @@ public class SessionResources {
             }
             if (price != 0.0f) {
                 s.setPrix(price);
+            }
+
+            if (idClassroom > 0) {
+            	//SalleService ss = new SalleService();
+            	//Salle classroom = ss.getReferenceById(idClassroom);
+            	//s.setSalle(classroom);
+            }
+            if (idTrainer > 0) {
+            	//FormateurService fs = new FormateurService();
+            	//Formateur trainer = ss.getReferenceById(idTrainer);
+            	//s.setFormateur(trainer);
+            }
+            if (evalSessions.length > 0) {
+            	//EvalSessionService ess = new EvalSessionService();
+            	//List<EvalSession> evalSession = ess.findAllById(idEval);
+            	//s.setEvalSessions(evalSession);
+            }
+            if (stagiaires.length > 0) {
+            	//StagiaireService ss = new StagiaireService();
+            	//List<Stagiaire> trainee = ss.findAllById(idTrainee);            	
+            	//s.setStagiaires(trainee);
             }
             return sessionService.updateSession(s);
         }
