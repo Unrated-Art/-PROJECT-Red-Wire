@@ -55,10 +55,10 @@ public class Session {// implements Serializable{??
         inverseJoinColumns = { @JoinColumn(name = "idTrainee") }
     )
     private Set<Stagiaire> stagiaires;
+    
 	public Session() {}
-	public Session(long idSession, LocalDate dateDebut, LocalDate dateFin, String lieu, float prix) {
-		super();
-		this.idSession = idSession;
+	
+	public Session(LocalDate dateDebut, LocalDate dateFin, String lieu, float prix) {
 		this.dateDebut = dateDebut;
 		this.dateFin = dateFin;
 		this.lieu = lieu;

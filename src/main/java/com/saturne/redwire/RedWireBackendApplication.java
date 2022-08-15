@@ -1,6 +1,9 @@
 package com.saturne.redwire;
 
+import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.HashMap;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +14,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import com.saturne.redwire.entities.Catalogue;
 import com.saturne.redwire.entities.Formation;
+import com.saturne.redwire.entities.Session;
 import com.saturne.redwire.services.CatalogueService;
 
 
@@ -20,6 +24,7 @@ import org.springframework.web.filter.CorsFilter;
 
 
 import com.saturne.redwire.services.FormationService;
+import com.saturne.redwire.services.SessionService;
 
 @SpringBootApplication
 public class RedWireBackendApplication {
@@ -83,8 +88,33 @@ public class RedWireBackendApplication {
 	
 	};
 	}
+	
+	@Bean
+	public CommandLineRunner demo2(SessionService sessionService) {
+	return (args) -> {
+		//Session(LocalDate dateDebut, LocalDate dateFin, String lieu, float prix)
+		Session s = new Session(LocalDate.of(2022, 5, 20), LocalDate.of(2022, 5, 26), "Lyon", 3000.0f);
+		Session s1 = new Session(LocalDate.of(2022, 7, 12), LocalDate.of(2022, 8, 12), "Toulouse", 3500.0f);
+		Session s2 = new Session(LocalDate.of(2022, 3, 20), LocalDate.of(2022, 3, 23), "Lyon", 6000.0f);
+		sessionService.createSession(s);
+		sessionService.createSession(s1);
+		sessionService.createSession(s2);
+	// fetch all sessions
+	log.info("Catalogues found with findAllSessions():");
+	log.info("-------------------------------");
+	log.info(sessionService.getSession(1).toString());
+	log.info(sessionService.getSession(2).toString());
+	log.info(sessionService.getSession(3).toString());
 
+	log.info("");
+	
+	};
+	}
 
+/**
+ * Cross-origin resource sharing
+ * @return CorsFilter
+ */
 	@Bean
 	public CorsFilter corsFilter() {
 		CorsConfiguration corsConfiguration = new CorsConfiguration();
