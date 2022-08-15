@@ -1,16 +1,20 @@
 package com.saturne.redwire.entities;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "classrooms")
-public class Salle {
+@Table(name="classrooms")
+public class Salle{// implements Serializable{??
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,23 +29,21 @@ public class Salle {
 
     @Column(name = "address")
     private String adresse;
-
-    public Salle() {}
-
+ 
+	public Salle() {}
+	
+	
+	@OneToMany(mappedBy="salle")
+	private Set<Session> sessions = new HashSet<Session>();
+	
     public Salle(String numSalle, String etage, String adresse) {
         this.numSalle = numSalle;
         this.etage = etage;
         this.adresse = adresse;
     }
 
-    public Salle(long idSalle, String numSalle, String etage, String adresse) {
-        this.idSalle = idSalle;
-        this.numSalle = numSalle;
-        this.etage = etage;
-        this.adresse = adresse;
-    }
-
-    public long getIdSalle() {
+	
+	public long getIdSalle() {
         return idSalle;
     }
 
@@ -72,28 +74,37 @@ public class Salle {
     public void setAdresse(String adresse) {
         this.adresse = adresse;
     }
+	
+	public Set<Session> getSessions() {
+		return sessions;
+	}
 
-    @Override
-    public String toString() {
-        return "Salle [idSalle=" + idSalle + ", numSalle=" + numSalle + ", etage=" + etage + ", adresse=" + adresse + "]";
-    }
+	public void setSessions(Set<Session> sessions) {
+		this.sessions = sessions;
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(adresse, etage, idSalle, numSalle);
-    }
+	 @Override
+	    public String toString() {
+	        return "Salle [idSalle=" + idSalle + ", numSalle=" + numSalle + ", etage=" + etage + ", adresse=" + adresse + "]";
+	    }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null) return false;
-        if (getClass() != obj.getClass()) return false;
-        Salle other = (Salle) obj;
-        return (
-            Objects.equals(adresse, other.adresse) &&
-            Objects.equals(etage, other.etage) &&
-            idSalle == other.idSalle &&
-            Objects.equals(numSalle, other.numSalle)
-        );
-    }
+	    @Override
+	    public int hashCode() {
+	        return Objects.hash(adresse, etage, idSalle, numSalle);
+	    }
+
+	    @Override
+	    public boolean equals(Object obj) {
+	        if (this == obj) return true;
+	        if (obj == null) return false;
+	        if (getClass() != obj.getClass()) return false;
+	        Salle other = (Salle) obj;
+	        return (
+	            Objects.equals(adresse, other.adresse) &&
+	            Objects.equals(etage, other.etage) &&
+	            idSalle == other.idSalle &&
+	            Objects.equals(numSalle, other.numSalle)
+	        );
+	    }
+	
 }

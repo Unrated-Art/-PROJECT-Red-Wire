@@ -1,74 +1,80 @@
 package com.saturne.redwire.entities;
 
-import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+//import java.io.Serializable;
+//import javax.persistence.CascadeType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "questions")
-public class Question {
+@Table(name="questions") 
+public class Question{// implements Serializable{??
 
-    @Id
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idQuestion")
-    private long idQuestion;
+    @Column(name="idQuestion")
+	private long idQuestion;
 
-    @Column(name = "content")
-    private String contenuQ;
+	@Column(name="questContent")
+	private String contenuQ;
 
-    @ManyToOne
-    @JoinColumn(name = "idTheme")
-    private Theme idTheme;
+	@Column(name="idTheme")
+	private String idTheme; 
+	
+	
+	// * questions <--> 1 pretset
+	@ManyToOne/*(cascade=CascadeType.PERSIST)*/ //#!TODO: check cascade!!
+	@JoinColumn(name="idTest")
+	private PreTest preTest = new PreTest();
+	
 
-    public Question() {}
+	public Question() {
+	}
 
-    public Question(String contenuQ) {
-        this.contenuQ = contenuQ;
-    }
+	public Question(String contenuQ, String idTheme) {
+		this.contenuQ = contenuQ;
+		this.idTheme = idTheme;
+	}
 
-    public Question(long idQuestion, String contenuQ) {
-        this.idQuestion = idQuestion;
-        this.contenuQ = contenuQ;
-    }
+	public long getIdQuestion() {
+		return idQuestion;
+	}
 
-    public long getIdQuestion() {
-        return idQuestion;
-    }
+	public void setIdQuestion(long idQuestion) {
+		this.idQuestion = idQuestion;
+	}
 
-    public void setIdQuestion(long idQuestion) {
-        this.idQuestion = idQuestion;
-    }
+	public String getContenuQ() {
+		return contenuQ;
+	}
 
-    public String getContenuQ() {
-        return contenuQ;
-    }
+	public void setContenuQ(String contenuQ) {
+		this.contenuQ = contenuQ;
+	}
 
-    public void setContenuQ(String contenuQ) {
-        this.contenuQ = contenuQ;
-    }
+	public String getIdTheme() {
+		return idTheme;
+	}
 
-    @Override
-    public String toString() {
-        return "Question [idQuestion=" + idQuestion + ", contenuQ=" + contenuQ + "]";
-    }
+	public void setIdTheme(String idTheme) {
+		this.idTheme = idTheme;
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(contenuQ, idQuestion);
-    }
+	public PreTest getPreTest() {
+		return preTest;
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null) return false;
-        if (getClass() != obj.getClass()) return false;
-        Question other = (Question) obj;
-        return Objects.equals(contenuQ, other.contenuQ) && idQuestion == other.idQuestion;
-    }
+	public void setPreTest(PreTest preTest) {
+		this.preTest = preTest;
+	}
+
+	@Override
+	public String toString() {
+		return "Question [idQuestion=" + idQuestion + ", contenuQ=" + contenuQ + ", idTheme=" + idTheme + "]";
+	}
 }

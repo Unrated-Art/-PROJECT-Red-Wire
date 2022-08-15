@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
 
+import java.util.stream.Collectors;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,25 +24,13 @@ public class FormationService {
 	@Autowired
 	private FormationRepository formationRepo;
 
-
-
 	/**
 	 * @param formation
 	 * @return
 	 */
 	public Formation addFormation(Formation f) {
-//		f.setTitref("Java");
-//		f.setReference("AB1020");
-//		f.setDuree(5);
-//		f.setLieu("Lyon");
-//		f.setInterFormation(true);
-//		f.setObjectif("obj");
-//		f.setPrerequis("nothing");
-//		f.setProgrammeDetaille("detailsFrom");
-//		f.setPublicVise("all");
-//		System.out.println("f persisted in DB!!!!!!");
-        return formationRepo.save(f);
-        
+
+        return formationRepo.save(f);    
     }
 
 	/**
@@ -67,15 +58,30 @@ public class FormationService {
                 .orElseThrow(() -> new TrainingNotFoundException("Training by id " + id + " was not found"));
     }
     
-//    //#! TODO: implement method with stream/filter!!!!
-//	public List<Formation> findByKeyword(String keyword) {
-//			
-//		return formationRepo.findByKeyword(keyword);
-//				//.orElseThrow(() -> new TrainingNotFoundException("Training by keyword " + keyword + "was not found"));
-//		
-//	}
+
+    /**
+     * 
+     * @param keyword
+     * @return List<Formation> containing 'keyword'
+     */
+	public List<Formation> findByKeyword(String keyword) {
+		return formationRepo.findAll().stream()
+				.filter(f -> ((f.getReference()).toUpperCase()).contains(keyword.toUpperCase())
+        				|| ((f.getTitref()).toUpperCase()).contains(keyword.toUpperCase()) 
+        				|| ((f.getLieu()).toUpperCase()).contains(keyword.toUpperCase()) 
+        				|| ((f.getObjectif()).toUpperCase()).contains(keyword.toUpperCase()) 
+        				|| ((f.getPrerequis()).toUpperCase()).contains(keyword.toUpperCase()) 
+        				|| ((f.getProgrammeDetaille()).toUpperCase()).contains(keyword.toUpperCase()) 
+        				|| ((f.getPublicVise()).toUpperCase()).contains(keyword.toUpperCase()))
+        				/*|| ((f.getThemes().foreach()????.contains(keyword.toLowerCase())*/ 
+        				.collect(Collectors.toList());
+				//.orElseThrow(() -> new TrainingNotFoundException("Training by keyword " + keyword + "was not found"));	
+	}
 	
-	
+	/***
+	 * @param ref
+	 * @return Formation
+	 */
 	public Formation findFormationByReference(String ref){
 		return formationRepo.findFormationByReference(ref)
 				.orElseThrow(() -> new TrainingNotFoundException("Training by reference " + ref + "was not found"));
@@ -84,7 +90,5 @@ public class FormationService {
     public void deleteFormation(long id){
     	formationRepo.deleteFormationByIdFormation(id);
     }
-    
-    
-	
+
 }

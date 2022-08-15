@@ -1,16 +1,20 @@
 package com.saturne.redwire.entities;
 
+
 import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "chapters")
-public class Chapitre {
+public class Chapitre{ //implemets serializable??
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,6 +26,10 @@ public class Chapitre {
 
     @Column(name = "content")
     private String contenu;
+    
+    @ManyToOne
+	@JoinColumn(name="idTraining") 
+	private Formation formation= new Formation(); 
 
     public Chapitre() {}
 
@@ -60,7 +68,16 @@ public class Chapitre {
         this.contenu = contenu;
     }
 
-    @Override
+    
+    public Formation getFormation() {
+		return formation;
+	}
+
+	public void setFormation(Formation formation) {
+		this.formation = formation;
+	}
+
+	@Override
     public String toString() {
         return "Chapitre [idChap=" + idChap + ", nomChapitre=" + nomChapitre + ", contenu=" + contenu + "]";
     }
@@ -79,3 +96,4 @@ public class Chapitre {
         return Objects.equals(contenu, other.contenu) && idChap == other.idChap && Objects.equals(nomChapitre, other.nomChapitre);
     }
 }
+

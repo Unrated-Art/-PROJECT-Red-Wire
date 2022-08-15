@@ -39,6 +39,5 @@ public class CatalogueService {
 	
 //Supprimer une formation @param idFormation
 	
-	
 
 }
