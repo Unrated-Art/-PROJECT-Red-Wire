@@ -2,28 +2,42 @@ package com.saturne.redwire.services;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.saturne.redwire.entities.Formation;
+import com.saturne.redwire.entities.Catalogue;
+import com.saturne.redwire.exceptions.CatalogueNotFoundException;
 import com.saturne.redwire.repositories.CatalogueRepository;
 
 @Service
+@Transactional
 public class CatalogueService {
-
-//	private static Logger log = Logger.getLogger(ServiceCatalogue.class);
-//	//Injection de dépendance 
-//	@Autowired
-//	private final CatalogueRepository catalogueRepo;
-//	
-//	public ServiceCatalogue(CatalogueRepository catalogueRepo) {
-//		this.catalogueRepo=catalogueRepo;
 	
-//}
+	//Injection de dépendance 	
+	@Autowired
+	private CatalogueRepository catalogueRepository;
 	
+//Ajouter un catalogue
+	public Catalogue addCatalogue(Catalogue catalogue) {
+		
+		//catalogue.setCatalogueCode(UUID.randomUUID().toString());
+		return catalogueRepository.save(catalogue);
+	}
 	
+//Rechercher tous les catalogues et les afficher @param reference
+	public List<Catalogue> findAllCatalogues() {
+		return catalogueRepository.findAll();
+	}
 	
+//Rechercher un catalogue et l'afficher @param reference
+	
+	public Catalogue findCatalogueById(long id) {
+        return catalogueRepository.findCatalogueByIdCatalogue(id)
+        		.orElseThrow(() -> new CatalogueNotFoundException("Catalogue by id " + id + "was not found"));
+    }
+	
+//Supprimer une formation @param idFormation
 	
 
 }

@@ -22,7 +22,6 @@ public class Auteur {
 
     @Column(name = "lastName")
     private String nomA;
-    
 
     public Auteur() {}
 

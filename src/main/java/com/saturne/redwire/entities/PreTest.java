@@ -83,8 +83,4 @@ public class PreTest {// implements Serializable??
 		return idTest == other.idTest
 				&& Objects.equals(titre, other.titre);
 	}
-	
-
 }
-
-

@@ -1,5 +1,11 @@
 package com.saturne.redwire.repositories;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.saturne.redwire.entities.Session;
+
+public interface SessionRepository extends JpaRepository<Session, Long> {
+
 import com.saturne.redwire.entities.Session;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,4 +16,5 @@ public interface SessionRepository extends JpaRepository<Session, Long> {
     Session getReferenceByIdSession(long id);
 
     void deleteByIdSession(long id);
+
 }

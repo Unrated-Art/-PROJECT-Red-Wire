@@ -1,11 +1,8 @@
 package com.saturne.redwire.repositories;
 
 import java.util.Optional;
-
 import org.springframework.data.jpa.repository.JpaRepository;
-
 import com.saturne.redwire.entities.Formation;
-
 
 public interface FormationRepository extends JpaRepository<Formation, Long> {
 
@@ -17,5 +14,4 @@ public interface FormationRepository extends JpaRepository<Formation, Long> {
 	//List<Formation> findByKeyword(String keyword);
 
 	void deleteFormationByIdFormation(long idFormation);
-
 }

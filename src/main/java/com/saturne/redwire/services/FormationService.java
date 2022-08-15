@@ -3,7 +3,9 @@ package com.saturne.redwire.services;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
+
 import java.util.stream.Collectors;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,7 @@ import com.saturne.redwire.entities.Formation;
 import com.saturne.redwire.exceptions.TrainingNotFoundException;
 import com.saturne.redwire.repositories.FormationRepository;
 
+
 @Service
 @Transactional
 public class FormationService {
@@ -21,12 +24,12 @@ public class FormationService {
 	@Autowired
 	private FormationRepository formationRepo;
 
-
 	/**
 	 * @param formation
 	 * @return
 	 */
 	public Formation addFormation(Formation f) {
+
         return formationRepo.save(f);    
     }
 
@@ -55,6 +58,7 @@ public class FormationService {
                 .orElseThrow(() -> new TrainingNotFoundException("Training by id " + id + " was not found"));
     }
     
+
     /**
      * 
      * @param keyword
@@ -82,19 +86,9 @@ public class FormationService {
 		return formationRepo.findFormationByReference(ref)
 				.orElseThrow(() -> new TrainingNotFoundException("Training by reference " + ref + "was not found"));
 	}
-	
-	/**
-	 * #TODO: rajouter methode updateFormation
-	 */
 
-	/**
-	 * 
-	 * @param id
-	 */
     public void deleteFormation(long id){
     	formationRepo.deleteFormationByIdFormation(id);
     }
-    
-    
-	
+
 }

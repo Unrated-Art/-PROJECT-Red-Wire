@@ -116,7 +116,5 @@ public class Catalogue{// implements Serializable{
 		Catalogue other = (Catalogue) obj;
 		return Objects.equals(auteur, other.auteur) && Objects.equals(dateCreation, other.dateCreation)
 				&& idCatalogue == other.idCatalogue;
-	}
-	
-	
+	}	
 }

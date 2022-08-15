@@ -1,13 +1,18 @@
 package com.saturne.redwire;
 
 import java.util.Arrays;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import org.springframework.context.annotation.Bean;
+import com.saturne.redwire.entities.Catalogue;
+import com.saturne.redwire.entities.Formation;
+import com.saturne.redwire.services.CatalogueService;
+
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -18,17 +23,16 @@ import org.springframework.web.filter.CorsFilter;
 import com.saturne.redwire.entities.Formation;
 import com.saturne.redwire.repositories.FormationRepository;
 import com.saturne.redwire.resources.FormationResource;
+
 import com.saturne.redwire.services.FormationService;
 
 @SpringBootApplication
 public class RedWireBackendApplication {
 	
 	@Autowired 
+
 	private FormationService formationService;
 	
-	
-//	@Autowired
-//	private FormationRepository repo;
 	
 	private static final Logger log = LoggerFactory.getLogger(RedWireBackendApplication.class);
 	
@@ -39,36 +43,13 @@ public class RedWireBackendApplication {
 	}	
 	
 	
-	/**
-	 * Test with repository
-	 * @param repo
-	 * @return
-	 */
-//	@Bean
-//	public CommandLineRunner demo(FormationRepository repo) {
-//	return (args) -> {
-//		
-//		repo.save(new Formation("reference", "intitulé", "lieu", true, 6, "prerequis",
-//			"objectif", "String publicVise", "String programmeDetaille"));
-//		repo.save(new Formation("reference1",  "intitulé1","lieu1", true, 6, "prerequis1",
-//		"objectif1", "String publicVise1", "String programmeDetaille1"));
-//		repo.save(new Formation("reference2",  "intitulé","lieu2", true, 6, "prerequis2",
-//			"objectif2", "String publicVise2", "String programmeDetaille2"));
-//	// fetch all trainings
-//	log.info("Trainings found with findAll():");
-//	log.info("-------------------------------");
-//	for (Formation f : repo.findAll()) {
-//	log.info(f.toString());
-//	}
-//	log.info("");
-//	
-//	};
-//	}
+	
 /***
  * Test with FormationService
  * @param repo
  * @return
  */
+
 	@Bean
 	public CommandLineRunner demo(FormationService formationService) {
 	return (args) -> {
@@ -84,6 +65,24 @@ public class RedWireBackendApplication {
 	log.info("-------------------------------");
 	for (Formation f : formationService.findAllFormations()) {
 	log.info(f.toString());
+	}
+	log.info("");
+	
+	};
+	}
+	
+	@Bean
+	public CommandLineRunner demo1(CatalogueService catalogueService) {
+	return (args) -> {
+		
+		catalogueService.addCatalogue(new Catalogue("title", "creationDate"));
+		catalogueService.addCatalogue(new Catalogue("title2", "creationDate2"));
+		catalogueService.addCatalogue(new Catalogue("title3", "creationDate3"));
+	// fetch all catalogues
+	log.info("Catalogues found with findAllCatalogues():");
+	log.info("-------------------------------");
+	for (Catalogue catalogue : catalogueService.findAllCatalogues()) {
+	log.info(catalogue.toString());
 	}
 	log.info("");
 	

@@ -98,8 +98,4 @@ public class Theme{// implements Serializable{
 		return idTheme == other.idTheme 
 				&& Objects.equals(nomTheme, other.nomTheme);
 	}
-	
-	
-	
-
 }
