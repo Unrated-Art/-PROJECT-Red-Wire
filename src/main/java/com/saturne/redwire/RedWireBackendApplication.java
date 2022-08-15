@@ -13,16 +13,11 @@ import com.saturne.redwire.entities.Catalogue;
 import com.saturne.redwire.entities.Formation;
 import com.saturne.redwire.services.CatalogueService;
 
-import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
+
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-import com.saturne.redwire.entities.Formation;
-import com.saturne.redwire.repositories.FormationRepository;
-import com.saturne.redwire.resources.FormationResource;
 
 import com.saturne.redwire.services.FormationService;
 
