@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SessionRepository extends JpaRepository<Session, Long> {
-    Session getReferenceByIdSession(long idSession);
+    Session getReferenceByIdSession(long id);
 
-    //List<Session> findAllByIdFormation(long idFormation);
+    void deleteByIdSession(long id);
 }

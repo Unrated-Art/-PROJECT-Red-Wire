@@ -1,6 +1,7 @@
 package com.saturne.redwire.entities;
 
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -19,11 +20,11 @@ public class Session {// implements Serializable{??
     @Column(name="idSession")
 	private long idSession;
 
-	@Column(name="dateStart")
-	private String dateDebut;
+	 @Column(name = "dateStart")
+	 private LocalDate dateDebut;
 
-	@Column(name="dateEnd")
-	private String dateFin;
+	 @Column(name = "dateEnd")
+	 private LocalDate dateFin;
 
 	@Column(name="location")
 	private String lieu;
@@ -31,59 +32,54 @@ public class Session {// implements Serializable{??
 	@Column(name = "price")
 	private float prix;
 
-	//*sessions <--> 1 salle
-	@ManyToOne/*(cascade=CascadeType.ALL)*/ //#!TODO: check cascade Type!!
-	@JoinColumn(name="idSalle")
-	private Salle salle = new Salle();
+    @ManyToOne
+    @JoinColumn(name = "idClassroom")
+    private Salle salle;
 
-	//* sessions --> * stagiaires
-	@ManyToMany/*(cascade=CascadeType.PERSIST) */////#!TODO: check cascade Type!!
-	@JoinTable(name="sessions_trainees",
-	joinColumns=@JoinColumn(name="sessions_ID"),
-	inverseJoinColumns=@JoinColumn(name="trainees_ID"))
-	private Set<Stagiaire> stagiaires = new HashSet<Stagiaire>();
+    @ManyToOne
+    @JoinColumn(name = "idTraining")
+    private Formation formation;
 
-	//1 session --> * evalSession 
-	@OneToMany/*(cascade=CascadeType.ALL) */ //#!TODO: check cascade Type!!
-	private Set<EvalSession> evalSessions = new HashSet<EvalSession>();
+    @ManyToOne
+    @JoinColumn(name = "idTrainer")
+    private Formateur formateur;
 
-	//session *<-->1 formateur
-	@ManyToOne/*(cascade=CascadeType.PERSIST)*/ //#!TODO: check cascade Type!!
-	@JoinColumn(name="idFormateur")
-	private Formateur formateur = new Formateur();
+    @OneToMany
+    @JoinColumn(name = "pivotEvalSession")
+    private Set<EvalSession> evalSessions;
 
-	
-	//session *<-->1 formation
-	@ManyToOne/*(cascade=CascadeType.PERSIST)*/  //#!TODO: check cascade Type!!
-	@JoinColumn(name="idFormation")
-	private Formation formation= new Formation();
-	//private HashSet<Formation> formations = new HashSet<Formation>(); //by J-M
-
+    @ManyToMany
+    @JoinTable(
+        name = "sessionTrainee",
+        joinColumns = { @JoinColumn(name = "idSession") },
+        inverseJoinColumns = { @JoinColumn(name = "idTrainee") }
+    )
+    private Set<Stagiaire> stagiaires;
 	public Session() {}
-
-	public Session(String dateDebut, String dateFin, String lieu, float prix) {
+	public Session(long idSession, LocalDate dateDebut, LocalDate dateFin, String lieu, float prix) {
+		super();
+		this.idSession = idSession;
 		this.dateDebut = dateDebut;
 		this.dateFin = dateFin;
 		this.lieu = lieu;
 		this.prix = prix;
 	}
-
 	public long getIdSession() {
 		return idSession;
 	}
 	public void setIdSession(long idSession) {
 		this.idSession = idSession;
 	}
-	public String getDateDebut() {
+	public LocalDate getDateDebut() {
 		return dateDebut;
 	}
-	public void setDateDebut(String dateDebut) {
+	public void setDateDebut(LocalDate dateDebut) {
 		this.dateDebut = dateDebut;
 	}
-	public String getDateFin() {
+	public LocalDate getDateFin() {
 		return dateFin;
 	}
-	public void setDateFin(String dateFin) {
+	public void setDateFin(LocalDate dateFin) {
 		this.dateFin = dateFin;
 	}
 	public String getLieu() {
@@ -92,65 +88,51 @@ public class Session {// implements Serializable{??
 	public void setLieu(String lieu) {
 		this.lieu = lieu;
 	}
-	public float getPrixSession() {
+	public float getPrix() {
 		return prix;
 	}
-	public void setPrixSession(float prix) {
+	public void setPrix(float prix) {
 		this.prix = prix;
 	}
-
+	public Salle getSalle() {
+		return salle;
+	}
+	public void setSalle(Salle salle) {
+		this.salle = salle;
+	}
+	public Formation getFormation() {
+		return formation;
+	}
+	public void setFormation(Formation formation) {
+		this.formation = formation;
+	}
+	public Formateur getFormateur() {
+		return formateur;
+	}
+	public void setFormateur(Formateur formateur) {
+		this.formateur = formateur;
+	}
+	public Set<EvalSession> getEvalSessions() {
+		return evalSessions;
+	}
+	public void setEvalSessions(Set<EvalSession> evalSessions) {
+		this.evalSessions = evalSessions;
+	}
+	public Set<Stagiaire> getStagiaires() {
+		return stagiaires;
+	}
+	public void setStagiaires(Set<Stagiaire> stagiaires) {
+		this.stagiaires = stagiaires;
+	}
 	@Override
 	public String toString() {
 		return "Session [idSession=" + idSession + ", dateDebut=" + dateDebut + ", dateFin=" + dateFin + ", lieu="
 				+ lieu + ", prix=" + prix + "]";
 	}
-
-	public Salle getSalle() {
-		return salle;
-	}
-
-	public void setSalle(Salle salle) {
-		this.salle = salle;
-	}
-
-	public Set<Stagiaire> getStagiaires() {
-		return stagiaires;
-	}
-
-	public void setStagiaires(Set<Stagiaire> stagiaires) {
-		this.stagiaires = stagiaires;
-	}
-
-	public Set<EvalSession> getEvalSession() {
-		return evalSessions;
-	}
-
-	public void setEvalSession(Set<EvalSession> evalSession) {
-		this.evalSessions = evalSession;
-	}
-
-
-	public Formation getFormation() {
-		return formation;
-	}
-
-	public void setFormation(Formation formation) {
-		this.formation = formation;
-	}
-	
-	public Formateur getFormateur() {
-		return formateur;
-	}
-
-	public void setFormateur(Formateur formateur) {
-		this.formateur = formateur;
-	}
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(dateDebut, dateFin, idSession, lieu, prix);
 	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -164,6 +146,5 @@ public class Session {// implements Serializable{??
 				&& idSession == other.idSession && Objects.equals(lieu, other.lieu)
 				&& Float.floatToIntBits(prix) == Float.floatToIntBits(other.prix);
 	}
-	
 	
 }

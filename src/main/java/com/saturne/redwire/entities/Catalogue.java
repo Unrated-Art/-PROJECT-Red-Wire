@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -34,7 +35,8 @@ public class Catalogue{// implements Serializable{
 	
 	
 	//1 catalogue --> * formations
-	@OneToMany(cascade=CascadeType.ALL)
+	@OneToMany//(cascade=CascadeType.ALL)
+	@JoinColumn(name = "catalogueFormation")
 	private Set<Formation> formations = new HashSet<Formation>();
 
 	

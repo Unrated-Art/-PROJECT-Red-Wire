@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity 
-@Table(name="evalSession")
+@Table(name="evalSessions")
 public class EvalSession {// implements Serializable{
 
 	@Id
@@ -44,7 +44,7 @@ public class EvalSession {// implements Serializable{
 	
 	//* eval session --> 1 stagiaire
 	@ManyToOne//(cascade=CascadeType.PERSIST)// ou CascadeType.ALL?? //#!TODO: vérifier!! cascade type
-	@JoinColumn(name="idStagiaire")
+	@JoinColumn(name="idTrainee")
 	private Stagiaire trainee;
 		
 	public EvalSession() {}
