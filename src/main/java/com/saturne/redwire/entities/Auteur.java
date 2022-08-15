@@ -79,3 +79,4 @@ public class Auteur {
         return idAuteur == other.idAuteur && Objects.equals(nomA, other.nomA) && Objects.equals(prenomA, other.prenomA);
     }
 }
+

@@ -2,12 +2,8 @@ package com.saturne.redwire.services;
 
 import com.saturne.redwire.entities.Session;
 import com.saturne.redwire.repositories.SessionRepository;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,31 +25,20 @@ public class SessionService {
         return sessionRepository.save(s);
     }
 
-    public Session getSession(long id) {
+    public Session getSessionByIdSession(Long id) {
         return sessionRepository.getReferenceByIdSession(id);
     }
 
-    public List<Session> getSessions(HashMap<String, String> params) {
-        DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
-        Stream<Session> sessionsStream = sessionRepository.findAll().stream();
-        if (params.containsKey("dateStart")) {
-            sessionsStream = sessionsStream.filter(s -> LocalDate.parse(params.get("dateStart"), f).isBefore(s.getDateDebut()));
+    public List<Session> getSessions(HashMap<String, String> keywords) {
+        if (keywords.size() != 0) {
+            // Filtrer
+            // sessionRepository.findAll()
         }
-        if (params.containsKey("dateEnd")) {
-            sessionsStream = sessionsStream.filter(s -> LocalDate.parse(params.get("dateEnd"), f).isAfter(s.getDateFin()));
-        }
-        if (params.containsKey("location")) {
-            sessionsStream = sessionsStream.filter(s -> s.getLieu().toUpperCase().contains(params.get("location").toUpperCase()));
-        }
-        if (params.containsKey("price")) {
-            System.out.println(Float.parseFloat(params.get("price")));
-            sessionsStream = sessionsStream.filter(s -> Float.parseFloat(params.get("price")) > s.getPrix());
-        }
-        return sessionsStream.collect(Collectors.toList());
+        return sessionRepository.findAll();
     }
 
-    public void deleteSession(long id) {
+    public void deleteSessionById(Long id) {
+        // boolean status = false;
         sessionRepository.deleteById(id);
     }
 }
