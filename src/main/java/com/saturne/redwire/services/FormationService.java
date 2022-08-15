@@ -1,4 +1,4 @@
-package com.saturne.services;
+package com.saturne.redwire.services;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,9 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.saturne.entities.Formation;
+import com.saturne.redwire.entities.Formation;
 import com.saturne.redwire.exceptions.TrainingNotFoundException;
-import com.saturne.repositories.FormationRepository;
+import com.saturne.redwire.repositories.FormationRepository;
 
 
 @Service

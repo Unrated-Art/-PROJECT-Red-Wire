@@ -1,4 +1,4 @@
-package com.saturne.entities;
+package com.saturne.redwire.entities;
 
 import java.util.Objects;
 import javax.persistence.Column;
@@ -26,9 +26,15 @@ public class Catalogue {
     @Column(name = "creationDate")
     private String dateCreation;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idAuthor")
-    private Auteur auteur;
+    
+   //"title": "titre1",
+    //"creationDate": "20janv 2022"
+    
+    
+    //@ManyToOne(fetch = FetchType.LAZY)
+    //@JoinColumn(name = "idAuthor")
+    @Column(name = "auteur")
+    private String auteur;
 
     public Catalogue() {}
 
@@ -67,11 +73,11 @@ public class Catalogue {
         this.dateCreation = dateCreation;
     }
 
-    public Auteur getAuteur() {
+    public String getAuteur() {
         return auteur;
     }
 
-    public void setAuteur(Auteur auteur) {
+    public void setAuteur(String auteur) {
         this.auteur = auteur;
     }
 

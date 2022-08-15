@@ -1,10 +1,10 @@
-package com.saturne.repositories;
+package com.saturne.redwire.repositories;
 
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.saturne.entities.Formation;
+import com.saturne.redwire.entities.Formation;
 
 public interface FormationRepository extends JpaRepository<Formation, Long> {
 

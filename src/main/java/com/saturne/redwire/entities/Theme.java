@@ -1,4 +1,4 @@
-package com.saturne.entities;
+package com.saturne.redwire.entities;
 
 import java.util.Objects;
 import javax.persistence.Column;

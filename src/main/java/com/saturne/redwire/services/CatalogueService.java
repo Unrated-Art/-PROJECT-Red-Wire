@@ -1,4 +1,4 @@
-package com.saturne.services;
+package com.saturne.redwire.services;
 
 import java.util.List;
 
@@ -6,26 +6,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.saturne.entities.Catalogue;
+import com.saturne.redwire.entities.Catalogue;
 import com.saturne.redwire.exceptions.CatalogueNotFoundException;
-import com.saturne.repositories.CatalogueRepository;
+import com.saturne.redwire.repositories.CatalogueRepository;
 
 @Service
 @Transactional
 public class CatalogueService {
-	private final CatalogueRepository catalogueRepository;
 	
-//Injection de dépendance 
+	//Injection de dépendance 	
 	@Autowired
-	public CatalogueService(CatalogueRepository catalogueRepository) {
-		this.catalogueRepository = catalogueRepository;
-}
+	private CatalogueRepository catalogueRepository;
+	
 //Ajouter un catalogue
 	public Catalogue addCatalogue(Catalogue catalogue) {
 		
-		
 		//catalogue.setCatalogueCode(UUID.randomUUID().toString());
-		return catalogueRepository.save(catalogue) ;
+		return catalogueRepository.save(catalogue);
 	}
 	
 //Rechercher tous les catalogues et les afficher @param reference
@@ -36,7 +33,7 @@ public class CatalogueService {
 //Rechercher un catalogue et l'afficher @param reference
 	
 	public Catalogue findCatalogueById(long id) {
-        return catalogueRepository.findCatalogueById(id)
+        return catalogueRepository.findCatalogueByIdCatalogue(id)
         		.orElseThrow(() -> new CatalogueNotFoundException("Catalogue by id " + id + "was not found"));
     }
 	

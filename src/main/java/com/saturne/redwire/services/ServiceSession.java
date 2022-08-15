@@ -1,4 +1,4 @@
-package com.saturne.services;
+package com.saturne.redwire.services;
 
 public class ServiceSession {
 

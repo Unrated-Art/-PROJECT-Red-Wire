@@ -8,10 +8,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import com.saturne.entities.Catalogue;
-import com.saturne.entities.Formation;
-import com.saturne.services.CatalogueService;
-import com.saturne.services.FormationService;
+import com.saturne.redwire.entities.Catalogue;
+import com.saturne.redwire.entities.Formation;
+import com.saturne.redwire.services.CatalogueService;
+import com.saturne.redwire.services.FormationService;
 
 @SpringBootApplication
 public class RedWireBackendApplication {

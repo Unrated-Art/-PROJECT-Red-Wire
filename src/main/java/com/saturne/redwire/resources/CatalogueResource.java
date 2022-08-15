@@ -1,4 +1,4 @@
-package com.saturne.resources;
+package com.saturne.redwire.resources;
 
 import java.util.List;
 
@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.saturne.entities.Catalogue;
-import com.saturne.services.CatalogueService;
+import com.saturne.redwire.entities.Catalogue;
+import com.saturne.redwire.services.CatalogueService;
 
 @RestController
-@RequestMapping("/catalogue")
+@RequestMapping(path = "/catalogue")
 public class CatalogueResource {
 	private final CatalogueService serviceCatalogue;
 	
@@ -23,8 +23,8 @@ public class CatalogueResource {
 		this.serviceCatalogue = serviceCatalogue;
 	}
 	
-	@GetMapping("/allcatalogue")
-	public ResponseEntity<List<Catalogue>> getAllCatalogues () {
+	@GetMapping("/all")
+	public ResponseEntity<List<Catalogue>> getAllCatalogues() {
 		List<Catalogue> catalogues = serviceCatalogue.findAllCatalogues();
 		return new ResponseEntity<>(catalogues, HttpStatus.OK);
 	}
