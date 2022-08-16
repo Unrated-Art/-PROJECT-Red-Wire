@@ -1,8 +1,6 @@
 package com.saturne.redwire.resources;
 
-import com.saturne.redwire.entities.Formation;
 import com.saturne.redwire.entities.Session;
-import com.saturne.redwire.services.FormationService;
 import com.saturne.redwire.services.SessionService;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -34,7 +32,7 @@ public class SessionResource {
     @PostMapping(name = "create.session")
     @ResponseStatus(HttpStatus.CREATED)
     public Session createSession(
-        @RequestParam(name = "idTraining") long idTraining,
+       // @RequestParam(name = "idTraining") long idTraining,
         @RequestParam(name = "dateStart") String dateStart,
         @RequestParam(name = "dateEnd") String dateEnd,
         @RequestParam(name = "location") String location,
@@ -48,12 +46,12 @@ public class SessionResource {
         s.setPrix(price);
         s = sessionService.createSession(s);
 
-        try {
-            FormationService fs = new FormationService();
-            Formation training = fs.findFormationById(idTraining);
-            s.setFormation(training);
-            s = sessionService.updateSession(s);
-        } catch (Exception e) {}
+//        try {
+//            FormationService fs = new FormationService();
+//            Formation training = fs.findFormationById(idTraining);
+//            s.setFormation(training);
+//            s = sessionService.updateSession(s);
+//        } catch (Exception e) {}
 
         return s;
     }

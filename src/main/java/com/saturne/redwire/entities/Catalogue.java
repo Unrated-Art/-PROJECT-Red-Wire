@@ -46,7 +46,8 @@ public class Catalogue{// implements Serializable{
 		super();
 	}
 
-	public Catalogue(String auteur, String dateCreation) {
+	public Catalogue(String titre, String auteur, String dateCreation){
+		this.titre = titre;
 		this.auteur = auteur;
 		this.dateCreation = dateCreation;
 	}
@@ -96,13 +97,13 @@ public class Catalogue{// implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Catalogue [idCatalogue=" + idCatalogue + ", auteur=" + auteur 
-				+ ", dateCreation=" + dateCreation + "]";
+		return "Catalogue [idCatalogue=" + idCatalogue + ", titre=" + titre + ", auteur=" + auteur + ", dateCreation="
+				+ dateCreation + "]";
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(auteur, dateCreation, idCatalogue);
+		return Objects.hash(auteur, dateCreation, idCatalogue, titre);
 	}
 
 	@Override
@@ -115,6 +116,8 @@ public class Catalogue{// implements Serializable{
 			return false;
 		Catalogue other = (Catalogue) obj;
 		return Objects.equals(auteur, other.auteur) && Objects.equals(dateCreation, other.dateCreation)
-				&& idCatalogue == other.idCatalogue;
-	}	
+				&& idCatalogue == other.idCatalogue && Objects.equals(titre, other.titre);
+	}
+
+	
 }

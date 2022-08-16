@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.saturne.redwire.entities.Catalogue;
 
 @Repository
-public interface CatalogueRepository extends JpaRepository<Catalogue, Long> {
+public interface CatalogueRepository extends JpaRepository<Catalogue, Integer> {
 	
-	Optional<Catalogue> findCatalogueByIdCatalogue (long id);
+	Optional<Catalogue> findCatalogueByIdCatalogue (int id);
 }

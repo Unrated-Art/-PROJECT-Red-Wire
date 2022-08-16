@@ -75,9 +75,9 @@ public class RedWireBackendApplication {
 	public CommandLineRunner demo1(CatalogueService catalogueService) {
 	return (args) -> {
 		
-		catalogueService.addCatalogue(new Catalogue("title", "creationDate"));
-		catalogueService.addCatalogue(new Catalogue("title2", "creationDate2"));
-		catalogueService.addCatalogue(new Catalogue("title3", "creationDate3"));
+		catalogueService.addCatalogue(new Catalogue("title", "auteur1","creationDate"));
+		catalogueService.addCatalogue(new Catalogue("title2", "auteur2", "creationDate2"));
+		catalogueService.addCatalogue(new Catalogue("title3", "auteur3", "creationDate3"));
 	// fetch all catalogues
 	log.info("Catalogues found with findAllCatalogues():");
 	log.info("-------------------------------");

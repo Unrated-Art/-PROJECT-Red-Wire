@@ -32,7 +32,7 @@ public class CatalogueService {
 	
 //Rechercher un catalogue et l'afficher @param reference
 	
-	public Catalogue findCatalogueById(long id) {
+	public Catalogue findCatalogueById(int id) {
         return catalogueRepository.findCatalogueByIdCatalogue(id)
         		.orElseThrow(() -> new CatalogueNotFoundException("Catalogue by id " + id + "was not found"));
     }
