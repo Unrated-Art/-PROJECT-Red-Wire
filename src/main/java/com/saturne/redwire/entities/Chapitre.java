@@ -1,8 +1,6 @@
 package com.saturne.redwire.entities;
 
-
 import java.util.Objects;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,86 +12,96 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "chapters")
-public class Chapitre{ //implemets serializable??
+public class Chapitre { //implemets serializable??
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idChapter")
-    private long idChap;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "idChapter")
+  private long idChap;
 
-    @Column(name = "name")
-    private String nomChapitre;
+  @Column(name = "name")
+  private String nomChapitre;
 
-    @Column(name = "content")
-    private String contenu;
-    
-    @ManyToOne
-	@JoinColumn(name="idTraining") 
-	private Formation formation= new Formation(); 
+  @Column(name = "content")
+  private String contenu;
 
-    public Chapitre() {}
+  @ManyToOne
+  @JoinColumn(name = "idTraining")
+  private Formation formation = new Formation();
 
-    public Chapitre(String nomChapitre, String contenu) {
-        this.nomChapitre = nomChapitre;
-        this.contenu = contenu;
-    }
+  public Chapitre() {}
 
-    public Chapitre(long idChap, String nomChapitre, String contenu) {
-        this.idChap = idChap;
-        this.nomChapitre = nomChapitre;
-        this.contenu = contenu;
-    }
+  public Chapitre(String nomChapitre, String contenu) {
+    this.nomChapitre = nomChapitre;
+    this.contenu = contenu;
+  }
 
-    public long getIdChap() {
-        return idChap;
-    }
+  public Chapitre(long idChap, String nomChapitre, String contenu) {
+    this.idChap = idChap;
+    this.nomChapitre = nomChapitre;
+    this.contenu = contenu;
+  }
 
-    public void setIdChap(long idChap) {
-        this.idChap = idChap;
-    }
+  public long getIdChap() {
+    return idChap;
+  }
 
-    public String getNomChapitre() {
-        return nomChapitre;
-    }
+  public void setIdChap(long idChap) {
+    this.idChap = idChap;
+  }
 
-    public void setNomChapitre(String nomChapitre) {
-        this.nomChapitre = nomChapitre;
-    }
+  public String getNomChapitre() {
+    return nomChapitre;
+  }
 
-    public String getContenu() {
-        return contenu;
-    }
+  public void setNomChapitre(String nomChapitre) {
+    this.nomChapitre = nomChapitre;
+  }
 
-    public void setContenu(String contenu) {
-        this.contenu = contenu;
-    }
+  public String getContenu() {
+    return contenu;
+  }
 
-    
-    public Formation getFormation() {
-		return formation;
-	}
+  public void setContenu(String contenu) {
+    this.contenu = contenu;
+  }
 
-	public void setFormation(Formation formation) {
-		this.formation = formation;
-	}
+  public Formation getFormation() {
+    return formation;
+  }
 
-	@Override
-    public String toString() {
-        return "Chapitre [idChap=" + idChap + ", nomChapitre=" + nomChapitre + ", contenu=" + contenu + "]";
-    }
+  public void setFormation(Formation formation) {
+    this.formation = formation;
+  }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(contenu, idChap, nomChapitre);
-    }
+  @Override
+  public String toString() {
+    return (
+      "Chapitre [idChap=" +
+      idChap +
+      ", nomChapitre=" +
+      nomChapitre +
+      ", contenu=" +
+      contenu +
+      "]"
+    );
+  }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null) return false;
-        if (getClass() != obj.getClass()) return false;
-        Chapitre other = (Chapitre) obj;
-        return Objects.equals(contenu, other.contenu) && idChap == other.idChap && Objects.equals(nomChapitre, other.nomChapitre);
-    }
+  @Override
+  public int hashCode() {
+    return Objects.hash(contenu, idChap, nomChapitre);
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) return true;
+    if (obj == null) return false;
+    if (getClass() != obj.getClass()) return false;
+    Chapitre other = (Chapitre) obj;
+    return (
+      Objects.equals(contenu, other.contenu) &&
+      idChap == other.idChap &&
+      Objects.equals(nomChapitre, other.nomChapitre)
+    );
+  }
 }
-
