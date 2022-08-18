@@ -1,0 +1,26 @@
+{
+  "name": "redwire",
+  "version": "1.0.0",
+  "description": "RedWire - Server",
+  "main": "index.js",
+  "scripts": {
+    "fix:xml": "npx prettier --write \"**/*.xml\"",
+    "fix:java": "npx prettier --write \"**/*.java\"",
+    "fix": "npm run fix:java && npm run fix:xml",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install",
+    "scriptname": "husky install"
+  },
+  "keywords": [
+    "java",
+    "spring"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@prettier/plugin-xml": "^2.2.0",
+    "husky": "^8.0.1",
+    "prettier": "2.7.1",
+    "prettier-plugin-java": "^1.6.2"
+  }
+}

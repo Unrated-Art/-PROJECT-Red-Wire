@@ -10,92 +10,83 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
- 
+
 @Entity
-@Table(name="themes")
-public class Theme{// implements Serializable{
-	
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="idTheme")
-	private long idTheme;
+@Table(name = "themes")
+public class Theme { // implements Serializable{
 
-    @Column(name="themeName")
-    private String nomTheme;
-	
-    //1 theme <--> * sous-themes
-    @OneToMany//( mappedBy="theme")//, insert=false , update=false )
-	private Set<Theme> sousTheme = new HashSet<Theme>();
-	
-//    //* sous-themes <--> 1 theme
-//    @ManyToOne
-//    @JoinColumn(name="idTheme")
-//	private Theme theme = new Theme();
-    
-    
-	public Theme() {}
-	
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "idTheme")
+  private long idTheme;
 
+  @Column(name = "themeName")
+  private String nomTheme;
 
-	//constructeur
-	public Theme(String nomTheme) {
-		this.nomTheme = nomTheme;
-	}
+  //1 theme <--> * sous-themes
+  @OneToMany //( mappedBy="theme")//, insert=false , update=false )
+  private Set<Theme> sousTheme = new HashSet<Theme>();
 
-	public long getIdTheme() {
-		return idTheme;
-	}
+  //    //* sous-themes <--> 1 theme
+  //    @ManyToOne
+  //    @JoinColumn(name="idTheme")
+  //	private Theme theme = new Theme();
 
-	public void setIdTheme(long idTheme) {
-		this.idTheme = idTheme;
-	}
+  public Theme() {}
 
-	public String getNomTheme() {
-		return nomTheme;
-	}
+  //constructeur
+  public Theme(String nomTheme) {
+    this.nomTheme = nomTheme;
+  }
 
-	public void setNomTheme(String nomTheme) {
-		this.nomTheme = nomTheme;
-	}
+  public long getIdTheme() {
+    return idTheme;
+  }
 
-	public Set<Theme> getSousTheme() {
-		return sousTheme;
-	}
+  public void setIdTheme(long idTheme) {
+    this.idTheme = idTheme;
+  }
 
-	public void setSousTheme(Set<Theme> sousTheme) {
-		this.sousTheme = sousTheme;
-	}
+  public String getNomTheme() {
+    return nomTheme;
+  }
 
-//	public Theme getTheme() {
-//		return theme;
-//	}
-//
-//	public void setTheme(Theme theme) {
-//		this.theme = theme;
-//	}
+  public void setNomTheme(String nomTheme) {
+    this.nomTheme = nomTheme;
+  }
 
-	@Override
-	public String toString() {
-		return "Theme [idTheme=" + idTheme + ", nomTheme=" + nomTheme + "]";
-	}
+  public Set<Theme> getSousTheme() {
+    return sousTheme;
+  }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(idTheme, nomTheme);
-	}
+  public void setSousTheme(Set<Theme> sousTheme) {
+    this.sousTheme = sousTheme;
+  }
 
+  //	public Theme getTheme() {
+  //		return theme;
+  //	}
+  //
+  //	public void setTheme(Theme theme) {
+  //		this.theme = theme;
+  //	}
 
+  @Override
+  public String toString() {
+    return "Theme [idTheme=" + idTheme + ", nomTheme=" + nomTheme + "]";
+  }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Theme other = (Theme) obj;
-		return idTheme == other.idTheme 
-				&& Objects.equals(nomTheme, other.nomTheme);
-	}
+  @Override
+  public int hashCode() {
+    return Objects.hash(idTheme, nomTheme);
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) return true;
+    if (obj == null) return false;
+    if (getClass() != obj.getClass()) return false;
+    Theme other = (Theme) obj;
+    return idTheme == other.idTheme && Objects.equals(nomTheme, other.nomTheme);
+  }
 }

@@ -1,6 +1,5 @@
 package com.saturne.redwire.entities;
 
-
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -15,72 +14,67 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="preTest")
-public class PreTest {// implements Serializable??
+@Table(name = "preTest")
+public class PreTest { // implements Serializable??
 
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="idTest")
-	private long idTest;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "idTest")
+  private long idTest;
 
-	@Column(name="title")
-	private String titre;
-	
-	
-	// 1 pretset <--> * questions
-	@OneToMany(mappedBy="idQuestion")
-	private Set<Question> questions = new HashSet<Question>();
-	
-	public PreTest() {}
+  @Column(name = "title")
+  private String titre;
 
-	public PreTest(String titre) {
-		this.titre = titre;
-	}
+  // 1 pretset <--> * questions
+  @OneToMany(mappedBy = "idQuestion")
+  private Set<Question> questions = new HashSet<Question>();
 
-	public long getIdTest() {
-		return idTest;
-	}
+  public PreTest() {}
 
-	public void setIdTest(long idTest) {
-		this.idTest = idTest;
-	}
+  public PreTest(String titre) {
+    this.titre = titre;
+  }
 
-	public String getTitre() {
-		return titre;
-	}
+  public long getIdTest() {
+    return idTest;
+  }
 
-	public void setTitre(String titre) {
-		this.titre = titre;
-	}	
-	
-	public Set<Question> getQuestions() {
-		return questions;
-	}
+  public void setIdTest(long idTest) {
+    this.idTest = idTest;
+  }
 
-	public void setQuestions(Set<Question> questions) {
-		this.questions = questions;
-	}
+  public String getTitre() {
+    return titre;
+  }
 
-	@Override
-	public String toString() {
-		return "PreTest [idTest=" + idTest + ", titre=" + titre + "]";
-	}
+  public void setTitre(String titre) {
+    this.titre = titre;
+  }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(idTest, titre);
-	}
+  public Set<Question> getQuestions() {
+    return questions;
+  }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		PreTest other = (PreTest) obj;
-		return idTest == other.idTest
-				&& Objects.equals(titre, other.titre);
-	}
+  public void setQuestions(Set<Question> questions) {
+    this.questions = questions;
+  }
+
+  @Override
+  public String toString() {
+    return "PreTest [idTest=" + idTest + ", titre=" + titre + "]";
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(idTest, titre);
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) return true;
+    if (obj == null) return false;
+    if (getClass() != obj.getClass()) return false;
+    PreTest other = (PreTest) obj;
+    return idTest == other.idTest && Objects.equals(titre, other.titre);
+  }
 }
