@@ -1,17 +1,21 @@
 package com.saturne.redwire.resources;
 
 import com.saturne.redwire.entities.Formation;
+import com.saturne.redwire.entities.Theme;
 import com.saturne.redwire.services.FormationService;
 import java.util.List;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -29,6 +33,15 @@ public class FormationResource {
     List<Formation> formations = sf.findAllFormations();
     return new ResponseEntity<>(formations, HttpStatus.OK);
   }
+  
+//  @GetMapping("/all/themes")
+//  public ResponseEntity<List<Theme>> getAllThemes() {
+//	  List<Formation> formations = sf.findAllFormations();
+//	  for(int i=0; ; i++)
+//    List<Theme> allThemes ;
+//		  //allThemes= sf.findAllFormations().for;
+//    return new ResponseEntity<>(allThemes, HttpStatus.OK);
+//  }
 
   @GetMapping(name = "get.training", path = "findbyId/{id}")
   public ResponseEntity<Formation> getFormationById(
@@ -56,50 +69,28 @@ public class FormationResource {
     return new ResponseEntity<>(formations, HttpStatus.OK);
   }
 
-  @PostMapping(name = "create.training", path = "/add") //,
-  //	    		consumes = MediaType.APPLICATION_JSON_VALUE,
-  //	            produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Formation> addFormation(
-    @RequestParam(name = "reference") String reference,
-    @RequestParam(name = "titref") String titref,
-    @RequestParam(name = "lieu") String lieu,
-    @RequestParam(name = "interFormation") boolean interFormation,
-    @RequestParam(name = "duree") int duree,
-    @RequestParam(name = "prerequis") String prerequis,
-    @RequestParam(name = "objectif") String objectif,
-    @RequestParam(name = "publicVise") String publicVise,
-    @RequestParam(name = "programmeDetaille") String programmeDetaille
-  ) {
-    Formation newf = new Formation();
-    newf.setReference(reference);
-    newf.setTitref(titref);
-    newf.setLieu(lieu);
-    newf.setInterFormation(interFormation);
-    newf.setDuree(duree);
-    newf.setPrerequis(prerequis);
-    newf.setObjectif(objectif);
-    newf.setPublicVise(publicVise);
-    newf.setProgrammeDetaille(programmeDetaille);
-    sf.addFormation(newf);
-    return new ResponseEntity<>(newf, HttpStatus.CREATED);
+  /***
+   * 
+   * @param newf
+   * @return 
+   */
+  @PostMapping(
+	  path = "/add",
+	  name = "create.training",
+	  consumes = MediaType.APPLICATION_JSON_VALUE
+  )
+  @ResponseStatus(HttpStatus.CREATED)
+  public Formation addFormation(@RequestBody Formation newf){
+	  try {
+		  sf.addFormation(newf);  
+	  }
+	  catch(Exception ex) {
+		System.out.println(ex.getMessage());
+		return null;
+	  }
+	  return newf;
   }
 
-  /**	
- * addFormation : Consumes/produces JSON
- *     @PostMapping(path = "/addJSON", 
-	            consumes = MediaType.APPLICATION_JSON_VALUE, 
-	            produces = MediaType.APPLICATION_JSON_VALUE)
-	    public ResponseEntity<Formation> create(@RequestBody Formation newf) {
-	    	Formation f = sf.addFormation(newf);
-	        if (f != null) {
-	        
-	        	return null;
-	            //throw new ServerException("Training not found");
-	        } else {
-	            return new ResponseEntity<>(f, HttpStatus.CREATED);
-	        }
-	    }
-*/
 
   @PutMapping("/update/{id}")
   public ResponseEntity<Formation> updateFormation(
