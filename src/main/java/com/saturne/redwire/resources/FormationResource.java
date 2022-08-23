@@ -91,7 +91,6 @@ public class FormationResource {
 	  return newf;
   }
 
-
   @PutMapping("/update/{id}")
   public ResponseEntity<Formation> updateFormation(
     @PathVariable(name = "id") long id,
