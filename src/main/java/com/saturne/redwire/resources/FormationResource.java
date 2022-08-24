@@ -90,36 +90,29 @@ public class FormationResource {
 	  }
 	  return newf;
   }
-
+  
   @PutMapping("/update/{id}")
-  public ResponseEntity<Formation> updateFormation(
-    @PathVariable(name = "id") long id,
-    @RequestParam(name = "reference") String reference,
-    @RequestParam(name = "titref") String titref,
-    @RequestParam(name = "lieu") String lieu,
-    @RequestParam(name = "interFormation") boolean interFormation,
-    @RequestParam(name = "duree") int duree,
-    @RequestParam(name = "prerequis") String prerequis,
-    @RequestParam(name = "objectif") String objectif,
-    @RequestParam(name = "publicVise") String publicVise,
-    @RequestParam(name = "programmeDetaille") String programmeDetaille
-  ) {
-    Formation uf = sf.findFormationById(id);
-    if (uf != null) {
-      if (reference != null) uf.setReference(reference);
-      if (titref != null) uf.setTitref(titref);
-      if (lieu != null) uf.setLieu(lieu);
-
-      uf.setInterFormation(interFormation);
-      if (duree != 0) uf.setDuree(duree);
-      if (prerequis != null) uf.setPrerequis(prerequis);
-      if (objectif != null) uf.setObjectif(objectif);
-      if (publicVise != null) uf.setPublicVise(publicVise);
-      if (programmeDetaille != null) uf.setProgrammeDetaille(programmeDetaille);
-    }
+  public ResponseEntity<Formation> updateFormation(@RequestBody Formation uf){
+//    ,@PathVariable(name = "id") long id
+//  ) {
+//    Formation uf = sf.findFormationById(id);
+//    f.
+//    if (uf != null) {
+//      if (f.getReference() != null) uf.setReference(f.getReference());
+//      if (f.getTitref() != null) uf.setTitref(titref);
+//      if (lieu != null) uf.setLieu(lieu);
+//
+//      uf.setInterFormation(interFormation);
+//      if (duree != 0) uf.setDuree(duree);
+//      if (prerequis != null) uf.setPrerequis(prerequis);
+//      if (objectif != null) uf.setObjectif(objectif);
+//      if (publicVise != null) uf.setPublicVise(publicVise);
+//      if (programmeDetaille != null) uf.setProgrammeDetaille(programmeDetaille);
+//    }
     sf.updateFormation(uf);
     return new ResponseEntity<>(uf, HttpStatus.OK);
   }
+  
 
   @DeleteMapping("/delete/{id}")
   public ResponseEntity<?> deleteFormation(@PathVariable("id") long id) {
