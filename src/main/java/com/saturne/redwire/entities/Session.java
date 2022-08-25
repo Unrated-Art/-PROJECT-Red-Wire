@@ -3,6 +3,7 @@ package com.saturne.redwire.entities;
 import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,9 +16,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+/*
+ * Sessions
+ */
 @Entity
 @Table(name = "sessions")
-public class Session {
+public class Session { // implements Serializable{??
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,7 +53,7 @@ public class Session {
     private Formateur formateur;
 
     @OneToMany
-    @JoinColumn(name = "evalSessions")
+    @JoinColumn(name = "pivotEvalSession")
     private Set<EvalSession> evalSessions;
 
     @ManyToMany
@@ -63,14 +67,6 @@ public class Session {
     public Session() {}
 
     public Session(LocalDate dateDebut, LocalDate dateFin, String lieu, float prix) {
-        this.dateDebut = dateDebut;
-        this.dateFin = dateFin;
-        this.lieu = lieu;
-        this.prix = prix;
-    }
-
-    public Session(long idSession, LocalDate dateDebut, LocalDate dateFin, String lieu, float prix) {
-        this.idSession = idSession;
         this.dateDebut = dateDebut;
         this.dateFin = dateFin;
         this.lieu = lieu;
