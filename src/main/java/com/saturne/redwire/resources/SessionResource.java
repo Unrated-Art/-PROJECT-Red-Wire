@@ -4,19 +4,15 @@ import com.saturne.redwire.entities.Formation;
 import com.saturne.redwire.entities.Session;
 import com.saturne.redwire.services.FormationService;
 import com.saturne.redwire.services.SessionService;
-
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.List;
-
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceException;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/api/session")
 public class SessionResource {
 
-	@Autowired
+    @Autowired
     private FormationService formationService;
 
     private final SessionService sessionService;
@@ -54,7 +50,7 @@ public class SessionResource {
     ) {
         HashMap<String, Object> params = new HashMap<>();
         if (idTraining > 0) {
-        	params.put("idTraining", idTraining);
+            params.put("idTraining", idTraining);
         }
         if (dateStart != null && this.isLocalDate(dateStart)) {
             params.put("dateStart", LocalDate.parse(dateStart, DateTimeFormatter.ISO_LOCAL_DATE));
@@ -73,15 +69,15 @@ public class SessionResource {
 
     @GetMapping(name = "get.session", path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Session> getSessionById(@PathVariable("id") long id) {
-    	Session s = null;
-		try {
-			s = sessionService.getSession(id);
-		} catch (EntityNotFoundException e) {
-			throw new PersistenceException("Error: Cannot FIND SESSION.");
-		}
+        Session s = null;
+        try {
+            s = sessionService.getSession(id);
+        } catch (EntityNotFoundException e) {
+            throw new PersistenceException("Error: Cannot FIND SESSION.");
+        }
         return new ResponseEntity<>(s, HttpStatus.OK);
     }
-    
+
     @PostMapping(name = "create.session", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Session> createSession(
         @RequestParam(value = "idTraining") long idTraining,
@@ -90,19 +86,19 @@ public class SessionResource {
         @RequestParam(value = "location") String location,
         @RequestParam(value = "price", defaultValue = "0") float price
     ) {
-    	DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
-    	Formation training = formationService.findFormationById(idTraining);
-    	if (training != null) {
-        	// SET SESSION
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
+        Formation training = formationService.findFormationById(idTraining);
+        if (training != null) {
+            // SET SESSION
             Session s = new Session();
             s.setDateDebut(LocalDate.parse(dateStart, formatter));
             s.setDateFin(LocalDate.parse(dateEnd, formatter));
             s.setLieu(location);
             s.setPrix(price);
             s.setFormation(training);
-        	return new ResponseEntity<>(sessionService.createSession(s), HttpStatus.CREATED);
-    	}
-    	return null;
+            return new ResponseEntity<>(sessionService.createSession(s), HttpStatus.CREATED);
+        }
+        return null;
     }
 
     @PutMapping(name = "update.session", path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -117,29 +113,29 @@ public class SessionResource {
         @RequestParam(value = "evalSessions[]", defaultValue = "[]") String[] evalSessions,
         @RequestParam(value = "stagiaires[]", defaultValue = "[]") String[] stagiaires
     ) {
-    	Session s = null;
-		try {
-			s = sessionService.getSession(idSession);
-		} catch (Exception e) {
-			throw new EntityNotFoundException("Error: Cannot FIND Session.");
-		}
-		if (s != null) {
-        	DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
+        Session s = null;
+        try {
+            s = sessionService.getSession(idSession);
+        } catch (Exception e) {
+            throw new EntityNotFoundException("Error: Cannot FIND Session.");
+        }
+        if (s != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
             if (dateStart != null) {
-            	LocalDate parsedDateStart = null;
+                LocalDate parsedDateStart = null;
                 try {
                     parsedDateStart = LocalDate.parse(dateStart, formatter);
                 } catch (DateTimeParseException e) {
-                	throw new DateTimeException("Error: Invalid Date Format 'dateStart'.");
+                    throw new DateTimeException("Error: Invalid Date Format 'dateStart'.");
                 }
                 s.setDateDebut(parsedDateStart);
             }
             if (dateEnd != null) {
-            	LocalDate parsedDateEnd = null;
+                LocalDate parsedDateEnd = null;
                 try {
-                	parsedDateEnd = LocalDate.parse(dateEnd, formatter);
+                    parsedDateEnd = LocalDate.parse(dateEnd, formatter);
                 } catch (DateTimeParseException e) {
-                	throw new DateTimeException("Error: Invalid Date Format 'dateEnd'.");
+                    throw new DateTimeException("Error: Invalid Date Format 'dateEnd'.");
                 }
                 s.setDateFin(parsedDateEnd);
             }
@@ -177,24 +173,24 @@ public class SessionResource {
     @DeleteMapping(name = "delete.session", path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteSessionById(@PathVariable("id") long id) {
-    	Session s = null;
-		try {
-			s = sessionService.getSession(id);
-		} catch (EntityNotFoundException e) {
-			throw new PersistenceException("Error: Cannot FIND SESSION.");
-		}
+        Session s = null;
+        try {
+            s = sessionService.getSession(id);
+        } catch (EntityNotFoundException e) {
+            throw new PersistenceException("Error: Cannot FIND SESSION.");
+        }
         if (s != null) {
             sessionService.deleteSession(s.getIdSession());
         }
     }
 
     private boolean isFloat(String nbStr) {
-    	try{
+        try {
             Float.parseFloat(nbStr);
         } catch (NumberFormatException e) {
-        	return false;
+            return false;
         }
-    	return true;
+        return true;
     }
 
     private boolean isLocalDate(String dateStr) {
