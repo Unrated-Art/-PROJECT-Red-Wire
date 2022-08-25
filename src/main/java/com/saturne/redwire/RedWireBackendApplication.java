@@ -6,9 +6,12 @@ import com.saturne.redwire.entities.Session;
 import com.saturne.redwire.services.CatalogueService;
 import com.saturne.redwire.services.FormationService;
 import com.saturne.redwire.services.SessionService;
+
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -109,7 +112,7 @@ public class RedWireBackendApplication {
     }
 
     @Bean
-    public CommandLineRunner demo2(SessionService sessionService) {
+    public CommandLineRunner demo2(SessionService sessionService, FormationService formationService) {
         return args -> {
             //Session(LocalDate dateDebut, LocalDate dateFin, String lieu, float prix)
             Session s = new Session(LocalDate.of(2022, 5, 20), LocalDate.of(2022, 5, 26), "Lyon", 3000.0f);
@@ -125,6 +128,13 @@ public class RedWireBackendApplication {
             log.info(sessionService.getSession(2).toString());
             log.info(sessionService.getSession(3).toString());
 
+            Formation f1 = formationService.findFormationById(1);
+            Formation f2 = formationService.findFormationById(2);
+
+            s.setFormation(f1);
+            s1.setFormation(f2);
+            s2.setFormation(f2);
+            sessionService.saveAll(Arrays.asList(s, s1, s2));
             log.info("");
         };
     }
@@ -166,39 +176,5 @@ public class RedWireBackendApplication {
         UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
         urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
         return new CorsFilter(urlBasedCorsConfigurationSource);
-
-        /*
-        CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.setAllowCredentials(true);
-        corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
-        corsConfiguration.setAllowedHeaders(
-            Arrays.asList(
-                "Origin",
-                "Access-Control-Allow-Origin",
-                "Content-Type",
-                "Accept",
-                "Authorization",
-                "Origin, Accept",
-                "X-Requested-With",
-                "Access-Control-Request-Method",
-                "Access-Control-Request-Headers"
-            )
-        );
-        corsConfiguration.setExposedHeaders(
-            Arrays.asList(
-                "Origin",
-                "Content-Type",
-                "Accept",
-                "Authorization",
-                "Access-Control-Allow-Origin",
-                "Access-Control-Allow-Origin",
-                "Access-Control-Allow-Credentials"
-            )
-        );
-        corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
-        urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
-        return new CorsFilter(urlBasedCorsConfigurationSource);
-        */
     }
 }

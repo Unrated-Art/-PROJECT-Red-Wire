@@ -90,27 +90,56 @@ public class FormationResource {
 	  }
 	  return newf;
   }
-  
+
   @PutMapping("/update/{id}")
-  public ResponseEntity<Formation> updateFormation(@RequestBody Formation uf){
-//    ,@PathVariable(name = "id") long id
-//  ) {
-//    Formation uf = sf.findFormationById(id);
-//    f.
-//    if (uf != null) {
-//      if (f.getReference() != null) uf.setReference(f.getReference());
-//      if (f.getTitref() != null) uf.setTitref(titref);
-//      if (lieu != null) uf.setLieu(lieu);
-//
-//      uf.setInterFormation(interFormation);
-//      if (duree != 0) uf.setDuree(duree);
-//      if (prerequis != null) uf.setPrerequis(prerequis);
-//      if (objectif != null) uf.setObjectif(objectif);
-//      if (publicVise != null) uf.setPublicVise(publicVise);
-//      if (programmeDetaille != null) uf.setProgrammeDetaille(programmeDetaille);
-//    }
-    sf.updateFormation(uf);
-    return new ResponseEntity<>(uf, HttpStatus.OK);
+  public ResponseEntity<Formation> updateFormation(
+	  @PathVariable("id") long id,
+	  @RequestBody Formation uf
+  ){
+	  Formation f = sf.findFormationById(id);
+	  if (f != null) {
+		  if (!uf.getReference().isEmpty()) {
+			  f.setReference(uf.getReference());
+		  }	
+		  if (!uf.getTitref().isEmpty()) {
+			  f.setTitref(uf.getTitref());
+		  }	
+		  if (!uf.getLieu().isEmpty()) {
+			  f.setLieu(uf.getLieu());
+		  }	
+		  if (uf.getInterFormation()!=f.getInterFormation()) {
+			  f.setInterFormation(uf.getInterFormation());
+		  }	
+		  if (uf.getDuree()>0) {
+			  f.setDuree(uf.getDuree());
+		  }	
+		  if (!uf.getPrerequis().isEmpty()) {
+			  f.setPrerequis(uf.getPrerequis());
+		  }	
+		  if (!uf.getObjectif().isEmpty()) {
+			  f.setObjectif(uf.getObjectif());
+		  }	
+		  if (!uf.getPublicVise().isEmpty()) {
+			  f.setPublicVise(uf.getPublicVise());
+		  }	
+		  if (!uf.getProgrammeDetaille().isEmpty()) {
+			  f.setProgrammeDetaille(uf.getProgrammeDetaille());
+		  }
+		  if (!uf.getThemes().isEmpty()) {
+			  f.setThemes(uf.getThemes());
+		  }
+		  if (!uf.getSessions().isEmpty()) { //#TODO: vérif condition
+			  f.setSessions(uf.getSessions());
+		  }
+		  if (uf.getPretest()!=null) { //#TODO: vérif condition
+			  f.setPretest(uf.getPretest());
+		  }
+		  if (!uf.getChapitres().isEmpty()) { //#TODO: vérif condition
+			  f.setChapitres(uf.getChapitres());
+		  }
+		  sf.updateFormation(f);
+	  }
+    return new ResponseEntity<>(f, HttpStatus.OK);
   }
   
 

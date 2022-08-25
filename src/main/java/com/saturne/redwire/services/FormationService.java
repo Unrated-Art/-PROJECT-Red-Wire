@@ -26,12 +26,12 @@ public class FormationService {
      */
     public Formation addFormation(Formation f) {
         if (f.getTitref().toLowerCase().contains("java")) {
-            //f.getThemes().add(new Theme("Java"));
-            //f.getThemes().add(new Theme("POO"));
+            f.getThemes().add(new Theme("Java"));
+//            f.getThemes().add(new Theme("POO"));
         } else if (f.getTitref().toLowerCase().contains("web")) {
-            //f.getThemes().add(new Theme("Web"));
+            f.getThemes().add(new Theme("Web"));
         } else {
-            //f.getThemes().add(new Theme("UNDEFINED"));
+            f.getThemes().add(new Theme("UNDEFINED"));
         }
         return formationRepo.saveAndFlush(f);
     }
