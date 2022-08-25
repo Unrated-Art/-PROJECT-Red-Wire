@@ -29,7 +29,7 @@ public class SessionService {
     }
 
     public Session getSession(long id) {
-        return sessionRepository.getSessionByIdSession(id).orElseThrow();
+        return sessionRepository.getSessionByIdSession(id);
     }
 
     public List<Session> getSessions(HashMap<String, Object> params) {
@@ -73,7 +73,7 @@ public class SessionService {
     }
 
     public void deleteSession(long id) {
-        sessionRepository.deleteByIdSession(id);
+        sessionRepository.deleteById(id);
     }
 
     public List<Session> saveAll(List<Session> listSessions) {
