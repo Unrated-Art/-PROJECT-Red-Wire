@@ -1,13 +1,11 @@
 package com.saturne.redwire.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -47,7 +45,7 @@ public class Session { // implements Serializable{??
     private Salle salle;
 
     @JsonIgnoreProperties("sessions")
-    @ManyToOne(fetch = FetchType.EAGER, optional = true)
+    @ManyToOne(optional = true)
     @JoinColumn(name = "idTraining")
     private Formation formation;
 

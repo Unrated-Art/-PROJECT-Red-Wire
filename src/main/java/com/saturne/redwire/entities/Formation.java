@@ -66,7 +66,7 @@ public class Formation { // implements Serializable {????
     private Set<Chapitre> chapitres = new HashSet<Chapitre>();
 
     // 1 formation <--> * sessions
-    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "formation", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "formation", fetch = FetchType.LAZY)
     private Set<Session> sessions = new HashSet<Session>();
 
     // 1 formation --> 1 preTest

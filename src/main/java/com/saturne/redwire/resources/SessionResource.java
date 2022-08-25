@@ -173,15 +173,8 @@ public class SessionResource {
     @DeleteMapping(name = "delete.session", path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteSessionById(@PathVariable("id") long id) {
-        Session s = null;
-        try {
-            s = sessionService.getSession(id);
-        } catch (EntityNotFoundException e) {
-            throw new PersistenceException("Error: Cannot FIND SESSION.");
-        }
-        if (s != null) {
-            sessionService.deleteSession(s.getIdSession());
-        }
+        Session s = sessionService.getSession(id);
+        sessionService.deleteSession(s.getIdSession());
     }
 
     private boolean isFloat(String nbStr) {
