@@ -4,8 +4,8 @@
   "description": "RedWire - Server",
   "main": "index.js",
   "scripts": {
-    "fix:xml": "npx prettier --write \"**/*.xml\"",
-    "fix:java": "npx prettier --write \"**/*.java\"",
+    "fix:xml": "npx prettier --check --write \"**/*.xml\"",
+    "fix:java": "npx prettier --check --write \"**/*.java\"",
     "fix": "npm run fix:java && npm run fix:xml",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "husky install",
