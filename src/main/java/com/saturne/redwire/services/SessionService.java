@@ -73,10 +73,6 @@ public class SessionService {
   }
 
   public void deleteSession(long id) {
-    sessionRepository.deleteByIdSession(id);
-  }
-
-  public List<Session> saveAll(List<Session> listSessions) {
-    return sessionRepository.saveAll(listSessions);
+    sessionRepository.deleteById(id);
   }
 }

@@ -115,7 +115,7 @@ public class RedWireBackendApplication {
   }
 
   @Bean
-  public CommandLineRunner demo2(SessionService sessionService, FormationService formationService) {
+  public CommandLineRunner demo2(SessionService sessionService) {
     return args -> {
       //Session(LocalDate dateDebut, LocalDate dateFin, String lieu, float prix)
       Session s = new Session(LocalDate.of(2022, 5, 20), LocalDate.of(2022, 5, 26), "Lyon", 3000.0f);
