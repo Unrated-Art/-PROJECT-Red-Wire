@@ -29,8 +29,7 @@ public class SessionService {
     }
 
     public Session getSession(long id) {
-        return sessionRepository.getSessionByIdSession(id).orElseThrow(
-                  RuntimeException::new);
+        return sessionRepository.getSessionByIdSession(id).orElseThrow(RuntimeException::new);
     }
 
     public List<Session> getSessions(HashMap<String, Object> params) {

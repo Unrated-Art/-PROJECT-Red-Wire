@@ -13,7 +13,6 @@ import java.util.HashMap;
 import java.util.List;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +33,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(path = "/api/session")
 public class SessionResource {
-	
-	 private static final Logger log = LoggerFactory.getLogger(SessionResource.class);
+
+    private static final Logger log = LoggerFactory.getLogger(SessionResource.class);
 
     @Autowired
     private FormationService formationService;
@@ -92,31 +91,28 @@ public class SessionResource {
      * @return Session
      */
     @PostMapping(
-    		path="/add/{idFormation}",
-    		name = "create.session"
-    		//consumes = MediaType.APPLICATION_JSON_VALUE
-    		)
+        path = "/add/{idFormation}",
+        name = "create.session"
+        //consumes = MediaType.APPLICATION_JSON_VALUE
+    )
     @ResponseStatus(HttpStatus.CREATED)
-    public Session createSession(
-    		@RequestBody Session session,
-    		@PathVariable long idFormation) {
-    	Formation f = formationService.findFormationById(idFormation);
-    	log.trace("*******************CREATE SESSION***************************");
-    	log.trace("Found the training n°: "+idFormation+" => "+ f);
-    	  try {
-    		  //System.out.println(session);
-    		  session = sessionService.createSession(session); 
-    		  log.trace("session before update: "+session+"; "+session.getFormation());
-    		  session.setFormation(f);
-    		  sessionService.updateSession(session);
-    		  log.trace("session after update: "+session+"; "+session.getFormation());
-    	  }
-    	  catch(Exception ex) {
-    		System.out.println(ex.getMessage());
-    		return null;
-    	  }
-    	  
-            return session;
+    public Session createSession(@RequestBody Session session, @PathVariable long idFormation) {
+        Formation f = formationService.findFormationById(idFormation);
+        log.trace("*******************CREATE SESSION***************************");
+        log.trace("Found the training n°: " + idFormation + " => " + f);
+        try {
+            //System.out.println(session);
+            session = sessionService.createSession(session);
+            log.trace("session before update: " + session + "; " + session.getFormation());
+            session.setFormation(f);
+            sessionService.updateSession(session);
+            log.trace("session after update: " + session + "; " + session.getFormation());
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            return null;
+        }
+
+        return session;
     }
 
     @PutMapping(name = "update.session", path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -191,17 +187,16 @@ public class SessionResource {
     @DeleteMapping(name = "delete.session", path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteSessionById(@PathVariable("id") long id) {
-        try{
-    	Session s = sessionService.getSession(id);
-    	log.trace("session: "+s);
-        sessionService.deleteSession(s.getIdSession());
-        log.trace("session deleted");
-       	}catch(Exception ex) {
-  		System.out.println(ex.getMessage());
-
-  	  	}
+        try {
+            Session s = sessionService.getSession(id);
+            log.trace("session: " + s);
+            sessionService.deleteSession(s.getIdSession());
+            log.trace("session deleted");
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
     }
-    
+
     private boolean isFloat(String nbStr) {
         try {
             Float.parseFloat(nbStr);

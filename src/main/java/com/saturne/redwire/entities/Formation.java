@@ -5,7 +5,6 @@ import java.util.Objects;
 import java.util.Set;
 //import java.io.Serializable;
 import javax.persistence.*;
-
 import org.hibernate.annotations.DynamicUpdate;
 
 /*
@@ -21,7 +20,7 @@ import org.hibernate.annotations.DynamicUpdate;
     resultClass = Formation.class
 )
 @DynamicUpdate
-public class Formation { 
+public class Formation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -67,7 +66,7 @@ public class Formation {
     // 1 formation <--> *chapitres //composition
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "formation")
     private Set<Chapitre> chapitres = new HashSet<Chapitre>();
-    
+
     // 1 formation <--> * sessions
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "formation", fetch = FetchType.EAGER)
     private Set<Session> sessions = new HashSet<Session>();
