@@ -75,4 +75,8 @@ public class SessionService {
   public void deleteSession(long id) {
     sessionRepository.deleteById(id);
   }
+
+  public List<Session> saveAll(List<Session> listSessions) {
+	  return sessionRepository.saveAll(listSessions);
+  }
 }
