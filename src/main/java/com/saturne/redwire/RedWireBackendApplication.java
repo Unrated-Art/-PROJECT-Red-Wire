@@ -8,13 +8,11 @@ import com.saturne.redwire.services.CatalogueService;
 import com.saturne.redwire.services.FormationService;
 import com.saturne.redwire.services.SessionService;
 import com.saturne.redwire.services.ThemeService;
-
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

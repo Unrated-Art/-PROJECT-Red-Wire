@@ -20,11 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/api/training")
 public class FormationResource {
 
-    private final FormationService sf;
+  private final FormationService sf;
 
-    public FormationResource(FormationService sf) {
-        this.sf = sf;
-    }
+  public FormationResource(FormationService sf) {
+    this.sf = sf;
+  }
 
   @GetMapping("/all")
   public ResponseEntity<List<Formation>> getAllFormations() {
