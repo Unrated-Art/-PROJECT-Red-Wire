@@ -77,6 +77,6 @@ public class SessionService {
   }
 
   public List<Session> saveAll(List<Session> listSessions) {
-	  return sessionRepository.saveAll(listSessions);
+    return sessionRepository.saveAll(listSessions);
   }
 }
