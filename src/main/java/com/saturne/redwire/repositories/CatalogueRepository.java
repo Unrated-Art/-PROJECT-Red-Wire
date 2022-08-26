@@ -8,5 +8,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CatalogueRepository extends JpaRepository<Catalogue, Integer> {
-  Optional<Catalogue> findCatalogueByIdCatalogue(int id);
+	void deleteCatalogueByIdCatalogue(int idCatalogue);
+  Optional<Catalogue> findCatalogueByIdCatalogue(int idCatalogue);
 }

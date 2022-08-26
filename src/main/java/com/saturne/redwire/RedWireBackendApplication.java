@@ -46,41 +46,48 @@ public class RedWireBackendApplication {
     return args -> {
       formationService.addFormation(
         new Formation(
-          "ref",
-          "intitulé",
-          "lieu",
+
+
+          "OB101",
+          "Java-Initiation",
+          "Lyon",
           true,
           6,
-          "prerequis",
-          "objectif",
-          "String publicVise",
-          "String programmeDetaille"
+          "Programmation orientée objet",
+          "Apprendre à coder en Java",
+          "-29ans",
+          "Chapitre1, chapitre2..etc"
+ 
         )
       );
       formationService.addFormation(
         new Formation(
-          "ref1",
-          "intitulé1",
-          "lieu1",
+         
+          "OB301",
+          "Java - accès aux données",
+          "Toulouse",
           true,
           8,
-          "prerequis1",
-          "objectif1",
-          "String publicVise1",
-          "String programmeDetaille1"
+          "aucun",
+          "Comprendre la notion de classe/objet",
+          "tout public",
+          "Chapter3,chapter5"
+
         )
       );
       formationService.addFormation(
         new Formation(
-          "ref2",
-          "intitulé",
-          "lieu2",
+
+          "AB134",
+          "Programmation web",
+          "Lyon",
           true,
           3,
-          "prerequis2",
-          "objectif2",
-          "String publicVise2",
-          "String programmeDetaille2"
+          "Aucun",
+          "apprendre à faire des sites web en HTML/CSS/JS",
+          "tout public",
+          "Chapter6, Chapter4"
+
         )
       );
       // fetch all trainings
@@ -96,14 +103,14 @@ public class RedWireBackendApplication {
   @Bean
   public CommandLineRunner demo1(CatalogueService catalogueService) {
     return args -> {
-      catalogueService.addCatalogue(
-        new Catalogue("title", "auteur1", "creationDate")
+    	catalogueService.addCatalogue(
+        new Catalogue("title", "auteur1", LocalDate.parse("2022-01-01"))
       );
-      catalogueService.addCatalogue(
-        new Catalogue("title2", "auteur2", "creationDate2")
+    	catalogueService.addCatalogue(
+        new Catalogue("title2", "auteur2", LocalDate.parse("2022-01-01"))
       );
-      catalogueService.addCatalogue(
-        new Catalogue("title3", "auteur3", "creationDate3")
+    	catalogueService.addCatalogue(
+        new Catalogue("title3", "auteur3", LocalDate.parse("2022-01-01"))
       );
       // fetch all catalogues
       log.info("Catalogues found with findAllCatalogues():");

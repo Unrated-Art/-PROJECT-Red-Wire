@@ -1,5 +1,6 @@
 package com.saturne.redwire.entities;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -30,7 +31,7 @@ public class Catalogue { // implements Serializable{
   private String auteur;
 
   @Column(name = "creationDate")
-  private String dateCreation;
+  private LocalDate dateCreation;
 
   //1 catalogue --> * formations
   @OneToMany //(cascade=CascadeType.ALL)
@@ -43,7 +44,7 @@ public class Catalogue { // implements Serializable{
     super();
   }
 
-  public Catalogue(String titre, String auteur, String dateCreation) {
+  public Catalogue(String titre, String auteur, LocalDate dateCreation) {
     this.titre = titre;
     this.auteur = auteur;
     this.dateCreation = dateCreation;
@@ -75,11 +76,11 @@ public class Catalogue { // implements Serializable{
     this.auteur = auteur;
   }
 
-  public String getDateCreation() {
+  public LocalDate getDateCreation() {
     return dateCreation;
   }
 
-  public void setDateCreation(String dateCreation) {
+  public void setDateCreation(LocalDate dateCreation) {
     this.dateCreation = dateCreation;
   }
 
@@ -106,22 +107,21 @@ public class Catalogue { // implements Serializable{
     );
   }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(auteur, dateCreation, idCatalogue, titre);
-  }
+	@Override
+	public int hashCode() {
+		return Objects.hash(auteur, dateCreation, idCatalogue, titre);
+	}
 
-  @Override
-  public boolean equals(Object obj) {
-    if (this == obj) return true;
-    if (obj == null) return false;
-    if (getClass() != obj.getClass()) return false;
-    Catalogue other = (Catalogue) obj;
-    return (
-      Objects.equals(auteur, other.auteur) &&
-      Objects.equals(dateCreation, other.dateCreation) &&
-      idCatalogue == other.idCatalogue &&
-      Objects.equals(titre, other.titre)
-    );
-  }
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Catalogue other = (Catalogue) obj;
+		return Objects.equals(auteur, other.auteur) && Objects.equals(dateCreation, other.dateCreation)
+				&& idCatalogue == other.idCatalogue && Objects.equals(titre, other.titre);
+	}
 }
