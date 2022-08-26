@@ -6,12 +6,10 @@ import com.saturne.redwire.entities.Session;
 import com.saturne.redwire.services.CatalogueService;
 import com.saturne.redwire.services.FormationService;
 import com.saturne.redwire.services.SessionService;
-
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
