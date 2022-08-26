@@ -1,12 +1,9 @@
 package com.saturne.redwire.services;
 
 import com.saturne.redwire.entities.Formation;
-import com.saturne.redwire.entities.Theme;
 import com.saturne.redwire.exceptions.TrainingNotFoundException;
 import com.saturne.redwire.repositories.FormationRepository;
 import java.util.List;
-import java.util.Optional;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

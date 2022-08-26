@@ -1,6 +1,5 @@
 package com.saturne.redwire.repositories;
 
-import com.saturne.redwire.entities.Formation;
 import com.saturne.redwire.entities.Theme;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;

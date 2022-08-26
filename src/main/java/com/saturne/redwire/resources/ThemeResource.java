@@ -1,6 +1,5 @@
 package com.saturne.redwire.resources;
 
-import com.saturne.redwire.entities.Formation;
 import com.saturne.redwire.entities.Theme;
 import com.saturne.redwire.services.ThemeService;
 import java.util.List;

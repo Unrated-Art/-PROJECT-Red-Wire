@@ -1,6 +1,5 @@
 package com.saturne.redwire.resources;
 
-import com.saturne.redwire.RedWireBackendApplication;
 import com.saturne.redwire.entities.Formation;
 import com.saturne.redwire.entities.Session;
 import com.saturne.redwire.services.FormationService;
@@ -36,14 +35,13 @@ public class SessionResource {
 
   private static final Logger log = LoggerFactory.getLogger(SessionResource.class);
 
-  @Autowired
-  private FormationService formationService;
-
+  private final FormationService formationService;
   private final SessionService sessionService;
 
   @Autowired
-  public SessionResource(SessionService sessionService) {
+  public SessionResource(SessionService sessionService, FormationService formationService) {
     this.sessionService = sessionService;
+    this.formationService = formationService;
   }
 
   @GetMapping(name = "search.session", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -184,7 +182,7 @@ public class SessionResource {
     return null;
   }
 
-  @DeleteMapping(name = "delete.session", path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  @DeleteMapping(name = "delete.session", path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void deleteSessionById(@PathVariable("id") long id) {
     try {

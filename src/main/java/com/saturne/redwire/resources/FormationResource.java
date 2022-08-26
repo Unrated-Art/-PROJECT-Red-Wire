@@ -1,7 +1,6 @@
 package com.saturne.redwire.resources;
 
 import com.saturne.redwire.entities.Formation;
-import com.saturne.redwire.entities.Theme;
 import com.saturne.redwire.services.FormationService;
 import java.util.List;
 import org.springframework.http.HttpStatus;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,11 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/api/training")
 public class FormationResource {
 
-  private final FormationService sf;
+    private final FormationService sf;
 
-  public FormationResource(FormationService sf) {
-    this.sf = sf;
-  }
+    public FormationResource(FormationService sf) {
+        this.sf = sf;
+    }
 
   @GetMapping("/all")
   public ResponseEntity<List<Formation>> getAllFormations() {
@@ -48,8 +46,6 @@ public class FormationResource {
     Formation Formation = sf.findFormationById(id);
     return new ResponseEntity<>(Formation, HttpStatus.OK);
   }
-
-  // getFormationByReference & getFormationByKeyword => Tested OK :)
 
   @GetMapping("/findRef/{ref}")
   public ResponseEntity<Formation> getFormationByReference(@PathVariable("ref") String ref) {

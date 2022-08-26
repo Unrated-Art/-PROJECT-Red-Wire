@@ -73,7 +73,7 @@ public class SessionService {
   }
 
   public void deleteSession(long id) {
-    sessionRepository.deleteById(id);
+    sessionRepository.deleteByIdSession(id);
   }
 
   public List<Session> saveAll(List<Session> listSessions) {

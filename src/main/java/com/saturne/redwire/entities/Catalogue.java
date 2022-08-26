@@ -3,8 +3,6 @@ package com.saturne.redwire.entities;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-//import java.io.Serializable;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
