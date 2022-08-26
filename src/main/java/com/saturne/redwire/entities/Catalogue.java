@@ -1,96 +1,115 @@
 package com.saturne.redwire.entities;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "catalogues")
-public class Catalogue {
+public class Catalogue { // implements Serializable{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idCatalogue")
-    private int idCatalogue;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "idCatalogue")
+  private int idCatalogue;
 
-    @Column(name = "title")
-    private String titre;
+  @Column(name = "Title")
+  private String titre;
 
-    @Column(name = "creationDate")
-    private String dateCreation;
+  @Column(name = "Author")
+  private String auteur;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idAuthor")
-    private Auteur auteur;
+  @Column(name = "creationDate")
+  private String dateCreation;
 
-    public Catalogue() {}
+  //1 catalogue --> * formations
+  @OneToMany //(cascade=CascadeType.ALL)
+  @JoinColumn(name = "catalogueFormation")
+  private Set<Formation> formations = new HashSet<Formation>();
 
-    public Catalogue(String titre, String dateCreation) {
-        this.titre = titre;
-        this.dateCreation = dateCreation;
-    }
+  //Constructeur
 
-    public Catalogue(int idCatalogue, String titre, String dateCreation) {
-        this.idCatalogue = idCatalogue;
-        this.titre = titre;
-        this.dateCreation = dateCreation;
-    }
+  public Catalogue() {
+    super();
+  }
 
-    public int getIdCatalogue() {
-        return idCatalogue;
-    }
+  public Catalogue(String titre, String auteur, String dateCreation) {
+    this.titre = titre;
+    this.auteur = auteur;
+    this.dateCreation = dateCreation;
+  }
 
-    public void setIdCatalogue(int idCatalogue) {
-        this.idCatalogue = idCatalogue;
-    }
+  //Setter et Getter
 
-    public String getTitre() {
-        return titre;
-    }
+  public int getIdCatalogue() {
+    return idCatalogue;
+  }
 
-    public void setTitre(String titre) {
-        this.titre = titre;
-    }
+  public void setIdCatalogue(int idCatalogue) {
+    this.idCatalogue = idCatalogue;
+  }
 
-    public String getDateCreation() {
-        return dateCreation;
-    }
+  public String getTitre() {
+    return titre;
+  }
 
-    public void setDateCreation(String dateCreation) {
-        this.dateCreation = dateCreation;
-    }
+  public void setTitre(String titre) {
+    this.titre = titre;
+  }
 
-    public Auteur getAuteur() {
-        return auteur;
-    }
+  public String getAuteur() {
+    return auteur;
+  }
 
-    public void setAuteur(Auteur auteur) {
-        this.auteur = auteur;
-    }
+  public void setAuteur(String auteur) {
+    this.auteur = auteur;
+  }
 
-    @Override
-    public String toString() {
-        return "Catalogue [idCatalogue=" + idCatalogue + ", titre=" + titre + ", dateCreation=" + dateCreation + "]";
-    }
+  public String getDateCreation() {
+    return dateCreation;
+  }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(dateCreation, idCatalogue, titre);
-    }
+  public void setDateCreation(String dateCreation) {
+    this.dateCreation = dateCreation;
+  }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null) return false;
-        if (getClass() != obj.getClass()) return false;
-        Catalogue other = (Catalogue) obj;
-        return Objects.equals(dateCreation, other.dateCreation) && idCatalogue == other.idCatalogue && Objects.equals(titre, other.titre);
-    }
+  public Set<Formation> getFormations() {
+    return formations;
+  }
+
+  public void setFormations(Set<Formation> formations) {
+    this.formations = formations;
+  }
+
+  @Override
+  public String toString() {
+    return ("Catalogue [idCatalogue=" + idCatalogue + ", titre=" + titre + ", auteur=" + auteur + ", dateCreation=" + dateCreation + "]");
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(auteur, dateCreation, idCatalogue, titre);
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) return true;
+    if (obj == null) return false;
+    if (getClass() != obj.getClass()) return false;
+    Catalogue other = (Catalogue) obj;
+    return (
+      Objects.equals(auteur, other.auteur) &&
+      Objects.equals(dateCreation, other.dateCreation) &&
+      idCatalogue == other.idCatalogue &&
+      Objects.equals(titre, other.titre)
+    );
+  }
 }
