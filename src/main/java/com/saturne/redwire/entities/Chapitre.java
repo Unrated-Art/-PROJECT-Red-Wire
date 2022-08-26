@@ -6,11 +6,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "chapters")
-public class Chapitre {
+public class Chapitre { //implemets serializable??
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,6 +24,10 @@ public class Chapitre {
 
     @Column(name = "content")
     private String contenu;
+
+    @ManyToOne
+    @JoinColumn(name = "idTraining")
+    private Formation formation = new Formation();
 
     public Chapitre() {}
 
@@ -60,9 +66,17 @@ public class Chapitre {
         this.contenu = contenu;
     }
 
+    public Formation getFormation() {
+        return formation;
+    }
+
+    public void setFormation(Formation formation) {
+        this.formation = formation;
+    }
+
     @Override
     public String toString() {
-        return "Chapitre [idChap=" + idChap + ", nomChapitre=" + nomChapitre + ", contenu=" + contenu + "]";
+        return ("Chapitre [idChap=" + idChap + ", nomChapitre=" + nomChapitre + ", contenu=" + contenu + "]");
     }
 
     @Override
@@ -76,6 +90,6 @@ public class Chapitre {
         if (obj == null) return false;
         if (getClass() != obj.getClass()) return false;
         Chapitre other = (Chapitre) obj;
-        return Objects.equals(contenu, other.contenu) && idChap == other.idChap && Objects.equals(nomChapitre, other.nomChapitre);
+        return (Objects.equals(contenu, other.contenu) && idChap == other.idChap && Objects.equals(nomChapitre, other.nomChapitre));
     }
 }

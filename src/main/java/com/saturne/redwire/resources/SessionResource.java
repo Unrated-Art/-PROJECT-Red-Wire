@@ -1,5 +1,6 @@
 package com.saturne.redwire.resources;
 
+import com.saturne.redwire.RedWireBackendApplication;
 import com.saturne.redwire.entities.Formation;
 import com.saturne.redwire.entities.Session;
 import com.saturne.redwire.services.FormationService;
@@ -12,6 +13,9 @@ import java.util.HashMap;
 import java.util.List;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,6 +25,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -29,6 +34,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(path = "/api/session")
 public class SessionResource {
+	
+	 private static final Logger log = LoggerFactory.getLogger(SessionResource.class);
 
     @Autowired
     private FormationService formationService;
@@ -78,27 +85,38 @@ public class SessionResource {
         return new ResponseEntity<>(s, HttpStatus.OK);
     }
 
-    @PostMapping(name = "create.session", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Session> createSession(
-        @RequestParam(value = "idTraining") long idTraining,
-        @RequestParam(value = "dateStart") String dateStart,
-        @RequestParam(value = "dateEnd") String dateEnd,
-        @RequestParam(value = "location") String location,
-        @RequestParam(value = "price", defaultValue = "0") float price
-    ) {
-        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
-        Formation training = formationService.findFormationById(idTraining);
-        if (training != null) {
-            // SET SESSION
-            Session s = new Session();
-            s.setDateDebut(LocalDate.parse(dateStart, formatter));
-            s.setDateFin(LocalDate.parse(dateEnd, formatter));
-            s.setLieu(location);
-            s.setPrix(price);
-            s.setFormation(training);
-            return new ResponseEntity<>(sessionService.createSession(s), HttpStatus.CREATED);
-        }
-        return null;
+    /***
+     * Create Session
+     * @param session
+     * @param idFormation
+     * @return Session
+     */
+    @PostMapping(
+    		path="/add/{idFormation}",
+    		name = "create.session"
+    		//consumes = MediaType.APPLICATION_JSON_VALUE
+    		)
+    @ResponseStatus(HttpStatus.CREATED)
+    public Session createSession(
+    		@RequestBody Session session,
+    		@PathVariable long idFormation) {
+    	Formation f = formationService.findFormationById(idFormation);
+    	log.trace("*******************CREATE SESSION***************************");
+    	log.trace("Found the training n°: "+idFormation+" => "+ f);
+    	  try {
+    		  //System.out.println(session);
+    		  session = sessionService.createSession(session); 
+    		  log.trace("session before update: "+session+"; "+session.getFormation());
+    		  session.setFormation(f);
+    		  sessionService.updateSession(session);
+    		  log.trace("session after update: "+session+"; "+session.getFormation());
+    	  }
+    	  catch(Exception ex) {
+    		System.out.println(ex.getMessage());
+    		return null;
+    	  }
+    	  
+            return session;
     }
 
     @PutMapping(name = "update.session", path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -173,10 +191,17 @@ public class SessionResource {
     @DeleteMapping(name = "delete.session", path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteSessionById(@PathVariable("id") long id) {
-        Session s = sessionService.getSession(id);
+        try{
+    	Session s = sessionService.getSession(id);
+    	log.trace("session: "+s);
         sessionService.deleteSession(s.getIdSession());
-    }
+        log.trace("session deleted");
+       	}catch(Exception ex) {
+  		System.out.println(ex.getMessage());
 
+  	  	}
+    }
+    
     private boolean isFloat(String nbStr) {
         try {
             Float.parseFloat(nbStr);

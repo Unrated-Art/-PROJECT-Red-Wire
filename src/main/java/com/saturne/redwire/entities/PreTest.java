@@ -1,16 +1,21 @@
 package com.saturne.redwire.entities;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
+//import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "preTests")
-public class PreTest {
+@Table(name = "preTest")
+public class PreTest { // implements Serializable??
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,14 +25,13 @@ public class PreTest {
     @Column(name = "title")
     private String titre;
 
+    // 1 pretset <--> * questions
+    @OneToMany(mappedBy = "idQuestion")
+    private Set<Question> questions = new HashSet<Question>();
+
     public PreTest() {}
 
     public PreTest(String titre) {
-        this.titre = titre;
-    }
-
-    public PreTest(long idTest, String titre) {
-        this.idTest = idTest;
         this.titre = titre;
     }
 
@@ -45,6 +49,14 @@ public class PreTest {
 
     public void setTitre(String titre) {
         this.titre = titre;
+    }
+
+    public Set<Question> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(Set<Question> questions) {
+        this.questions = questions;
     }
 
     @Override

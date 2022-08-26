@@ -1,16 +1,19 @@
 package com.saturne.redwire.entities;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "classrooms")
-public class Salle {
+public class Salle { // implements Serializable{??
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,14 +31,10 @@ public class Salle {
 
     public Salle() {}
 
-    public Salle(String numSalle, String etage, String adresse) {
-        this.numSalle = numSalle;
-        this.etage = etage;
-        this.adresse = adresse;
-    }
+    @OneToMany(mappedBy = "salle")
+    private Set<Session> sessions = new HashSet<Session>();
 
-    public Salle(long idSalle, String numSalle, String etage, String adresse) {
-        this.idSalle = idSalle;
+    public Salle(String numSalle, String etage, String adresse) {
         this.numSalle = numSalle;
         this.etage = etage;
         this.adresse = adresse;
@@ -73,9 +72,17 @@ public class Salle {
         this.adresse = adresse;
     }
 
+    public Set<Session> getSessions() {
+        return sessions;
+    }
+
+    public void setSessions(Set<Session> sessions) {
+        this.sessions = sessions;
+    }
+
     @Override
     public String toString() {
-        return "Salle [idSalle=" + idSalle + ", numSalle=" + numSalle + ", etage=" + etage + ", adresse=" + adresse + "]";
+        return ("Salle [idSalle=" + idSalle + ", numSalle=" + numSalle + ", etage=" + etage + ", adresse=" + adresse + "]");
     }
 
     @Override

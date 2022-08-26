@@ -1,6 +1,5 @@
 package com.saturne.redwire.entities;
 
-import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,9 +7,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/*
+ * Stagiaires
+ */
 @Entity
 @Table(name = "trainees")
-public class Stagiaire extends User {
+public class Stagiaire { //  implements Serializable{??
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,7 +38,7 @@ public class Stagiaire extends User {
     private String mpass;
 
     @Column(name = "company")
-    private Boolean entreprise;
+    private boolean entreprise;
 
     @Column(name = "contactInfo")
     private String coordonneesEntre;
@@ -49,8 +51,7 @@ public class Stagiaire extends User {
         String adresse,
         String email,
         String numTelephone,
-        String mpass,
-        Boolean entreprise,
+        boolean entreprise,
         String coordonneesEntre
     ) {
         this.nom = nom;
@@ -58,29 +59,6 @@ public class Stagiaire extends User {
         this.adresse = adresse;
         this.email = email;
         this.numTelephone = numTelephone;
-        this.mpass = mpass;
-        this.entreprise = entreprise;
-        this.coordonneesEntre = coordonneesEntre;
-    }
-
-    public Stagiaire(
-        long idStagiaire,
-        String nom,
-        String prenom,
-        String adresse,
-        String email,
-        String numTelephone,
-        String mpass,
-        Boolean entreprise,
-        String coordonneesEntre
-    ) {
-        this.idStagiaire = idStagiaire;
-        this.nom = nom;
-        this.prenom = prenom;
-        this.adresse = adresse;
-        this.email = email;
-        this.numTelephone = numTelephone;
-        this.mpass = mpass;
         this.entreprise = entreprise;
         this.coordonneesEntre = coordonneesEntre;
     }
@@ -141,11 +119,11 @@ public class Stagiaire extends User {
         this.mpass = mpass;
     }
 
-    public Boolean getEntreprise() {
+    public boolean getEntreprise() {
         return entreprise;
     }
 
-    public void setEntreprise(Boolean entreprise) {
+    public void setEntreprise(boolean entreprise) {
         this.entreprise = entreprise;
     }
 
@@ -153,8 +131,8 @@ public class Stagiaire extends User {
         return coordonneesEntre;
     }
 
-    public void setCoordonneesEntre(String coordonneesEntre) {
-        this.coordonneesEntre = coordonneesEntre;
+    public void setCoordonneesEntre(String coordonnees) {
+        this.coordonneesEntre = coordonnees;
     }
 
     @Override
@@ -172,37 +150,11 @@ public class Stagiaire extends User {
             email +
             ", numTelephone=" +
             numTelephone +
-            ", mpass=" +
-            mpass +
             ", entreprise=" +
             entreprise +
             ", coordonneesEntre=" +
             coordonneesEntre +
             "]"
-        );
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(adresse, coordonneesEntre, email, entreprise, idStagiaire, mpass, nom, numTelephone, prenom);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null) return false;
-        if (getClass() != obj.getClass()) return false;
-        Stagiaire other = (Stagiaire) obj;
-        return (
-            Objects.equals(adresse, other.adresse) &&
-            Objects.equals(coordonneesEntre, other.coordonneesEntre) &&
-            Objects.equals(email, other.email) &&
-            Objects.equals(entreprise, other.entreprise) &&
-            idStagiaire == other.idStagiaire &&
-            Objects.equals(mpass, other.mpass) &&
-            Objects.equals(nom, other.nom) &&
-            Objects.equals(numTelephone, other.numTelephone) &&
-            Objects.equals(prenom, other.prenom)
         );
     }
 }

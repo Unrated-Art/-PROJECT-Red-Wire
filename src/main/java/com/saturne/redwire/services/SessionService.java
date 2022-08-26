@@ -29,7 +29,8 @@ public class SessionService {
     }
 
     public Session getSession(long id) {
-        return sessionRepository.getSessionByIdSession(id);
+        return sessionRepository.getSessionByIdSession(id).orElseThrow(
+                  RuntimeException::new);
     }
 
     public List<Session> getSessions(HashMap<String, Object> params) {
@@ -73,7 +74,7 @@ public class SessionService {
     }
 
     public void deleteSession(long id) {
-        sessionRepository.deleteById(id);
+        sessionRepository.deleteByIdSession(id);
     }
 
     public List<Session> saveAll(List<Session> listSessions) {

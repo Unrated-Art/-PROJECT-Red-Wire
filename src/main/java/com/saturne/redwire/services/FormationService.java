@@ -1,7 +1,14 @@
 package com.saturne.redwire.services;
 
 import com.saturne.redwire.entities.Formation;
+import com.saturne.redwire.entities.Theme;
+import com.saturne.redwire.exceptions.TrainingNotFoundException;
+import com.saturne.redwire.repositories.FormationRepository;
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,16 +17,23 @@ import org.springframework.transaction.annotation.Transactional;
 public class FormationService {
 
     //injection de dépendance
-    // @Autowired
-    // private FormationRepository formationRepo;
+    @Autowired
+    private FormationRepository formationRepo;
 
     /**
      * @param formation
      * @return
      */
     public Formation addFormation(Formation f) {
-        //return formationRepo.save(f);
-        return f;
+        if (f.getTitref().toLowerCase().contains("java")) {
+            f.getThemes().add(new Theme("Java"));
+//            f.getThemes().add(new Theme("POO"));
+        } else if (f.getTitref().toLowerCase().contains("web")) {
+            f.getThemes().add(new Theme("Web"));
+        } else {
+            f.getThemes().add(new Theme("UNDEFINED"));
+        }
+        return formationRepo.saveAndFlush(f);
     }
 
     /**
@@ -27,8 +41,7 @@ public class FormationService {
      * @return List<Formation>
      */
     public List<Formation> findAllFormations() {
-        // return formationRepo.findAll();
-        return List.of();
+        return formationRepo.findAll();
     }
 
     /**
@@ -36,8 +49,7 @@ public class FormationService {
      * @return Formation
      */
     public Formation updateFormation(Formation formation) {
-        // return formationRepo.save(formation);
-        return formation;
+        return formationRepo.save(formation);
     }
 
     /**
@@ -45,12 +57,9 @@ public class FormationService {
      * @return Formation
      */
     public Formation findFormationById(long id) {
-        Formation f = new Formation();
-        return f;
-        // return formationRepo.findFormationByIdFormation(id);
-        /*
-                .orElseThrow(() -> new TrainingNotFoundException("Training by id " + id + " was not found"));
-        */
+        return formationRepo
+            .findFormationByIdFormation(id)
+            .orElseThrow(() -> new TrainingNotFoundException("Training by id " + id + " was not found"));
     }
 
     /**
@@ -59,20 +68,21 @@ public class FormationService {
      * @return List<Formation> containing 'keyword'
      */
     public List<Formation> findByKeyword(String keyword) {
-        return List.of();
-        /*
-		return formationRepo.findAll().stream()
-				.filter(f -> ((f.getReference()).toUpperCase()).contains(keyword.toUpperCase())
-        				|| ((f.getTitref()).toUpperCase()).contains(keyword.toUpperCase()) 
-        				|| ((f.getLieu()).toUpperCase()).contains(keyword.toUpperCase()) 
-        				|| ((f.getObjectif()).toUpperCase()).contains(keyword.toUpperCase()) 
-        				|| ((f.getPrerequis()).toUpperCase()).contains(keyword.toUpperCase()) 
-        				|| ((f.getProgrammeDetaille()).toUpperCase()).contains(keyword.toUpperCase()) 
-        				|| ((f.getPublicVise()).toUpperCase()).contains(keyword.toUpperCase()))
-        				|| ((f.getThemes().foreach()????.contains(keyword.toLowerCase())
-        				.collect(Collectors.toList());
-				//.orElseThrow(() -> new TrainingNotFoundException("Training by keyword " + keyword + "was not found"));	
-		*/
+        return formationRepo
+            .findAll()
+            .stream()
+            .filter(f ->
+                ((f.getReference()).toUpperCase()).contains(keyword.toUpperCase()) ||
+                ((f.getTitref()).toUpperCase()).contains(keyword.toUpperCase()) ||
+                ((f.getLieu()).toUpperCase()).contains(keyword.toUpperCase()) ||
+                ((f.getObjectif()).toUpperCase()).contains(keyword.toUpperCase()) ||
+                ((f.getPrerequis()).toUpperCase()).contains(keyword.toUpperCase()) ||
+                ((f.getProgrammeDetaille()).toUpperCase()).contains(keyword.toUpperCase()) ||
+                ((f.getPublicVise()).toUpperCase()).contains(keyword.toUpperCase())
+            )
+            /*|| ((f.getThemes().foreach()????.contains(keyword.toLowerCase())*/
+            .collect(Collectors.toList());
+        //.orElseThrow(() -> new TrainingNotFoundException("Training by keyword " + keyword + "was not found"));
     }
 
     /***
@@ -80,23 +90,12 @@ public class FormationService {
      * @return Formation
      */
     public Formation findFormationByReference(String ref) {
-        Formation f = new Formation();
-        return f;
-        /*
-		return formationRepo.findFormationByReference(ref)
-				.orElseThrow(() -> new TrainingNotFoundException("Training by reference " + ref + "was not found"));
-		*/
+        return formationRepo
+            .findFormationByReference(ref)
+            .orElseThrow(() -> new TrainingNotFoundException("Training by reference " + ref + "was not found"));
     }
 
-    /**
-     * #TODO: rajouter methode updateFormation
-     */
-
-    /**
-     *
-     * @param id
-     */
     public void deleteFormation(long id) {
-        // formationRepo.deleteFormationByIdFormation(id);
+        formationRepo.deleteFormationByIdFormation(id);
     }
 }

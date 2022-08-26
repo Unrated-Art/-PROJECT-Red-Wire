@@ -1,33 +1,41 @@
 package com.saturne.redwire.entities;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "themes")
-public class Theme {
+public class Theme { // implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idTheme")
     private long idTheme;
 
-    @Column(name = "name")
+    @Column(name = "themeName")
     private String nomTheme;
+
+    //1 theme <--> * sous-themes
+    @OneToMany //( mappedBy="theme")//, insert=false , update=false )
+    private Set<Theme> sousTheme = new HashSet<Theme>();
+
+    //    //* sous-themes <--> 1 theme
+    //    @ManyToOne
+    //    @JoinColumn(name="idTheme")
+    //	private Theme theme = new Theme();
 
     public Theme() {}
 
+    //constructeur
     public Theme(String nomTheme) {
-        this.nomTheme = nomTheme;
-    }
-
-    public Theme(long idTheme, String nomTheme) {
-        this.idTheme = idTheme;
         this.nomTheme = nomTheme;
     }
 
@@ -46,6 +54,22 @@ public class Theme {
     public void setNomTheme(String nomTheme) {
         this.nomTheme = nomTheme;
     }
+
+    public Set<Theme> getSousTheme() {
+        return sousTheme;
+    }
+
+    public void setSousTheme(Set<Theme> sousTheme) {
+        this.sousTheme = sousTheme;
+    }
+
+    //	public Theme getTheme() {
+    //		return theme;
+    //	}
+    //
+    //	public void setTheme(Theme theme) {
+    //		this.theme = theme;
+    //	}
 
     @Override
     public String toString() {
