@@ -3,14 +3,19 @@ package com.saturne.redwire;
 import com.saturne.redwire.entities.Catalogue;
 import com.saturne.redwire.entities.Formation;
 import com.saturne.redwire.entities.Session;
+import com.saturne.redwire.entities.Theme;
 import com.saturne.redwire.services.CatalogueService;
 import com.saturne.redwire.services.FormationService;
 import com.saturne.redwire.services.SessionService;
+import com.saturne.redwire.services.ThemeService;
 
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -138,6 +143,46 @@ public class RedWireBackendApplication {
             log.info("");
         };
     }
+    
+    @Bean
+    public CommandLineRunner demo3(ThemeService themeService, FormationService formationService) {
+        return args -> {
+        	themeService.addTheme(new Theme("Développement"));
+        	themeService.addTheme(new Theme("Big Data, Data Science et IA"));
+        	themeService.addTheme(new Theme("Informatique décicionnelle"));
+        	themeService.addTheme(new Theme("Bases de données"));
+        	themeService.addTheme(new Theme("Réseaux et Télécoms"));
+        	themeService.addTheme(new Theme("Cybersécurité"));
+        	themeService.addTheme(new Theme("Cloud computing"));
+        	themeService.addTheme(new Theme("Virtualisation"));
+        	themeService.addTheme(new Theme("Windows et System Center"));
+        	themeService.addTheme(new Theme("Linux, Unix, Mac"));
+        	themeService.addTheme(new Theme("Solutions collaboratives Microsoft"));
+        	themeService.addTheme(new Theme("IBM"));
+        	themeService.addTheme(new Theme("SAP"));
+        	themeService.addTheme(new Theme("Tests"));
+        	themeService.addTheme(new Theme("Développement web et mobilité"));
+        	themeService.addTheme(new Theme("IoT, Systèmes embarquées, Robotic Process Automation"));
+        	themeService.addTheme(new Theme("DevOps, industrialisation et gestion de production"));
+        	themeService.addTheme(new Theme("PAO, CAO, DAO, BIM"));
+            // fetch all Themes
+            log.info("Themes found with findAllThemes():");
+            log.info("-------------------------------");
+            log.info(themeService.findAllThemes().toString());
+
+            Formation f1 = formationService.findFormationById(1);
+            Formation f2 = formationService.findFormationById(2);
+            
+            Set<Theme> themes1 = Stream.of(themeService.findThemeById(1),themeService.findThemeById(3)).collect(Collectors.toSet()); 
+            Set<Theme> themes2 = Stream.of(themeService.findThemeById(2),themeService.findThemeById(5),themeService.findThemeById(7)).collect(Collectors.toSet()); 
+            f1.setThemes(themes1);
+            f2.setThemes(themes2);
+            
+            //themeService.saveAll();
+            log.info("Demo3-Themes OK");
+        };
+    }
+
 
     /**
      * Cross-origin resource sharing

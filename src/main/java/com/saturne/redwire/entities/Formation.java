@@ -56,7 +56,7 @@ public class Formation {
     private String programmeDetaille;
 
     //* Formations --> * Themes
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinTable(
         name = "trainings_themes",
         joinColumns = @JoinColumn(name = "trainings_ID"),
