@@ -12,46 +12,46 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class ThemeService {
 
-    @Autowired
-    private ThemeRepository themeRepo;
+  @Autowired
+  private ThemeRepository themeRepo;
 
-    /***
-     * @param t
-     * @return Theme
-     */
-    public Theme addTheme(Theme t) {
-        return themeRepo.saveAndFlush(t);
-    }
+  /***
+   * @param t
+   * @return Theme
+   */
+  public Theme addTheme(Theme t) {
+    return themeRepo.saveAndFlush(t);
+  }
 
-    /**
-     *
-     * @return List<Theme>
-     */
-    public List<Theme> findAllThemes() {
-        return themeRepo.findAll();
-    }
+  /**
+   *
+   * @return List<Theme>
+   */
+  public List<Theme> findAllThemes() {
+    return themeRepo.findAll();
+  }
 
-    /**
-     * @param theme
-     * @return Theme
-     */
-    public Theme updateTheme(Theme theme) {
-        return themeRepo.save(theme);
-    }
+  /**
+   * @param theme
+   * @return Theme
+   */
+  public Theme updateTheme(Theme theme) {
+    return themeRepo.save(theme);
+  }
 
-    /**
-     * @param id
-     * @return Theme
-     */
-    public Theme findThemeById(long id) {
-        return themeRepo.findThemeByIdTheme(id).orElseThrow(() -> new TrainingNotFoundException("Theme by id " + id + " was not found"));
-    }
+  /**
+   * @param id
+   * @return Theme
+   */
+  public Theme findThemeById(long id) {
+    return themeRepo.findThemeByIdTheme(id).orElseThrow(() -> new TrainingNotFoundException("Theme by id " + id + " was not found"));
+  }
 
-    /***
-     *
-     * @param id
-     */
-    public void deleteTheme(long id) {
-        themeRepo.deleteThemeByIdTheme(id);
-    }
+  /***
+   *
+   * @param id
+   */
+  public void deleteTheme(long id) {
+    themeRepo.deleteThemeByIdTheme(id);
+  }
 }

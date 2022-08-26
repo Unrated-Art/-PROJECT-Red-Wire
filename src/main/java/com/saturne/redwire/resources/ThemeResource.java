@@ -16,27 +16,27 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/api/themes")
 public class ThemeResource {
 
-    private final ThemeService ts;
+  private final ThemeService ts;
 
-    public ThemeResource(ThemeService ts) {
-        this.ts = ts;
-    }
+  public ThemeResource(ThemeService ts) {
+    this.ts = ts;
+  }
 
-    @GetMapping("/all")
-    public ResponseEntity<List<Theme>> getAllThemes() {
-        List<Theme> themes = ts.findAllThemes();
-        return new ResponseEntity<>(themes, HttpStatus.OK);
-    }
+  @GetMapping("/all")
+  public ResponseEntity<List<Theme>> getAllThemes() {
+    List<Theme> themes = ts.findAllThemes();
+    return new ResponseEntity<>(themes, HttpStatus.OK);
+  }
 
-    @GetMapping(name = "get.theme", path = "findbyId/{id}")
-    public ResponseEntity<Theme> getThemeById(@PathVariable("id") long id) {
-        Theme theme = ts.findThemeById(id);
-        return new ResponseEntity<>(theme, HttpStatus.OK);
-    }
+  @GetMapping(name = "get.theme", path = "findbyId/{id}")
+  public ResponseEntity<Theme> getThemeById(@PathVariable("id") long id) {
+    Theme theme = ts.findThemeById(id);
+    return new ResponseEntity<>(theme, HttpStatus.OK);
+  }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteTheme(@PathVariable("id") long id) {
-        ts.deleteTheme(id);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+  @DeleteMapping("/delete/{id}")
+  public ResponseEntity<?> deleteTheme(@PathVariable("id") long id) {
+    ts.deleteTheme(id);
+    return new ResponseEntity<>(HttpStatus.OK);
+  }
 }

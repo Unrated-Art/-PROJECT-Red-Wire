@@ -22,115 +22,115 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/api/training")
 public class FormationResource {
 
-    private final FormationService sf;
+  private final FormationService sf;
 
-    public FormationResource(FormationService sf) {
-        this.sf = sf;
+  public FormationResource(FormationService sf) {
+    this.sf = sf;
+  }
+
+  @GetMapping("/all")
+  public ResponseEntity<List<Formation>> getAllFormations() {
+    List<Formation> formations = sf.findAllFormations();
+    return new ResponseEntity<>(formations, HttpStatus.OK);
+  }
+
+  //  @GetMapping("/all/themes")
+  //  public ResponseEntity<List<Theme>> getAllThemes() {
+  //	  List<Formation> formations = sf.findAllFormations();
+  //	  for(int i=0; ; i++)
+  //    List<Theme> allThemes ;
+  //		  //allThemes= sf.findAllFormations().for;
+  //    return new ResponseEntity<>(allThemes, HttpStatus.OK);
+  //  }
+
+  @GetMapping(name = "get.training", path = "findbyId/{id}")
+  public ResponseEntity<Formation> getFormationById(@PathVariable("id") long id) {
+    Formation Formation = sf.findFormationById(id);
+    return new ResponseEntity<>(Formation, HttpStatus.OK);
+  }
+
+  // getFormationByReference & getFormationByKeyword => Tested OK :)
+
+  @GetMapping("/findRef/{ref}")
+  public ResponseEntity<Formation> getFormationByReference(@PathVariable("ref") String ref) {
+    Formation formation = sf.findFormationByReference(ref);
+    return new ResponseEntity<>(formation, HttpStatus.OK);
+  }
+
+  @GetMapping("/findKeyword/{keyword}")
+  public ResponseEntity<List<Formation>> getFormationsByKeyword(@PathVariable("keyword") String keyword) {
+    List<Formation> formations = sf.findByKeyword(keyword);
+    return new ResponseEntity<>(formations, HttpStatus.OK);
+  }
+
+  /***
+   *
+   * @param newf
+   * @return
+   */
+  @PostMapping(path = "/add", name = "create.training", consumes = MediaType.APPLICATION_JSON_VALUE)
+  @ResponseStatus(HttpStatus.CREATED)
+  public Formation addFormation(@RequestBody Formation newf) {
+    try {
+      sf.addFormation(newf);
+    } catch (Exception ex) {
+      System.out.println(ex.getMessage());
+      return null;
     }
+    return newf;
+  }
 
-    @GetMapping("/all")
-    public ResponseEntity<List<Formation>> getAllFormations() {
-        List<Formation> formations = sf.findAllFormations();
-        return new ResponseEntity<>(formations, HttpStatus.OK);
+  @PutMapping("/update/{id}")
+  public ResponseEntity<Formation> updateFormation(@PathVariable("id") long id, @RequestBody Formation uf) {
+    Formation f = sf.findFormationById(id);
+    if (f != null) {
+      if (!uf.getReference().isEmpty()) {
+        f.setReference(uf.getReference());
+      }
+      if (!uf.getTitref().isEmpty()) {
+        f.setTitref(uf.getTitref());
+      }
+      if (!uf.getLieu().isEmpty()) {
+        f.setLieu(uf.getLieu());
+      }
+      if (uf.getInterFormation() != f.getInterFormation()) {
+        f.setInterFormation(uf.getInterFormation());
+      }
+      if (uf.getDuree() > 0) {
+        f.setDuree(uf.getDuree());
+      }
+      if (!uf.getPrerequis().isEmpty()) {
+        f.setPrerequis(uf.getPrerequis());
+      }
+      if (!uf.getObjectif().isEmpty()) {
+        f.setObjectif(uf.getObjectif());
+      }
+      if (!uf.getPublicVise().isEmpty()) {
+        f.setPublicVise(uf.getPublicVise());
+      }
+      if (!uf.getProgrammeDetaille().isEmpty()) {
+        f.setProgrammeDetaille(uf.getProgrammeDetaille());
+      }
+      if (!uf.getThemes().isEmpty()) {
+        f.setThemes(uf.getThemes());
+      }
+      if (!uf.getSessions().isEmpty()) { //#TODO: vérif condition
+        f.setSessions(uf.getSessions());
+      }
+      if (uf.getPretest() != null) { //#TODO: vérif condition
+        f.setPretest(uf.getPretest());
+      }
+      if (!uf.getChapitres().isEmpty()) { //#TODO: vérif condition
+        f.setChapitres(uf.getChapitres());
+      }
+      sf.updateFormation(f);
     }
+    return new ResponseEntity<>(f, HttpStatus.OK);
+  }
 
-    //  @GetMapping("/all/themes")
-    //  public ResponseEntity<List<Theme>> getAllThemes() {
-    //	  List<Formation> formations = sf.findAllFormations();
-    //	  for(int i=0; ; i++)
-    //    List<Theme> allThemes ;
-    //		  //allThemes= sf.findAllFormations().for;
-    //    return new ResponseEntity<>(allThemes, HttpStatus.OK);
-    //  }
-
-    @GetMapping(name = "get.training", path = "findbyId/{id}")
-    public ResponseEntity<Formation> getFormationById(@PathVariable("id") long id) {
-        Formation Formation = sf.findFormationById(id);
-        return new ResponseEntity<>(Formation, HttpStatus.OK);
-    }
-
-    // getFormationByReference & getFormationByKeyword => Tested OK :)
-
-    @GetMapping("/findRef/{ref}")
-    public ResponseEntity<Formation> getFormationByReference(@PathVariable("ref") String ref) {
-        Formation formation = sf.findFormationByReference(ref);
-        return new ResponseEntity<>(formation, HttpStatus.OK);
-    }
-
-    @GetMapping("/findKeyword/{keyword}")
-    public ResponseEntity<List<Formation>> getFormationsByKeyword(@PathVariable("keyword") String keyword) {
-        List<Formation> formations = sf.findByKeyword(keyword);
-        return new ResponseEntity<>(formations, HttpStatus.OK);
-    }
-
-    /***
-     *
-     * @param newf
-     * @return
-     */
-    @PostMapping(path = "/add", name = "create.training", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.CREATED)
-    public Formation addFormation(@RequestBody Formation newf) {
-        try {
-            sf.addFormation(newf);
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-            return null;
-        }
-        return newf;
-    }
-
-    @PutMapping("/update/{id}")
-    public ResponseEntity<Formation> updateFormation(@PathVariable("id") long id, @RequestBody Formation uf) {
-        Formation f = sf.findFormationById(id);
-        if (f != null) {
-            if (!uf.getReference().isEmpty()) {
-                f.setReference(uf.getReference());
-            }
-            if (!uf.getTitref().isEmpty()) {
-                f.setTitref(uf.getTitref());
-            }
-            if (!uf.getLieu().isEmpty()) {
-                f.setLieu(uf.getLieu());
-            }
-            if (uf.getInterFormation() != f.getInterFormation()) {
-                f.setInterFormation(uf.getInterFormation());
-            }
-            if (uf.getDuree() > 0) {
-                f.setDuree(uf.getDuree());
-            }
-            if (!uf.getPrerequis().isEmpty()) {
-                f.setPrerequis(uf.getPrerequis());
-            }
-            if (!uf.getObjectif().isEmpty()) {
-                f.setObjectif(uf.getObjectif());
-            }
-            if (!uf.getPublicVise().isEmpty()) {
-                f.setPublicVise(uf.getPublicVise());
-            }
-            if (!uf.getProgrammeDetaille().isEmpty()) {
-                f.setProgrammeDetaille(uf.getProgrammeDetaille());
-            }
-            if (!uf.getThemes().isEmpty()) {
-                f.setThemes(uf.getThemes());
-            }
-            if (!uf.getSessions().isEmpty()) { //#TODO: vérif condition
-                f.setSessions(uf.getSessions());
-            }
-            if (uf.getPretest() != null) { //#TODO: vérif condition
-                f.setPretest(uf.getPretest());
-            }
-            if (!uf.getChapitres().isEmpty()) { //#TODO: vérif condition
-                f.setChapitres(uf.getChapitres());
-            }
-            sf.updateFormation(f);
-        }
-        return new ResponseEntity<>(f, HttpStatus.OK);
-    }
-
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteFormation(@PathVariable("id") long id) {
-        sf.deleteFormation(id);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+  @DeleteMapping("/delete/{id}")
+  public ResponseEntity<?> deleteFormation(@PathVariable("id") long id) {
+    sf.deleteFormation(id);
+    return new ResponseEntity<>(HttpStatus.OK);
+  }
 }

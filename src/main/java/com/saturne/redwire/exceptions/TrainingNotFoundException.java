@@ -2,7 +2,7 @@ package com.saturne.redwire.exceptions;
 
 public class TrainingNotFoundException extends RuntimeException {
 
-    public TrainingNotFoundException(String message) {
-        super(message);
-    }
+  public TrainingNotFoundException(String message) {
+    super(message);
+  }
 }
