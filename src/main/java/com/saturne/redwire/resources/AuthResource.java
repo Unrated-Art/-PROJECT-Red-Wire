@@ -13,11 +13,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.saturne.redwire.entities.Session;
 import com.saturne.redwire.services.AuthService;
 
 @RestController
 @RequestMapping(path = "/api/auth")
 public class AuthResource {
+
+	// AIDES: https://www.javainuse.com/jwtgenerator
 
 	private final AuthService authService;
 
@@ -44,13 +47,15 @@ public class AuthResource {
     )
     @ResponseStatus(HttpStatus.ACCEPTED)
     public Map<String, String> login(@RequestBody HashMap<String, String> data) {
+		//
+		//
 		Map<String, String> response = new HashMap<>();
 		response.put("token", "SECRET");
 		if (data.get("email").contains("admin@redwire.com")) {
-			response.put("token", "eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiQWRtaW4iLCJmaXJzdE5hbWUiOiJBZG1pbiIsImxhc3ROYW1lIjoiTm9UaG9yIiwiZXhwIjoxNjY0MzcxNzU0LCJpYXQiOjE2NjE2OTMzNTR9.k05UJ2i35yCB3JL0lHjc7Insg4z_mCl6rfdqJveUEHQ");
+			response.put("token", "eyJhbGciOiJIUzI1NiJ9.eyJmaXJzdE5hbWUiOiJBaCcgZC1taW4gKG5pLW1vbSkiLCJsYXN0TmFtZSI6Ik1vTm8gRGVyYScgVGhvciIsInJvbGUiOiJBRE1JTiIsImlkIjoiMSJ9.O9fCGv6naEhxp1PQwkKC_PQCOyuZvlMUXzoCKxfYRlY");
 		}
 		if (data.get("email").contains("stag@redwire.com")) {
-			response.put("token", "eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiU3RhZ2lhaXJlIiwiZmlyc3ROYW1lIjoiU3RhaiIsImxhc3ROYW1lIjoiWSdhaXJlIiwiZXhwIjoxNjY0MzcxNzU0LCJpYXQiOjE2NjE2OTMzNTR9.Wz1Qze8cgRPpsiS03ji82rKoc0QW4rbV6GJzQCkw1h0");
+			response.put("token", "eyJhbGciOiJIUzI1NiJ9.eyJmaXJzdE5hbWUiOiJTdGFnIFknYWlyZSIsImxhc3ROYW1lIjoiR2lyTy1Ob29iIGwnUmUtTG91Iiwicm9sZSI6IlNUQUdJQUlSRSIsImlkIjoiMiJ9.AnXZa8l_tlnCkFPTozZQtEHQy9iJe5Xy_IZhnIWFucE");
 		}
     	return response;
     }
