@@ -32,15 +32,6 @@ public class FormationResource {
     return new ResponseEntity<>(formations, HttpStatus.OK);
   }
 
-  //  @GetMapping("/all/themes")
-  //  public ResponseEntity<List<Theme>> getAllThemes() {
-  //	  List<Formation> formations = sf.findAllFormations();
-  //	  for(int i=0; ; i++)
-  //    List<Theme> allThemes ;
-  //		  //allThemes= sf.findAllFormations().for;
-  //    return new ResponseEntity<>(allThemes, HttpStatus.OK);
-  //  }
-
   @GetMapping(name = "get.training", path = "findbyId/{id}")
   public ResponseEntity<Formation> getFormationById(@PathVariable("id") long id) {
     Formation Formation = sf.findFormationById(id);

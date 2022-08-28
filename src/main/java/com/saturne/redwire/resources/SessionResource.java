@@ -2,8 +2,10 @@ package com.saturne.redwire.resources;
 
 import com.saturne.redwire.entities.Formation;
 import com.saturne.redwire.entities.Session;
+import com.saturne.redwire.entities.Stagiaire;
 import com.saturne.redwire.services.FormationService;
 import com.saturne.redwire.services.SessionService;
+import com.saturne.redwire.services.StagiaireService;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -37,11 +39,13 @@ public class SessionResource {
 
   private final FormationService formationService;
   private final SessionService sessionService;
+  private final StagiaireService stagiaireService;
 
   @Autowired
-  public SessionResource(SessionService sessionService, FormationService formationService) {
+  public SessionResource(SessionService sessionService, FormationService formationService, StagiaireService stagiaireService) {
     this.sessionService = sessionService;
     this.formationService = formationService;
+    this.stagiaireService = stagiaireService;
   }
 
   @GetMapping(name = "search.session", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -211,5 +215,22 @@ public class SessionResource {
       return false;
     }
     return true;
+  }
+
+  //create trainee Post => /api/session/trainee/{idSession}
+  @PostMapping(path = "/stagiaire/{idSession}", name = "addUser.session")
+  @ResponseStatus(HttpStatus.CREATED)
+  public Stagiaire addUserSession(@RequestBody Stagiaire stagiaire, @PathVariable long idSession) {
+    this.stagiaireService.createStagiaire(stagiaire);
+    this.sessionService.getSession(idSession).getStagiaires().add(stagiaire);
+
+    return stagiaire;
+  }
+
+  //delete trainee DELETE => api/session/trainee/{id}
+  @DeleteMapping(path = "/stagiaire", name = "removeUser.session")
+  @ResponseStatus(HttpStatus.CREATED)
+  public void removeUserSession(@RequestBody Stagiaire st, @PathVariable long idSession) {
+    this.sessionService.getSession(idSession).getStagiaires().remove(st);
   }
 }
