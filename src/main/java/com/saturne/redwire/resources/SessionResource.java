@@ -1,7 +1,5 @@
 package com.saturne.redwire.resources;
 
-import com.saturne.redwire.RedWireBackendApplication;
-import com.saturne.redwire.entities.Formation;
 import com.saturne.redwire.entities.Session;
 import com.saturne.redwire.services.FormationService;
 import com.saturne.redwire.services.SessionService;
@@ -22,9 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -90,31 +86,9 @@ public class SessionResource {
      * @param idFormation
      * @return Session
      */
-    @PostMapping(
-        path = "/add/{idFormation}",
-        name = "create.session"
-        //consumes = MediaType.APPLICATION_JSON_VALUE
-    )
-    @ResponseStatus(HttpStatus.CREATED)
-    public Session createSession(@RequestBody Session session, @PathVariable long idFormation) {
-        Formation f = formationService.findFormationById(idFormation);
-        log.trace("*******************CREATE SESSION***************************");
-        log.trace("Found the training n°: " + idFormation + " => " + f);
-        try {
-            //System.out.println(session);
-            session = sessionService.createSession(session);
-            log.trace("session before update: " + session + "; " + session.getFormation());
-            session.setFormation(f);
-            sessionService.updateSession(session);
-            log.trace("session after update: " + session + "; " + session.getFormation());
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-            return null;
-        }
 
-        return session;
-    }
-
+    
+    
     @PutMapping(name = "update.session", path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Session> updateSession(
         @PathVariable(value = "id") long idSession,
