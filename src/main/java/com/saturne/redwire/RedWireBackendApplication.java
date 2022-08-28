@@ -1,12 +1,16 @@
 package com.saturne.redwire;
 
+import com.saturne.redwire.entities.Administrateur;
 import com.saturne.redwire.entities.Catalogue;
 import com.saturne.redwire.entities.Formation;
 import com.saturne.redwire.entities.Session;
+import com.saturne.redwire.entities.Stagiaire;
 import com.saturne.redwire.entities.Theme;
+import com.saturne.redwire.entities.User;
 import com.saturne.redwire.services.CatalogueService;
 import com.saturne.redwire.services.FormationService;
 import com.saturne.redwire.services.SessionService;
+import com.saturne.redwire.services.StagiaireService;
 import com.saturne.redwire.services.ThemeService;
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -177,6 +181,26 @@ public class RedWireBackendApplication {
 
       //themeService.saveAll();
       log.info("Demo3-Themes OK");
+    };
+  }
+
+  //add trainees
+
+  @Bean
+  public CommandLineRunner demo4(StagiaireService ss) {
+    return args -> {
+      User user1 = ss.createStagiaire(
+        new Stagiaire("Barbelette", "Charline", "paris20", "charline.barbelette@gmail.com", "0606060606", "123", true, "Talismas")
+      );
+      User user2 = ss.createStagiaire(
+        new Stagiaire("Charles", "J-M", "Pantin", "j-m.charles.garcia@gmail.com", "0707070707", null, false, "")
+      );
+
+      // fetch all Trainees
+      log.info("Themes found with findAllTrainees():");
+      log.info("-------------------------------");
+      log.info(ss.findAllStagiaires().toString());
+      log.info("Demo04-Trainees OK");
     };
   }
 
