@@ -45,7 +45,7 @@ public class AuthResource {
   public Map<String, String> login(@RequestBody HashMap<String, String> data) {
     Map<String, String> response = new HashMap<>();
     data.put("idStagiaire", "1");
-    data.put("role", "ADMIN");
+    data.put("role", "STAGIAIRE");
     try {
       Algorithm algorithm = Algorithm.HMAC256("redwire");
       String token = JWT.create().withPayload(data).withIssuer("auth0").sign(algorithm);

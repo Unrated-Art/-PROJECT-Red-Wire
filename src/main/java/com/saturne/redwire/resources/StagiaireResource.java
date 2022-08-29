@@ -6,13 +6,11 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.saturne.redwire.entities.Formation;
 import com.saturne.redwire.entities.Session;
 import com.saturne.redwire.entities.Stagiaire;
 import com.saturne.redwire.services.SessionService;
 import com.saturne.redwire.services.StagiaireService;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -103,6 +101,23 @@ public class StagiaireResource {
     ss.updateSession(session);
 
     return new ResponseEntity<>(status, HttpStatus.OK);
+  }
+
+  @GetMapping(name = "list.stagiaire", path = "list", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<List<Session>> getStagiaireSessions(@RequestHeader Map<String, String> headers) {
+    String token = headers.get("authorization").toString();
+    Stagiaire stagiaire = this.getStagiaireFromToken(token);
+
+    HashMap<String, Object> searchData = new HashMap<String, Object>();
+    searchData.put("idStagiaire", stagiaire);
+    List<Session> sessions = ss.getSessions(searchData);
+
+    System.out.println("STAGIAIRE: " + stagiaire);
+    System.out.println("LIST sessions :" + sessions);
+    
+    List<Session> sessions2 = ss.getSessions(new HashMap<String, Object>());
+    System.out.println("LIST sessions :" + sessions2);
+    return new ResponseEntity<>(sessions, HttpStatus.ACCEPTED);
   }
 
   private Stagiaire getStagiaireFromToken(String token) {
