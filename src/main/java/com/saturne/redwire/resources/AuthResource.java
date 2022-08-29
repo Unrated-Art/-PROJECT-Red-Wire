@@ -47,6 +47,8 @@ public class AuthResource {
     Map<String, String> response = new HashMap<>();
     data.put("idStagiaire", "1");
     data.put("role", "STAGIAIRE");
+
+    authService.getUserByEmail(data.get("email").toString());
     try {
       Algorithm algorithm = Algorithm.HMAC256("redwire");
       String token = JWT.create().withPayload(data).withIssuer("auth0").sign(algorithm);

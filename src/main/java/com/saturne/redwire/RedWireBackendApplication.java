@@ -7,6 +7,7 @@ import com.saturne.redwire.entities.Session;
 import com.saturne.redwire.entities.Stagiaire;
 import com.saturne.redwire.entities.Theme;
 import com.saturne.redwire.entities.User;
+import com.saturne.redwire.enumerations.Role;
 import com.saturne.redwire.services.CatalogueService;
 import com.saturne.redwire.services.FormationService;
 import com.saturne.redwire.services.SessionService;
@@ -189,9 +190,10 @@ public class RedWireBackendApplication {
   @Bean
   public CommandLineRunner demo4(StagiaireService ss) {
     return args -> {
-      User user1 = ss.createStagiaire(
-        new Stagiaire("Barbelette", "Charline", "paris20", "charline.barbelette@gmail.com", "0606060606", "123", true, "Talismas")
+      User admin = ss.createStagiaire(
+        new Stagiaire("Barbelette", "Charline", "paris20", "admin@saturne.com", "0606060606", "123", true, "Talismas")
       );
+      admin.setRole(Role.ADMIN);
       User user2 = ss.createStagiaire(
         new Stagiaire("Charles", "J-M", "Pantin", "j-m.charles.garcia@gmail.com", "0707070707", null, false, "")
       );
