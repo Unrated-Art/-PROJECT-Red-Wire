@@ -43,8 +43,8 @@ public class Formation { // implements Serializable {????
   @Column(name = "requirements")
   private String prerequis;
 
-  @Column(name = "goal")
-  private String objectif;
+  @Column(name = "goal", length=100000)
+  private String objectif; 
 
   @Column(name = "targetAudience")
   private String publicVise;
