@@ -1,7 +1,10 @@
 package com.saturne.redwire.entities;
 
+import com.saturne.redwire.enumerations.Role;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,149 +15,168 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "trainees")
-public class Stagiaire { //  implements Serializable{??
+public class Stagiaire extends User {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idTrainee")
-    private long idStagiaire;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "idTrainee")
+  private long idStagiaire;
 
-    @Column(name = "lastName")
-    private String nom;
+  @Column(name = "lastName")
+  private String nom;
 
-    @Column(name = "firstName")
-    private String prenom;
+  @Column(name = "firstName")
+  private String prenom;
 
-    @Column(name = "address")
-    private String adresse;
+  @Column(name = "address")
+  private String adresse;
 
-    @Column(name = "email")
-    private String email;
+  @Column(name = "email")
+  private String email;
 
-    @Column(name = "phoneNumber")
-    private String numTelephone;
+  @Column(name = "phoneNumber")
+  private String numTelephone;
 
-    @Column(name = "password")
-    private String mpass;
+  @Column(name = "password")
+  private String mpass;
 
-    @Column(name = "company")
-    private boolean entreprise;
+  @Column(name = "company")
+  private boolean entreprise;
 
-    @Column(name = "contactInfo")
-    private String coordonneesEntre;
+  @Column(name = "contactInfo")
+  private String coordonneesEntre;
 
-    public Stagiaire() {}
+  @Enumerated(EnumType.STRING)
+  @Column(name = "user_role")
+  private Role role;
 
-    public Stagiaire(
-        String nom,
-        String prenom,
-        String adresse,
-        String email,
-        String numTelephone,
-        boolean entreprise,
-        String coordonneesEntre
-    ) {
-        this.nom = nom;
-        this.prenom = prenom;
-        this.adresse = adresse;
-        this.email = email;
-        this.numTelephone = numTelephone;
-        this.entreprise = entreprise;
-        this.coordonneesEntre = coordonneesEntre;
-    }
+  public Stagiaire() {}
 
-    public long getIdStagiaire() {
-        return idStagiaire;
-    }
+  public Stagiaire(
+    String nom,
+    String prenom,
+    String adresse,
+    String email,
+    String numTelephone,
+    String mpass,
+    boolean entreprise,
+    String coordonneesEntre
+  ) {
+    this.nom = nom;
+    this.prenom = prenom;
+    this.adresse = adresse;
+    this.email = email;
+    this.numTelephone = numTelephone;
+    this.mpass = mpass;
+    this.entreprise = entreprise;
+    this.coordonneesEntre = coordonneesEntre;
+    this.role = Role.STAGIAIRE;
+  }
 
-    public void setIdStagiaire(long idStagiaire) {
-        this.idStagiaire = idStagiaire;
-    }
+  public long getIdStagiaire() {
+    return idStagiaire;
+  }
 
-    public String getNom() {
-        return nom;
-    }
+  public void setIdStagiaire(long idStagiaire) {
+    this.idStagiaire = idStagiaire;
+  }
 
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
+  public String getNom() {
+    return nom;
+  }
 
-    public String getPrenom() {
-        return prenom;
-    }
+  public void setNom(String nom) {
+    this.nom = nom;
+  }
 
-    public void setPrenom(String prenom) {
-        this.prenom = prenom;
-    }
+  public String getPrenom() {
+    return prenom;
+  }
 
-    public String getAdresse() {
-        return adresse;
-    }
+  public void setPrenom(String prenom) {
+    this.prenom = prenom;
+  }
 
-    public void setAdresse(String adresse) {
-        this.adresse = adresse;
-    }
+  public String getAdresse() {
+    return adresse;
+  }
 
-    public String getEmail() {
-        return email;
-    }
+  public void setAdresse(String adresse) {
+    this.adresse = adresse;
+  }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+  public String getEmail() {
+    return email;
+  }
 
-    public String getNumTelephone() {
-        return numTelephone;
-    }
+  public void setEmail(String email) {
+    this.email = email;
+  }
 
-    public void setNumTelephone(String numTelephone) {
-        this.numTelephone = numTelephone;
-    }
+  public String getNumTelephone() {
+    return numTelephone;
+  }
 
-    public String getMpass() {
-        return mpass;
-    }
+  public void setNumTelephone(String numTelephone) {
+    this.numTelephone = numTelephone;
+  }
 
-    public void setMpass(String mpass) {
-        this.mpass = mpass;
-    }
+  public String getMpass() {
+    return mpass;
+  }
 
-    public boolean getEntreprise() {
-        return entreprise;
-    }
+  public void setMpass(String mpass) {
+    this.mpass = mpass;
+  }
 
-    public void setEntreprise(boolean entreprise) {
-        this.entreprise = entreprise;
-    }
+  public boolean getEntreprise() {
+    return entreprise;
+  }
 
-    public String getCoordonneesEntre() {
-        return coordonneesEntre;
-    }
+  public void setEntreprise(boolean entreprise) {
+    this.entreprise = entreprise;
+  }
 
-    public void setCoordonneesEntre(String coordonnees) {
-        this.coordonneesEntre = coordonnees;
-    }
+  public String getCoordonneesEntre() {
+    return coordonneesEntre;
+  }
 
-    @Override
-    public String toString() {
-        return (
-            "Stagiaire [idStagiaire=" +
-            idStagiaire +
-            ", nom=" +
-            nom +
-            ", prenom=" +
-            prenom +
-            ", adresse=" +
-            adresse +
-            ", email=" +
-            email +
-            ", numTelephone=" +
-            numTelephone +
-            ", entreprise=" +
-            entreprise +
-            ", coordonneesEntre=" +
-            coordonneesEntre +
-            "]"
-        );
-    }
+  public void setCoordonneesEntre(String coordonnees) {
+    this.coordonneesEntre = coordonnees;
+  }
+
+  public Role getRole() {
+    return role;
+  }
+
+  public void setRole(Role role) {
+    this.role = role;
+  }
+
+  @Override
+  public String toString() {
+    return (
+      "Stagiaire [idStagiaire=" +
+      idStagiaire +
+      ", nom=" +
+      nom +
+      ", prenom=" +
+      prenom +
+      ", adresse=" +
+      adresse +
+      ", email=" +
+      email +
+      ", numTelephone=" +
+      numTelephone +
+      ", mpass=" +
+      mpass +
+      ", entreprise=" +
+      entreprise +
+      ", coordonneesEntre=" +
+      coordonneesEntre +
+      ", role=" +
+      role +
+      "]"
+    );
+  }
 }

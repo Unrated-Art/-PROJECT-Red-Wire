@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SessionRepository extends JpaRepository<Session, Long> {
-    Optional<Session> getSessionByIdSession(long idSession);
+  Optional<Session> getSessionByIdSession(long idSession);
 
-    void deleteByIdSession(long id);
+  void deleteByIdSession(long id);
 }
