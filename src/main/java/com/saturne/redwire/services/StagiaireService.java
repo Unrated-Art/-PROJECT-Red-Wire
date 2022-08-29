@@ -31,9 +31,9 @@ public class StagiaireService {
    * @return stagiaire
    */
   public Stagiaire updateStagiaire(Stagiaire s) {
-	    return stagiaireRepo.saveAndFlush(s);
+    return stagiaireRepo.saveAndFlush(s);
   }
-  
+
   /**
    * getAllTrainees
    * @return List<Stagiaire>

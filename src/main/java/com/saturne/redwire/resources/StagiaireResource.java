@@ -7,17 +7,22 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.saturne.redwire.entities.Formation;
+import com.saturne.redwire.entities.Session;
 import com.saturne.redwire.entities.Stagiaire;
+import com.saturne.redwire.services.SessionService;
 import com.saturne.redwire.services.StagiaireService;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,39 +35,74 @@ import org.springframework.web.bind.annotation.RestController;
 public class StagiaireResource {
 
   private final StagiaireService sf;
+  private final SessionService ss;
 
   @Autowired
-  public StagiaireResource(StagiaireService sf) {
+  public StagiaireResource(StagiaireService sf, SessionService ss) {
     this.sf = sf;
+    this.ss = ss;
   }
 
-  @GetMapping(name = "get.stagiaire", path="", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(name = "get.stagiaire", path = "", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Stagiaire> getStagiaire(@RequestHeader Map<String, String> headers) {
-	  String token = headers.get("authorization").toString();
-	  Stagiaire stagiaire = this.getStagiaireFromToken(token);
-	  return new ResponseEntity<>(stagiaire, HttpStatus.ACCEPTED);
+    String token = headers.get("authorization").toString();
+    Stagiaire stagiaire = this.getStagiaireFromToken(token);
+    return new ResponseEntity<>(stagiaire, HttpStatus.ACCEPTED);
   }
 
-  @PutMapping(name = "update.stagiaire", path="", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Stagiaire> updateStagiaire(
-		  @RequestHeader Map<String, String> headers,
-		  @RequestBody Map<String, String> body
-	  ) {
-	  String token = headers.get("authorization").toString();
-	  Stagiaire stagiaire = this.getStagiaireFromToken(token);
+  @PutMapping(name = "update.stagiaire", path = "", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<Stagiaire> updateStagiaire(@RequestHeader Map<String, String> headers, @RequestBody Map<String, String> body) {
+    String token = headers.get("authorization").toString();
+    Stagiaire stagiaire = this.getStagiaireFromToken(token);
 
-	  stagiaire.setNom(body.get("nom").toString());
-	  stagiaire.setPrenom(body.get("prenom").toString());
-	  stagiaire.setAdresse(body.get("adresse").toString());
-	  stagiaire.setEmail(body.get("email").toString());
-	  stagiaire.setNumTelephone(body.get("numTelephone").toString());
-	  stagiaire.setMpass(body.get("mpass").toString());
-	  stagiaire.setEntreprise(Boolean.parseBoolean(body.get("entreprise").toString()));
-	  stagiaire.setCoordonneesEntre(body.get("coordonneesEntre").toString());
+    stagiaire.setNom(body.get("nom").toString());
+    stagiaire.setPrenom(body.get("prenom").toString());
+    stagiaire.setAdresse(body.get("adresse").toString());
+    stagiaire.setEmail(body.get("email").toString());
+    stagiaire.setNumTelephone(body.get("numTelephone").toString());
+    stagiaire.setMpass(body.get("mpass").toString());
+    stagiaire.setEntreprise(Boolean.parseBoolean(body.get("entreprise").toString()));
+    stagiaire.setCoordonneesEntre(body.get("coordonneesEntre").toString());
 
-	  stagiaire = sf.updateStagiaire(stagiaire);
-	  System.out.println("stagiaire " + stagiaire);
-	  return new ResponseEntity<Stagiaire>(stagiaire, HttpStatus.OK);
+    stagiaire = sf.updateStagiaire(stagiaire);
+    System.out.println("stagiaire " + stagiaire);
+    return new ResponseEntity<>(stagiaire, HttpStatus.OK);
+  }
+
+  @PostMapping(name = "link.stagiaire.session", path = "/{idSession}")
+  public ResponseEntity<Boolean> inscriptionSessionStagiaire(
+    @RequestHeader Map<String, String> headers,
+    @PathVariable("idSession") long idSession
+  ) {
+    Boolean status = true;
+    String token = headers.get("authorization").toString();
+    Stagiaire stagiaire = this.getStagiaireFromToken(token);
+    Session session = ss.getSession(idSession);
+
+    Set<Stagiaire> listStagiaires = session.getStagiaires();
+    listStagiaires.add(stagiaire);
+    session.setStagiaires(listStagiaires);
+    ss.updateSession(session);
+
+    return new ResponseEntity<>(status, HttpStatus.OK);
+  }
+
+  @DeleteMapping(name = "unlink.stagiaire.session", path = "/{idSession}")
+  public ResponseEntity<Boolean> desinscriptionSessionStagiaire(
+    @RequestHeader Map<String, String> headers,
+    @PathVariable("idSession") long idSession
+  ) {
+    Boolean status = true;
+    String token = headers.get("authorization").toString();
+    Stagiaire stagiaire = this.getStagiaireFromToken(token);
+    Session session = ss.getSession(idSession);
+
+    Set<Stagiaire> listStagiaires = session.getStagiaires();
+    listStagiaires.remove(stagiaire);
+    session.setStagiaires(listStagiaires);
+    ss.updateSession(session);
+
+    return new ResponseEntity<>(status, HttpStatus.OK);
   }
 
   private Stagiaire getStagiaireFromToken(String token) {
