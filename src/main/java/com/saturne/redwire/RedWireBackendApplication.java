@@ -194,9 +194,12 @@ public class RedWireBackendApplication {
         new Stagiaire("Barbelette", "Charline", "paris20", "admin@saturne.com", "0606060606", "123", true, "Talismas")
       );
       admin.setRole(Role.ADMIN);
+      ss.up
       User user2 = ss.createStagiaire(
         new Stagiaire("Charles", "J-M", "Pantin", "j-m.charles.garcia@gmail.com", "0707070707", null, false, "")
       );
+      
+      
 
       // fetch all Trainees
       log.info("Themes found with findAllTrainees():");

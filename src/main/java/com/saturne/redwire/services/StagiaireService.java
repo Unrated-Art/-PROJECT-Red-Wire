@@ -25,6 +25,15 @@ public class StagiaireService {
     return stagiaireRepo.saveAndFlush(s);
   }
 
+  /***
+   * Editer stagiaire
+   * @param stagiaire
+   * @return stagiaire
+   */
+  public Stagiaire updateStagiaire(Stagiaire s) {
+    return stagiaireRepo.saveAndFlush(s);
+  }
+
   /**
    * getAllTrainees
    * @return List<Stagiaire>

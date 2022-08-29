@@ -3,7 +3,6 @@ package com.saturne.redwire.resources;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
-import com.saturne.redwire.entities.Session;
 import com.saturne.redwire.services.AuthService;
 import java.util.HashMap;
 import java.util.Map;
@@ -46,9 +45,7 @@ public class AuthResource {
   public Map<String, String> login(@RequestBody HashMap<String, String> data) {
     Map<String, String> response = new HashMap<>();
     data.put("idStagiaire", "1");
-    data.put("role", "STAGIAIRE");
-
-    authService.getUserByEmail(data.get("email").toString());
+    data.put("role", "ADMIN");
     try {
       Algorithm algorithm = Algorithm.HMAC256("redwire");
       String token = JWT.create().withPayload(data).withIssuer("auth0").sign(algorithm);
