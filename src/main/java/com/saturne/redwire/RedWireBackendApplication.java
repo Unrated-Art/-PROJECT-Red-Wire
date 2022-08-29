@@ -399,12 +399,12 @@ public class RedWireBackendApplication {
   @Bean
   public CommandLineRunner demo4(StagiaireService ss) {
     return args -> {
-      User admin = ss.createStagiaire(
+      Stagiaire admin = ss.createStagiaire(
         new Stagiaire("Barbelette", "Charline", "paris20", "admin@saturne.com", "0606060606", "123", true, "Talismas")
       );
       admin.setRole(Role.ADMIN);
-      //ss.updateStagiaire(admin);
-      User user2 = ss.createStagiaire(
+      ss.updateStagiaire(admin);
+      Stagiaire user2 = ss.createStagiaire(
         new Stagiaire("Charles", "J-M", "Pantin", "j-m.charles.garcia@gmail.com", "0707070707", null, false, "")
       );
 

@@ -114,7 +114,7 @@ public class StagiaireResource {
 
     System.out.println("STAGIAIRE: " + stagiaire);
     System.out.println("LIST sessions :" + sessions);
-    
+
     List<Session> sessions2 = ss.getSessions(new HashMap<String, Object>());
     System.out.println("LIST sessions :" + sessions2);
     return new ResponseEntity<>(sessions, HttpStatus.ACCEPTED);

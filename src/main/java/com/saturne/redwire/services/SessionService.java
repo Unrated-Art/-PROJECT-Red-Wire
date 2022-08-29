@@ -70,9 +70,10 @@ public class SessionService {
         });
     }
     if (params.containsKey("idStagiaire")) {
-      sessionsStream = sessionsStream.filter(s -> {
-    	  return s.getStagiaires().contains(params.get("idStagiaire"));
-      });
+      sessionsStream =
+        sessionsStream.filter(s -> {
+          return s.getStagiaires().contains(params.get("idStagiaire"));
+        });
     }
     return sessionsStream.collect(Collectors.toList());
   }

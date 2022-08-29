@@ -51,7 +51,7 @@ public class Formation {
   @Column(name = "targetAudience")
   private String publicVise;
 
-  @Column(name = "details")
+  @Column(name = "details", length = 10000)
   private String programmeDetaille;
 
   //* Formations --> * Themes
