@@ -51,19 +51,155 @@ public class RedWireBackendApplication {
   @Bean
   public CommandLineRunner demo(FormationService formationService) {
     return args -> {
+    	/*1*/
+        formationService.addFormation(
+                new Formation(
+                 /*reference*/  "BD500",
+                 /*titref*/ 	"Formation Big Data - Enjeux et perspectives",
+                 /*lieu*/       "Paris",
+                 /*interFormation*/true,
+                  /*duree*/  2,
+                  /*prerequis*/"Savoir manipuler un outil bureautique comme Excel et connaitre le fonctionnement d'un système de gestion de base de données (SGBD/R)",
+                  /*objectif*/"Connaitre les informations essentielles pour lancer une initiative Big Data et comprendre comment les entreprises les plus avancées, dans tous les secteurs, ont tiré profit de projets Big Data",
+                  /*publicVise*/"Toute personne amenée à participer à un projet Big Data (MOA, Chefs de projet, Développeurs, Analystes...)",
+               /*programmeDetaille*/"LA DÉFINITION DU BIG DATA\r\n LES ORIGINES DU BIG DATA ET LES FACTEURS D'ÉVOLUTION DU BIG DATA\r\n"
+               		+ " LE MARCHÉ BIG DATA ET LES PRINCIPAUX CAS D'USAGES D'ANALYTIQUES\r\n LE PROJET BIG DATA ET LES TECHNOLOGIES FONDAMENTALES DES SOLUTIONS"
+               		
+               		
+                )
+              );
+    	/*2*/
       formationService.addFormation(
         new Formation(
-          "OB101",
-          "Java - Initiation",
-          "Lyon",
-          true,
-          6,
-          "Programmation orientée objet",
-          "Apprendre à coder en Java",
-          "-29ans",
-          "Chapitre1, chapitre2..etc"
+          "OR100", //reference
+          "Formation Interroger et manipuler des bases de données Oracle avec le langage SQL", //intitulé
+          "Lyon", //lieu
+          true, //interentreprise
+          3, //duree
+          "Avoir suivi la formation \"Introduction au SGBD Oracle\" (OR10) ou connaissances équivalentes", //prérequis
+          "Apprendre à coder en Java", //objectif
+          "Analystes et analystes programmeurs\r\nResponsables de service, chefs de projet\r\nAdministrateurs de bases de données, exploitants", //public visé
+          "Chapitre1, chapitre2..etc" //programme détaillé
         )
       );
+      
+      /*3*/
+      formationService.addFormation(
+    	        new Formation(
+    	          "OR100", //reference
+    	          "Formation Interroger et manipuler des bases de données Oracle avec le langage SQL", //intitulé
+    	          "Lyon", //lieu
+    	          true, //interentreprise
+    	          3, //duree
+    	          "Avoir suivi la formation \"Introduction au SGBD Oracle\" (OR10) ou connaissances équivalentes", //prérequis
+    	          "Apprendre à coder en Java", //objectif
+    	          "-29ans", //public visé
+    	          "Chapitre1, chapitre2..etc" //programme détaillé
+    	        )
+    	      );
+      
+      /*4*/
+      formationService.addFormation(
+    	        new Formation(
+    	          "OR100", //reference
+    	          "Formation Interroger et manipuler des bases de données Oracle avec le langage SQL", //intitulé
+    	          "Lyon", //lieu
+    	          true, //interentreprise
+    	          3, //duree
+    	          "Avoir suivi la formation \"Introduction au SGBD Oracle\" (OR10) ou connaissances équivalentes", //prérequis
+    	          "Apprendre à coder en Java", //objectif
+    	          "-29ans", //public visé
+    	          "Chapitre1, chapitre2..etc" //programme détaillé
+    	        )
+    	      );
+      
+      /*5*/
+      
+      formationService.addFormation(
+    	        new Formation(
+    	          "OR100", //reference
+    	          "Formation Interroger et manipuler des bases de données Oracle avec le langage SQL", //intitulé
+    	          "Lyon", //lieu
+    	          true, //interentreprise
+    	          3, //duree
+    	          "Avoir suivi la formation \"Introduction au SGBD Oracle\" (OR10) ou connaissances équivalentes", //prérequis
+    	          "Apprendre à coder en Java", //objectif
+    	          "-29ans", //public visé
+    	          "Chapitre1, chapitre2..etc" //programme détaillé
+    	        )
+    	      );
+      
+      /*6*/
+      formationService.addFormation(
+    	        new Formation(
+    	          "OR100", //reference
+    	          "Formation Interroger et manipuler des bases de données Oracle avec le langage SQL", //intitulé
+    	          "Lyon", //lieu
+    	          true, //interentreprise
+    	          3, //duree
+    	          "Avoir suivi la formation \"Introduction au SGBD Oracle\" (OR10) ou connaissances équivalentes", //prérequis
+    	          "Apprendre à coder en Java", //objectif
+    	          "-29ans", //public visé
+    	          "Chapitre1, chapitre2..etc" //programme détaillé
+    	        )
+    	      );
+      /*7*/
+      formationService.addFormation(
+    	        new Formation(
+    	          "OR100", //reference
+    	          "Formation Interroger et manipuler des bases de données Oracle avec le langage SQL", //intitulé
+    	          "Lyon", //lieu
+    	          true, //interentreprise
+    	          3, //duree
+    	          "Avoir suivi la formation \"Introduction au SGBD Oracle\" (OR10) ou connaissances équivalentes", //prérequis
+    	          "Apprendre à coder en Java", //objectif
+    	          "-29ans", //public visé
+    	          "Chapitre1, chapitre2..etc" //programme détaillé
+    	        )
+    	      );
+      /*8*/
+      formationService.addFormation(
+    	        new Formation(
+    	          "OR100", //reference
+    	          "Formation Interroger et manipuler des bases de données Oracle avec le langage SQL", //intitulé
+    	          "Lyon", //lieu
+    	          true, //interentreprise
+    	          3, //duree
+    	          "Avoir suivi la formation \"Introduction au SGBD Oracle\" (OR10) ou connaissances équivalentes", //prérequis
+    	          "Apprendre à coder en Java", //objectif
+    	          "-29ans", //public visé
+    	          "Chapitre1, chapitre2..etc" //programme détaillé
+    	        )
+    	      );
+      /*9*/
+      formationService.addFormation(
+    	        new Formation(
+    	          "OR100", //reference
+    	          "Formation Interroger et manipuler des bases de données Oracle avec le langage SQL", //intitulé
+    	          "Lyon", //lieu
+    	          true, //interentreprise
+    	          3, //duree
+    	          "Avoir suivi la formation \"Introduction au SGBD Oracle\" (OR10) ou connaissances équivalentes", //prérequis
+    	          "Apprendre à coder en Java", //objectif
+    	          "-29ans", //public visé
+    	          "Chapitre1, chapitre2..etc" //programme détaillé
+    	        )
+    	      );
+      /*10*/
+      formationService.addFormation(
+    	        new Formation(
+    	          "OR100", //reference
+    	          "Formation Interroger et manipuler des bases de données Oracle avec le langage SQL", //intitulé
+    	          "Lyon", //lieu
+    	          true, //interentreprise
+    	          3, //duree
+    	          "Avoir suivi la formation \"Introduction au SGBD Oracle\" (OR10) ou connaissances équivalentes", //prérequis
+    	          "Apprendre à coder en Java", //objectif
+    	          "-29ans", //public visé
+    	          "Chapitre1, chapitre2..etc" //programme détaillé
+    	        )
+    	      );
+      /*11*/
       formationService.addFormation(
         new Formation(
           "OB301",
@@ -77,6 +213,8 @@ public class RedWireBackendApplication {
           "Chapter3,chapter5"
         )
       );
+      
+      /*12*/
       formationService.addFormation(
         new Formation(
           "AB134",
@@ -90,6 +228,80 @@ public class RedWireBackendApplication {
           "Chapter6, Chapter4"
         )
       );
+      
+      
+      /*13*/
+      formationService.addFormation(
+    	        new Formation(
+    	          "CE980",
+    	          "Javascript - Fondamentaux",
+    	          "Toulouse",
+    	          true,
+    	          3,
+    	          "Disposer de connaissances en langages HTML et CSS Connaître la programmation structurée",
+    	          "Comprendre la notion de classe/objet",
+    	          "Développeurs Web, Architectes Web, Chefs de projet,Webmasters…",
+    	          "*JAVASCRIPT : LE COEUR DU LANGAGE\r\n La syntaxe, Les variables et les constantes, "
+    	          + "Les fonctions globales, Les opérateurs, Les structures de contrôle, Les fonctions , fonctions sous forme de données\r\n "
+    	          + "*LES OBJETS DU NAVIGATEUR: La hiérarchie des objets, Les principaux objets "
+    	        )
+    	      );
+      
+      /*14*/
+//      formationService.addFormation(
+//    	        new Formation(
+//    	          "CE954",
+//    	          "JavaScript - Programmation avancée",
+//    	          "Rennes",
+//    	          true,
+//    	          3,
+//    	          "Avoir des connaissances pratiques en JavaScript, HTML et CSS\r\n Posséder des connaissances de base de XML",
+//    	          "Découvrir les concepts avancés JavaScript ES5 \r\n-Mettre en pratique la Programmation Orientée Objet
+//    	    -Maîtriser l'environnement de débogage
+//    	    -Mettre en oeuvre le framework JavaScript jQuery
+//    	    -Manipuler les API JavaScript HTML5
+//    	    -Appréhender la notion de JavaScript côté serveur avec Node.js
+//    	",
+//    	          "Développeurs Web, Architectes Web, Chefs de projet,Webmasters…”,
+//    	    “-LE MOT-CLÉ “THIS
+//    	     -LISTE D'ÉLÉMENTS : DES ALTERNATIVES AUX BOUCLES
+//    	     -LES ARCHITECTURES PRÉ-ES2015
+//    	     -LES PACKAGES ET LA TRANSPILATION
+//    	     -TYPESCRIPT
+//    	     -WEB APIS ET PWA
+//    	     -TESTS
+//    	     -INTRODUCTION AUX LIBRAIRIES / FRAMEWORKS FRONT-END
+//    	     -BONUS : NODE.JS ET AUTRES WEB APIS“
+//    	        )
+//    	      );
+      
+      /*15*/
+      /*
+       formationService.addFormation(
+        new Formation(
+          "LI200",
+          "Développement d'applications web",
+          "Lyon",
+          true,
+          4,
+          “-Maîtriser la syntaxe PHP en vue de développer de sites Web dynamiques
+    -Apprendre à créer des applications dynamiques avec PHP et MySQL
+    -Comprendre les bonnes pratiques de programmation PHP
+    -Traiter des formulaires Web
+    -Gérer des sessions utilisateurs",
+          "Disposer de connaissances pratiques de HTML et au moins d'un langage de programmation",
+          "Développeurs Web, Architectes Web, Chefs de projet,Webmasters…”,
+    “- INTRODUCTION À LA PROGRAMMATION AVEC PHP
+     - INSTALLATION DE PHP ET MYSQL
+     - LES BASES DE PHP
+     - LES FORMULAIRES ET L'INTERACTION UTILISATEURS
+     - AUTHENTIFICATION, SESSIONS ET COOKIES
+     - LES BASES DE DONNÉES (MYSQL)
+     - COMMUNICATION ENTRE PHP ET MYSQL
+     - TECHNIQUES AVANCÉES”
+        )
+      );
+       */
       // fetch all trainings
       log.info("Trainings found with findAllFormations():");
       log.info("-------------------------------");
@@ -194,7 +406,7 @@ public class RedWireBackendApplication {
         new Stagiaire("Barbelette", "Charline", "paris20", "admin@saturne.com", "0606060606", "123", true, "Talismas")
       );
       admin.setRole(Role.ADMIN);
-      ss.up
+      //ss.updateStagiaire(admin);
       User user2 = ss.createStagiaire(
         new Stagiaire("Charles", "J-M", "Pantin", "j-m.charles.garcia@gmail.com", "0707070707", null, false, "")
       );
