@@ -1,7 +1,6 @@
 package com.saturne.redwire.resources;
 
 import com.saturne.redwire.entities.Catalogue;
-import com.saturne.redwire.entities.Formation;
 import com.saturne.redwire.services.CatalogueService;
 
 import java.time.LocalDate;

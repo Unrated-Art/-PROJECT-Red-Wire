@@ -62,15 +62,7 @@ public class Auteur {
 
   @Override
   public String toString() {
-    return (
-      "Auteur [idAuteur=" +
-      idAuteur +
-      ", prenomA=" +
-      prenomA +
-      ", nomA=" +
-      nomA +
-      "]"
-    );
+    return ("Auteur [idAuteur=" + idAuteur + ", prenomA=" + prenomA + ", nomA=" + nomA + "]");
   }
 
   @Override
@@ -84,10 +76,6 @@ public class Auteur {
     if (obj == null) return false;
     if (getClass() != obj.getClass()) return false;
     Auteur other = (Auteur) obj;
-    return (
-      idAuteur == other.idAuteur &&
-      Objects.equals(nomA, other.nomA) &&
-      Objects.equals(prenomA, other.prenomA)
-    );
+    return (idAuteur == other.idAuteur && Objects.equals(nomA, other.nomA) && Objects.equals(prenomA, other.prenomA));
   }
 }

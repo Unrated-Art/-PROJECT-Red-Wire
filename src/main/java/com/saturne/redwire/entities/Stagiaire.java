@@ -1,7 +1,10 @@
 package com.saturne.redwire.entities;
 
+import com.saturne.redwire.enumerations.Role;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,7 +15,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "trainees")
-public class Stagiaire { //  implements Serializable{??
+public class Stagiaire extends User {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,6 +46,10 @@ public class Stagiaire { //  implements Serializable{??
   @Column(name = "contactInfo")
   private String coordonneesEntre;
 
+  @Enumerated(EnumType.STRING)
+  @Column(name = "user_role")
+  private Role role;
+
   public Stagiaire() {}
 
   public Stagiaire(
@@ -51,6 +58,7 @@ public class Stagiaire { //  implements Serializable{??
     String adresse,
     String email,
     String numTelephone,
+    String mpass,
     boolean entreprise,
     String coordonneesEntre
   ) {
@@ -59,8 +67,10 @@ public class Stagiaire { //  implements Serializable{??
     this.adresse = adresse;
     this.email = email;
     this.numTelephone = numTelephone;
+    this.mpass = mpass;
     this.entreprise = entreprise;
     this.coordonneesEntre = coordonneesEntre;
+    this.role = Role.STAGIAIRE;
   }
 
   public long getIdStagiaire() {
@@ -135,6 +145,14 @@ public class Stagiaire { //  implements Serializable{??
     this.coordonneesEntre = coordonnees;
   }
 
+  public Role getRole() {
+    return role;
+  }
+
+  public void setRole(Role role) {
+    this.role = role;
+  }
+
   @Override
   public String toString() {
     return (
@@ -150,10 +168,14 @@ public class Stagiaire { //  implements Serializable{??
       email +
       ", numTelephone=" +
       numTelephone +
+      ", mpass=" +
+      mpass +
       ", entreprise=" +
       entreprise +
       ", coordonneesEntre=" +
       coordonneesEntre +
+      ", role=" +
+      role +
       "]"
     );
   }

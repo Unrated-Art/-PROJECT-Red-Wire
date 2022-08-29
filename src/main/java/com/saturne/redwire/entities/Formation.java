@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.Set;
 //import java.io.Serializable;
 import javax.persistence.*;
+import org.hibernate.annotations.DynamicUpdate;
 
 /*
  * Formations
@@ -18,7 +19,8 @@ import javax.persistence.*;
   //query="SELECT idTraining, ref, location, interTraining, duration,requirements, goal, targetAudience, details  FROM trainings WHERE ref=?",
   resultClass = Formation.class
 )
-public class Formation { // implements Serializable {????
+@DynamicUpdate
+public class Formation {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,7 +55,7 @@ public class Formation { // implements Serializable {????
   private String programmeDetaille;
 
   //* Formations --> * Themes
-  @ManyToMany(cascade = CascadeType.PERSIST)
+  @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
   @JoinTable(
     name = "trainings_themes",
     joinColumns = @JoinColumn(name = "trainings_ID"),
@@ -66,7 +68,7 @@ public class Formation { // implements Serializable {????
   private Set<Chapitre> chapitres = new HashSet<Chapitre>();
 
   // 1 formation <--> * sessions
-  @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "formation")
+  @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "formation", fetch = FetchType.EAGER)
   private Set<Session> sessions = new HashSet<Session>();
 
   // 1 formation --> 1 preTest
@@ -239,18 +241,7 @@ public class Formation { // implements Serializable {????
 
   @Override
   public int hashCode() {
-    return Objects.hash(
-      duree,
-      idFormation,
-      interFormation,
-      lieu,
-      objectif,
-      prerequis,
-      programmeDetaille,
-      publicVise,
-      reference,
-      titref
-    );
+    return Objects.hash(duree, idFormation, interFormation, lieu, objectif, prerequis, programmeDetaille, publicVise, reference, titref);
   }
 
   @Override

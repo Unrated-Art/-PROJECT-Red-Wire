@@ -76,15 +76,7 @@ public class Chapitre { //implemets serializable??
 
   @Override
   public String toString() {
-    return (
-      "Chapitre [idChap=" +
-      idChap +
-      ", nomChapitre=" +
-      nomChapitre +
-      ", contenu=" +
-      contenu +
-      "]"
-    );
+    return ("Chapitre [idChap=" + idChap + ", nomChapitre=" + nomChapitre + ", contenu=" + contenu + "]");
   }
 
   @Override
@@ -98,10 +90,6 @@ public class Chapitre { //implemets serializable??
     if (obj == null) return false;
     if (getClass() != obj.getClass()) return false;
     Chapitre other = (Chapitre) obj;
-    return (
-      Objects.equals(contenu, other.contenu) &&
-      idChap == other.idChap &&
-      Objects.equals(nomChapitre, other.nomChapitre)
-    );
+    return (Objects.equals(contenu, other.contenu) && idChap == other.idChap && Objects.equals(nomChapitre, other.nomChapitre));
   }
 }

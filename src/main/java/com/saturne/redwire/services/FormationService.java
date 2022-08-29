@@ -4,8 +4,6 @@ import com.saturne.redwire.entities.Formation;
 import com.saturne.redwire.exceptions.TrainingNotFoundException;
 import com.saturne.redwire.repositories.FormationRepository;
 import java.util.List;
-import java.util.Optional;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +22,15 @@ public class FormationService {
    * @return
    */
   public Formation addFormation(Formation f) {
-    return formationRepo.save(f);
+    //        if (f.getTitref().toLowerCase().contains("java")) {
+    //            f.getThemes().add(new Theme("Java"));
+    ////            f.getThemes().add(new Theme("POO"));
+    //        } else if (f.getTitref().toLowerCase().contains("web")) {
+    //            f.getThemes().add(new Theme("Web"));
+    //        } else {
+    //            f.getThemes().add(new Theme("UNDEFINED"));
+    //        }
+    return formationRepo.saveAndFlush(f);
   }
 
   /**
@@ -50,9 +56,7 @@ public class FormationService {
   public Formation findFormationById(long id) {
     return formationRepo
       .findFormationByIdFormation(id)
-      .orElseThrow(() ->
-        new TrainingNotFoundException("Training by id " + id + " was not found")
-      );
+      .orElseThrow(() -> new TrainingNotFoundException("Training by id " + id + " was not found"));
   }
 
   /**
@@ -70,9 +74,7 @@ public class FormationService {
         ((f.getLieu()).toUpperCase()).contains(keyword.toUpperCase()) ||
         ((f.getObjectif()).toUpperCase()).contains(keyword.toUpperCase()) ||
         ((f.getPrerequis()).toUpperCase()).contains(keyword.toUpperCase()) ||
-        ((f.getProgrammeDetaille()).toUpperCase()).contains(
-            keyword.toUpperCase()
-          ) ||
+        ((f.getProgrammeDetaille()).toUpperCase()).contains(keyword.toUpperCase()) ||
         ((f.getPublicVise()).toUpperCase()).contains(keyword.toUpperCase())
       )
       /*|| ((f.getThemes().foreach()????.contains(keyword.toLowerCase())*/
@@ -87,11 +89,7 @@ public class FormationService {
   public Formation findFormationByReference(String ref) {
     return formationRepo
       .findFormationByReference(ref)
-      .orElseThrow(() ->
-        new TrainingNotFoundException(
-          "Training by reference " + ref + "was not found"
-        )
-      );
+      .orElseThrow(() -> new TrainingNotFoundException("Training by reference " + ref + "was not found"));
   }
 
   public void deleteFormation(long id) {

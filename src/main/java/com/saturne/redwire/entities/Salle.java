@@ -82,17 +82,7 @@ public class Salle { // implements Serializable{??
 
   @Override
   public String toString() {
-    return (
-      "Salle [idSalle=" +
-      idSalle +
-      ", numSalle=" +
-      numSalle +
-      ", etage=" +
-      etage +
-      ", adresse=" +
-      adresse +
-      "]"
-    );
+    return ("Salle [idSalle=" + idSalle + ", numSalle=" + numSalle + ", etage=" + etage + ", adresse=" + adresse + "]");
   }
 
   @Override

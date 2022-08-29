@@ -1,18 +1,31 @@
 package com.saturne.redwire.resources;
 
+import com.saturne.redwire.entities.Formation;
 import com.saturne.redwire.entities.Session;
+import com.saturne.redwire.entities.Stagiaire;
+import com.saturne.redwire.services.FormationService;
 import com.saturne.redwire.services.SessionService;
+import com.saturne.redwire.services.StagiaireService;
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.List;
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.PersistenceException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -22,78 +35,135 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/api/session")
 public class SessionResource {
 
+  private static final Logger log = LoggerFactory.getLogger(SessionResource.class);
+
+  private final FormationService formationService;
   private final SessionService sessionService;
+  private final StagiaireService stagiaireService;
 
   @Autowired
-  public SessionResource(SessionService sessionService) {
+  public SessionResource(SessionService sessionService, FormationService formationService, StagiaireService stagiaireService) {
     this.sessionService = sessionService;
+    this.formationService = formationService;
+    this.stagiaireService = stagiaireService;
   }
 
-  @PostMapping(name = "create.session")
+  @GetMapping(name = "search.session", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<List<Session>> getSessions(
+    @RequestParam(value = "idTraining", defaultValue = "0") long idTraining,
+    @RequestParam(value = "dateStart", required = false) String dateStart,
+    @RequestParam(value = "dateEnd", required = false) String dateEnd,
+    @RequestParam(value = "location", required = false) String location,
+    @RequestParam(value = "price", required = false) String price
+  ) {
+    HashMap<String, Object> params = new HashMap<>();
+    if (idTraining > 0) {
+      params.put("idTraining", idTraining);
+    }
+    if (dateStart != null && this.isLocalDate(dateStart)) {
+      params.put("dateStart", LocalDate.parse(dateStart, DateTimeFormatter.ISO_LOCAL_DATE));
+    }
+    if (dateEnd != null && this.isLocalDate(dateEnd)) {
+      params.put("dateEnd", LocalDate.parse(dateEnd, DateTimeFormatter.ISO_LOCAL_DATE));
+    }
+    if (location != null) {
+      params.put("location", location);
+    }
+    if (price != null/* && this.isFloat(price)*/) {
+      params.put("price", Float.parseFloat(price));
+    }
+    return new ResponseEntity<>(sessionService.getSessions(params), HttpStatus.OK);
+  }
+
+  @GetMapping(name = "get.session", path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<Session> getSessionById(@PathVariable("id") long id) {
+    Session s = null;
+    try {
+      s = sessionService.getSession(id);
+    } catch (EntityNotFoundException e) {
+      throw new PersistenceException("Error: Cannot FIND SESSION.");
+    }
+    return new ResponseEntity<>(s, HttpStatus.OK);
+  }
+
+  /***
+   * Create Session
+   * @param session
+   * @param idFormation
+   * @return Session
+   */
+  @PostMapping(
+    path = "/add/{idFormation}",
+    name = "create.session"
+    //consumes = MediaType.APPLICATION_JSON_VALUE
+  )
   @ResponseStatus(HttpStatus.CREATED)
-  public Session createSession(
-    // @RequestParam(name = "idTraining") long idTraining,
-    @RequestParam(name = "dateStart") String dateStart,
-    @RequestParam(name = "dateEnd") String dateEnd,
-    @RequestParam(name = "location") String location,
-    @RequestParam(name = "price", defaultValue = "0") float price
-  ) {
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    Session s = new Session();
-    s.setDateDebut(LocalDate.parse(dateStart, formatter));
-    s.setDateFin(LocalDate.parse(dateEnd, formatter));
-    s.setLieu(location);
-    s.setPrix(price);
-    s = sessionService.createSession(s);
+  public Session createSession(@RequestBody Session session, @PathVariable long idFormation) {
+    Formation f = formationService.findFormationById(idFormation);
+    log.trace("*******************CREATE SESSION***************************");
+    log.trace("Found the training n°: " + idFormation + " => " + f);
+    try {
+      //System.out.println(session);
+      session = sessionService.createSession(session);
+      log.trace("session before update: " + session + "; " + session.getFormation());
+      session.setFormation(f);
+      sessionService.updateSession(session);
+      log.trace("session after update: " + session + "; " + session.getFormation());
+    } catch (Exception ex) {
+      System.out.println(ex.getMessage());
+      return null;
+    }
 
-    //        try {
-    //            FormationService fs = new FormationService();
-    //            Formation training = fs.findFormationById(idTraining);
-    //            s.setFormation(training);
-    //            s = sessionService.updateSession(s);
-    //        } catch (Exception e) {}
-
-    return s;
+    return session;
   }
 
-  @PutMapping(name = "update.session", path = "/{id}")
-  @ResponseStatus(HttpStatus.OK)
-  public Session updateSession(
-    @PathVariable(name = "id") long idSession,
-    @RequestParam(name = "dateStart", required = false) String dateStart,
-    @RequestParam(name = "dateEnd", required = false) String dateEnd,
-    @RequestParam(name = "location", required = false) String location,
-    @RequestParam(name = "price", defaultValue = "0") float price,
-    @RequestParam(name = "idClassroom", defaultValue = "0") long idClassroom,
-    @RequestParam(name = "idTrainer", defaultValue = "0") long idTrainer,
-    @RequestParam(
-      name = "evalSessions[]",
-      defaultValue = "[]"
-    ) String[] evalSessions,
-    @RequestParam(
-      name = "stagiaires[]",
-      defaultValue = "[]"
-    ) String[] stagiaires
+  @PutMapping(name = "update.session", path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<Session> updateSession(
+    @PathVariable(value = "id") long idSession,
+    @RequestParam(value = "dateStart", required = false) String dateStart,
+    @RequestParam(value = "dateEnd", required = false) String dateEnd,
+    @RequestParam(value = "location", required = false) String location,
+    @RequestParam(value = "price", defaultValue = "0") String price,
+    @RequestParam(value = "idClassroom", defaultValue = "0") long idClassroom,
+    @RequestParam(value = "idTrainer", defaultValue = "0") long idTrainer,
+    @RequestParam(value = "evalSessions[]", defaultValue = "[]") String[] evalSessions,
+    @RequestParam(value = "stagiaires[]", defaultValue = "[]") String[] stagiaires
   ) {
-    Session s = sessionService.getSession(idSession);
+    Session s = null;
+    try {
+      s = sessionService.getSession(idSession);
+    } catch (Exception e) {
+      throw new EntityNotFoundException("Error: Cannot FIND Session.");
+    }
     if (s != null) {
-      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+      DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
       if (dateStart != null) {
-        s.setDateDebut(LocalDate.parse(dateStart, formatter));
+        LocalDate parsedDateStart = null;
+        try {
+          parsedDateStart = LocalDate.parse(dateStart, formatter);
+        } catch (DateTimeParseException e) {
+          throw new DateTimeException("Error: Invalid Date Format 'dateStart'.");
+        }
+        s.setDateDebut(parsedDateStart);
       }
       if (dateEnd != null) {
-        s.setDateFin(LocalDate.parse(dateEnd, formatter));
+        LocalDate parsedDateEnd = null;
+        try {
+          parsedDateEnd = LocalDate.parse(dateEnd, formatter);
+        } catch (DateTimeParseException e) {
+          throw new DateTimeException("Error: Invalid Date Format 'dateEnd'.");
+        }
+        s.setDateFin(parsedDateEnd);
       }
       if (location != null) {
         s.setLieu(location);
       }
-      if (price != 0.0f) {
-        s.setPrix(price);
+      if (this.isFloat(price) && Float.parseFloat(price) > 0.0f) {
+        s.setPrix(Float.parseFloat(price));
       }
-
       if (idClassroom > 0) {
         //SalleService ss = new SalleService();
-        //Salle classroom = ss.getReferenceById(idClassroom);
+        //Salle classroom = ss.getSessionByIdSession(idClassroom);
         //s.setSalle(classroom);
       }
       if (idTrainer > 0) {
@@ -111,47 +181,56 @@ public class SessionResource {
         //List<Stagiaire> trainee = ss.findAllById(idTrainee);
         //s.setStagiaires(trainee);
       }
-      return sessionService.updateSession(s);
+      return new ResponseEntity<>(sessionService.updateSession(s), HttpStatus.OK);
     }
     return null;
   }
 
-  @GetMapping(name = "get.session", path = "/{id}")
-  @ResponseStatus(HttpStatus.OK)
-  public Session getSessionById(@PathVariable("id") long id) {
-    return sessionService.getSession(id);
-  }
-
-  @GetMapping(name = "search.session")
-  @ResponseStatus(HttpStatus.OK)
-  public List<Session> getSessions(
-    @RequestParam(value = "dateStart", required = false) String dateStart,
-    @RequestParam(value = "dateEnd", required = false) String dateEnd,
-    @RequestParam(value = "location", required = false) String location,
-    @RequestParam(value = "price", required = false) String price
-  ) {
-    HashMap<String, String> params = new HashMap<>();
-    if (dateStart != null) {
-      params.put("dateStart", dateStart);
-    }
-    if (dateEnd != null) {
-      params.put("dateEnd", dateEnd);
-    }
-    if (location != null) {
-      params.put("location", location);
-    }
-    if (price != null) {
-      params.put("price", price);
-    }
-    return sessionService.getSessions(params);
-  }
-
-  @DeleteMapping(name = "delete.session", path = "/{id}")
+  @DeleteMapping(name = "delete.session", path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void deleteSessionById(@PathVariable("id") long id) {
-    Session s = sessionService.getSession(id);
-    if (s != null) {
+    try {
+      Session s = sessionService.getSession(id);
+      log.trace("session: " + s);
       sessionService.deleteSession(s.getIdSession());
+      log.trace("session deleted");
+    } catch (Exception ex) {
+      System.out.println(ex.getMessage());
     }
+  }
+
+  private boolean isFloat(String nbStr) {
+    try {
+      Float.parseFloat(nbStr);
+    } catch (NumberFormatException e) {
+      return false;
+    }
+    return true;
+  }
+
+  private boolean isLocalDate(String dateStr) {
+    try {
+      LocalDate.parse(dateStr, DateTimeFormatter.ISO_LOCAL_DATE);
+    } catch (DateTimeParseException e) {
+      return false;
+    }
+    return true;
+  }
+
+  //create trainee Post => /api/session/trainee/{idSession}
+  @PostMapping(path = "/stagiaire/{idSession}", name = "addUser.session")
+  @ResponseStatus(HttpStatus.CREATED)
+  public Stagiaire addUserSession(@RequestBody Stagiaire stagiaire, @PathVariable long idSession) {
+    this.stagiaireService.createStagiaire(stagiaire);
+    this.sessionService.getSession(idSession).getStagiaires().add(stagiaire);
+
+    return stagiaire;
+  }
+
+  //delete trainee DELETE => api/session/trainee/{id}
+  @DeleteMapping(path = "/stagiaire", name = "removeUser.session")
+  @ResponseStatus(HttpStatus.CREATED)
+  public void removeUserSession(@RequestBody Stagiaire st, @PathVariable long idSession) {
+    this.sessionService.getSession(idSession).getStagiaires().remove(st);
   }
 }

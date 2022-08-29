@@ -72,14 +72,6 @@ public class Question { // implements Serializable{??
 
   @Override
   public String toString() {
-    return (
-      "Question [idQuestion=" +
-      idQuestion +
-      ", contenuQ=" +
-      contenuQ +
-      ", idTheme=" +
-      idTheme +
-      "]"
-    );
+    return ("Question [idQuestion=" + idQuestion + ", contenuQ=" + contenuQ + ", idTheme=" + idTheme + "]");
   }
 }

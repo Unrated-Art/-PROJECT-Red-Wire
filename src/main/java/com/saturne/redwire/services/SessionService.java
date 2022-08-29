@@ -3,7 +3,6 @@ package com.saturne.redwire.services;
 import com.saturne.redwire.entities.Session;
 import com.saturne.redwire.repositories.SessionRepository;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,45 +29,54 @@ public class SessionService {
   }
 
   public Session getSession(long id) {
-    return sessionRepository.getReferenceByIdSession(id);
+    return sessionRepository.getSessionByIdSession(id).orElseThrow(RuntimeException::new);
   }
 
-  public List<Session> getSessions(HashMap<String, String> params) {
-    DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
+  public List<Session> getSessions(HashMap<String, Object> params) {
     Stream<Session> sessionsStream = sessionRepository.findAll().stream();
+    if (params.containsKey("idTraining")) {
+      sessionsStream =
+        sessionsStream.filter(s -> {
+          if (s.getFormation() != null) {
+            return s.getFormation().getIdFormation() == Float.parseFloat(params.get("idTraining").toString());
+          }
+          return false;
+        });
+    }
     if (params.containsKey("dateStart")) {
       sessionsStream =
-        sessionsStream.filter(s ->
-          LocalDate.parse(params.get("dateStart"), f).isBefore(s.getDateDebut())
-        );
+        sessionsStream.filter(s -> {
+          LocalDate dateStart = LocalDate.parse(params.get("dateStart").toString());
+          return dateStart.isBefore(s.getDateDebut());
+        });
     }
     if (params.containsKey("dateEnd")) {
       sessionsStream =
-        sessionsStream.filter(s ->
-          LocalDate.parse(params.get("dateEnd"), f).isAfter(s.getDateFin())
-        );
+        sessionsStream.filter(s -> {
+          LocalDate dateEnd = LocalDate.parse(params.get("dateEnd").toString());
+          return dateEnd.isAfter(s.getDateFin());
+        });
     }
     if (params.containsKey("location")) {
       sessionsStream =
-        sessionsStream.filter(s ->
-          s
-            .getLieu()
-            .toUpperCase()
-            .contains(params.get("location").toUpperCase())
-        );
+        sessionsStream.filter(s -> {
+          return s.getLieu().toUpperCase().contains(params.get("location").toString().toUpperCase());
+        });
     }
     if (params.containsKey("price")) {
-      System.out.println(Float.parseFloat(params.get("price")));
       sessionsStream =
-        sessionsStream.filter(s ->
-          Float.parseFloat(params.get("price")) > s.getPrix()
-        );
+        sessionsStream.filter(s -> {
+          return s.getPrix() < Float.parseFloat(params.get("price").toString());
+        });
     }
     return sessionsStream.collect(Collectors.toList());
   }
 
   public void deleteSession(long id) {
-    sessionRepository.deleteById(id);
+    sessionRepository.deleteByIdSession(id);
+  }
+
+  public List<Session> saveAll(List<Session> listSessions) {
+    return sessionRepository.saveAll(listSessions);
   }
 }

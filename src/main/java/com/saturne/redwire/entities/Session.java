@@ -1,10 +1,20 @@
 package com.saturne.redwire.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /*
  * Sessions
@@ -34,7 +44,8 @@ public class Session { // implements Serializable{??
   @JoinColumn(name = "idClassroom")
   private Salle salle;
 
-  @ManyToOne
+  @JsonIgnoreProperties("sessions")
+  @ManyToOne(optional = true)
   @JoinColumn(name = "idTraining")
   private Formation formation;
 
@@ -56,12 +67,7 @@ public class Session { // implements Serializable{??
 
   public Session() {}
 
-  public Session(
-    LocalDate dateDebut,
-    LocalDate dateFin,
-    String lieu,
-    float prix
-  ) {
+  public Session(LocalDate dateDebut, LocalDate dateFin, String lieu, float prix) {
     this.dateDebut = dateDebut;
     this.dateFin = dateFin;
     this.lieu = lieu;
@@ -151,17 +157,7 @@ public class Session { // implements Serializable{??
   @Override
   public String toString() {
     return (
-      "Session [idSession=" +
-      idSession +
-      ", dateDebut=" +
-      dateDebut +
-      ", dateFin=" +
-      dateFin +
-      ", lieu=" +
-      lieu +
-      ", prix=" +
-      prix +
-      "]"
+      "Session [idSession=" + idSession + ", dateDebut=" + dateDebut + ", dateFin=" + dateFin + ", lieu=" + lieu + ", prix=" + prix + "]"
     );
   }
 

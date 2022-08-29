@@ -4,8 +4,6 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-//import java.io.Serializable;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -94,17 +92,7 @@ public class Catalogue { // implements Serializable{
 
   @Override
   public String toString() {
-    return (
-      "Catalogue [idCatalogue=" +
-      idCatalogue +
-      ", titre=" +
-      titre +
-      ", auteur=" +
-      auteur +
-      ", dateCreation=" +
-      dateCreation +
-      "]"
-    );
+    return ("Catalogue [idCatalogue=" + idCatalogue + ", titre=" + titre + ", auteur=" + auteur + ", dateCreation=" + dateCreation + "]");
   }
 
 	@Override
