@@ -69,6 +69,11 @@ public class SessionService {
           return s.getPrix() < Float.parseFloat(params.get("price").toString());
         });
     }
+    if (params.containsKey("idStagiaire")) {
+      sessionsStream = sessionsStream.filter(s -> {
+    	  return s.getStagiaires().contains(params.get("idStagiaire"));
+      });
+    }
     return sessionsStream.collect(Collectors.toList());
   }
 
