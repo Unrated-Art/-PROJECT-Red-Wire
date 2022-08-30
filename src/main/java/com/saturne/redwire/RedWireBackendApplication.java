@@ -75,26 +75,34 @@ public class RedWireBackendApplication {
           true, //interentreprise
           3, //duree
           "Avoir suivi la formation \"Introduction au SGBD Oracle\" (OR10) ou connaissances équivalentes", //prérequis
-          "Apprendre à coder en Java", //objectif
-          "Analystes et analystes programmeurs\r\nResponsables de service, chefs de projet\r\nAdministrateurs de bases de données, exploitants", //public visé
-          "Chapitre1, chapitre2..etc" //programme détaillé
+          "Connaître les fonctionnalités du langage SQL : langage de requêtes, fonctions\r\n"
+          + " et comprendre comment manipuler des données avec le langage SQL", //objectif
+          "Analystes et analystes programmeurs,\r\n Responsables de service, chefs de projet\r\n, Administrateurs de bases de données, exploitants", //public visé
+          "Les commandes SQL+" //programme détaillé
         )
       );
 
       /*3*/
       formationService.addFormation(
-        new Formation(
-          "OR100", //reference
-          "Formation Interroger et manipuler des bases de données Oracle avec le langage SQL", //intitulé
-          "Lyon", //lieu
-          true, //interentreprise
-          3, //duree
-          "Avoir suivi la formation \"Introduction au SGBD Oracle\" (OR10) ou connaissances équivalentes", //prérequis
-          "Apprendre à coder en Java", //objectif
-          "-29ans", //public visé
-          "Chapitre1, chapitre2..etc" //programme détaillé
-        )
-      );
+    	        new Formation(
+    	          "LI254",
+    	          "Angular 2+ - Développement d'applications web",
+    	          "Paris",
+    	          true,
+    	          3,
+    	          "-Maîtriser les fondamentaux du Framework Angular et ses nouveautés:\r\n  "
+    	          + "-Organiser, modulariser et tester ses développements JavaScript\r\n "
+    	          + "-Savoir développer plus rapidement et tester des applications web Angular 2 avec JavaScript et TypeScript\r\n "
+    	          + "-Connaître les bonnes pratiques de développement et de mise en production"
+    	          + "\r\n -Découvrir les spécifications EcmaScript 6 (ES6)\r\n "
+    	          + "-Savoir intégrer les tests unitaires au développement",
+    	          "Disposer de connaissances pratiques sur les technologies du Web, "
+    	          + "les outils actuels de développement Front-End et JavaScript",
+    	          "Développeurs Web, Architectes Web, Chefs de projet,Webmasters…",
+    	    "- INTRODUCTION À ANGULAR\r\n ,- TYPESCRIPT ET ES6\r\n- LE FRAMEWORK ANGULAR\r\n - LES COMPOSANTS ET TEMPLATE"
+    	    + "\r\n- DIRECTIVES\r\n - EVÉNEMENTS ET CYCLE DE VIE\r\n - PIPES\r\n - SERVICES"
+    	        )
+    	      );
 
       /*4*/
       formationService.addFormation(
@@ -312,9 +320,9 @@ public class RedWireBackendApplication {
   @Bean
   public CommandLineRunner demo1(CatalogueService catalogueService) {
     return args -> {
-      catalogueService.addCatalogue(new Catalogue("title", "auteur1", "creationDate"));
-      catalogueService.addCatalogue(new Catalogue("title2", "auteur2", "creationDate2"));
-      catalogueService.addCatalogue(new Catalogue("title3", "auteur3", "creationDate3"));
+      catalogueService.addCatalogue(new Catalogue("Catalogue - Q1 2022", "Jean-Manno", "2021-08-20"));
+      catalogueService.addCatalogue(new Catalogue("Catalogue - Q4 2022", "Charline", "2022-02-14"));
+      catalogueService.addCatalogue(new Catalogue("Ctalogue 2023", "Nourhene", "2022-05-25"));
       // fetch all catalogues
       log.info("Catalogues found with findAllCatalogues():");
       log.info("-------------------------------");

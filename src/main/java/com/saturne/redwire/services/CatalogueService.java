@@ -29,11 +29,26 @@ public class CatalogueService {
 
   //Rechercher un catalogue et l'afficher @param reference
 
-  public Catalogue findCatalogueById(int id) {
+  public Catalogue findCatalogueById(int idCatalogue) {
     return catalogueRepository
-      .findCatalogueByIdCatalogue(id)
-      .orElseThrow(() -> new CatalogueNotFoundException("Catalogue by id " + id + "was not found"));
+      .findCatalogueByIdCatalogue(idCatalogue)
+      .orElseThrow(() ->
+        new CatalogueNotFoundException(
+          "Catalogue by id " + idCatalogue + "was not found"
+        )
+      );
   }
+//Mettre à jour une formation @param idFormation
+  
+  public Catalogue updateCatalogue(Catalogue catalogue) {
+      return catalogueRepository.save(catalogue);
+  }
+  
+  
   //Supprimer une formation @param idFormation
 
+  public void deleteCatalogue(int idCatalogue){
+      catalogueRepository.deleteCatalogueByIdCatalogue(idCatalogue);
+  }
+  
 }

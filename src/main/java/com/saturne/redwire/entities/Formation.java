@@ -42,10 +42,10 @@ public class Formation {
   @Column(name = "duration")
   private int duree;
 
-  @Column(name = "requirements")
+  @Column(name = "requirements", length = 10000)
   private String prerequis;
 
-  @Column(name = "goal")
+  @Column(name = "goal",  length = 10000)
   private String objectif;
 
   @Column(name = "targetAudience")
