@@ -1,6 +1,5 @@
 package com.saturne.redwire;
 
-import com.saturne.redwire.entities.Administrateur;
 import com.saturne.redwire.entities.Catalogue;
 import com.saturne.redwire.entities.Formation;
 import com.saturne.redwire.entities.Session;

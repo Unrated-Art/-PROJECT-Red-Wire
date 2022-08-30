@@ -3,7 +3,9 @@ package com.saturne.redwire.resources;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
-import com.saturne.redwire.services.AuthService;
+import com.saturne.redwire.entities.Stagiaire;
+import com.saturne.redwire.services.StagiaireService;
+
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +24,11 @@ public class AuthResource {
 
   // AIDES: https://www.javainuse.com/jwtgenerator
 
-  private final AuthService authService;
+  private final StagiaireService ss;
 
   @Autowired
-  public AuthResource(AuthService authService) {
-    this.authService = authService;
+  public AuthResource(StagiaireService ss) {
+    this.ss = ss;
   }
 
   @PostMapping(path = "/logout", name = "auth.logout", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -42,17 +44,23 @@ public class AuthResource {
     produces = MediaType.APPLICATION_JSON_VALUE
   )
   @ResponseStatus(HttpStatus.ACCEPTED)
-  public Map<String, String> login(@RequestBody HashMap<String, String> data) {
-    Map<String, String> response = new HashMap<>();
-    data.put("idStagiaire", "1");
-    data.put("role", "ADMIN");
-    try {
-      Algorithm algorithm = Algorithm.HMAC256("redwire");
-      String token = JWT.create().withPayload(data).withIssuer("auth0").sign(algorithm);
-      response.put("token", token);
-    } catch (JWTCreationException exception) {
-      System.out.println("Invalid Signing configuration / Couldn't convert Claims:\n" + exception.getMessage());
-    }
+  public Map<String, String> login(@RequestBody HashMap<String, String> data) throws Exception {
+	  Map<String, String> response = new HashMap<>();
+	  Stagiaire stagiaire = ss.findStagiaireByEmail(data.get("email").toString());
+	  if (stagiaire != null) {
+		  data.put("idStagiaire", String.valueOf(stagiaire.getIdStagiaire()));
+		  data.put("role", stagiaire.getRole().toString());
+		try {
+			Algorithm algorithm = Algorithm.HMAC256("redwire");
+			String token = JWT.create().withPayload(data).withIssuer("auth0").sign(algorithm);
+			response.put("token", token);
+		} catch (JWTCreationException exception) {
+			throw new Exception("Invalid Signing configuration / Couldn't convert Claims");
+			// System.out.println("Invalid Signing configuration / Couldn't convert Claims:\n" + exception.getMessage());
+		}
+	  } else {
+		  throw new Exception("Invalid Email or Password");
+	  }
     return response;
   }
 
