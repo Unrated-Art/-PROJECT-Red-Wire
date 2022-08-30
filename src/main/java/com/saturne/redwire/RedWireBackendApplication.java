@@ -1,6 +1,5 @@
 package com.saturne.redwire;
 
-import com.saturne.redwire.entities.Administrateur;
 import com.saturne.redwire.entities.Catalogue;
 import com.saturne.redwire.entities.Formation;
 import com.saturne.redwire.entities.Session;
@@ -194,7 +193,6 @@ public class RedWireBackendApplication {
         new Stagiaire("Barbelette", "Charline", "paris20", "admin@saturne.com", "0606060606", "123", true, "Talismas")
       );
       admin.setRole(Role.ADMIN);
-      ss.up
       User user2 = ss.createStagiaire(
         new Stagiaire("Charles", "J-M", "Pantin", "j-m.charles.garcia@gmail.com", "0707070707", null, false, "")
       );

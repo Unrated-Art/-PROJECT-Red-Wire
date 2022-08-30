@@ -52,6 +52,10 @@ public class StagiaireService {
       .orElseThrow(() -> new StagiaireNotFoundException("Trainee by id " + id + " was not found"));
   }
 
+  public Stagiaire findStagiaireByEmail(String email) {
+    return stagiaireRepo.findStagiaireByEmail(email);
+  }
+
   /**
    * DeleteStagiaire
    * @param id
